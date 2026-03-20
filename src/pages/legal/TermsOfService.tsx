@@ -20,10 +20,10 @@ export default function TermsOfService() {
 
         <div className="prose prose-sm dark:prose-invert max-w-none text-sm text-foreground/90 space-y-4">
           <h2 className="text-base font-semibold mt-6">1. Acceptance of Terms</h2>
-          <p>By accessing or using OpenClawForWindows ("the Service"), you agree to be bound by these Terms of Service. If you do not agree to all terms, do not use the Service.</p>
+          <p>By accessing or using OpenClaw ("the Service"), you agree to be bound by these Terms of Service. If you do not agree to all terms, do not use the Service.</p>
 
           <h2 className="text-base font-semibold mt-6">2. Description of Service</h2>
-          <p>OpenClawForWindows is a workflow automation platform that allows users to create, manage, and execute automated workflows. The Service includes a visual editor, execution engine, and cloud storage for workflows.</p>
+          <p>OpenClaw is a workflow automation platform that allows users to create, manage, and execute automated workflows. The Service includes a visual editor, execution engine, and cloud storage for workflows.</p>
 
           <h2 className="text-base font-semibold mt-6">3. User Accounts</h2>
           <p>You must register for an account to use the Service. You are responsible for maintaining the confidentiality of your account credentials and for all activities under your account. You must be at least 16 years old to create an account.</p>
@@ -32,7 +32,7 @@ export default function TermsOfService() {
           <p>You agree not to: (a) use the Service for any unlawful purpose; (b) attempt to gain unauthorized access to the Service; (c) interfere with or disrupt the Service; (d) reverse-engineer the Service; (e) use the Service to send spam or malicious content.</p>
 
           <h2 className="text-base font-semibold mt-6">5. Intellectual Property</h2>
-          <p>The Service, including its original content, features, and functionality, is owned by OpenClawForWindows and is protected by international copyright, trademark, and other intellectual property laws. Your workflows and data remain your property.</p>
+          <p>The Service, including its original content, features, and functionality, is owned by OpenClaw and is protected by international copyright, trademark, and other intellectual property laws. Your workflows and data remain your property.</p>
 
           <h2 className="text-base font-semibold mt-6">6. Subscriptions and Payments</h2>
           <p>Paid features are available through subscription plans. Subscriptions auto-renew unless cancelled before the renewal date. Prices may change with 30 days' notice. Refunds are handled according to applicable law.</p>
@@ -41,7 +41,7 @@ export default function TermsOfService() {
           <p>We may terminate or suspend your account at any time for violations of these Terms. You may delete your account at any time. Upon termination, your right to use the Service ceases immediately.</p>
 
           <h2 className="text-base font-semibold mt-6">8. Limitation of Liability</h2>
-          <p>To the maximum extent permitted by law, OpenClawForWindows shall not be liable for any indirect, incidental, special, consequential, or punitive damages, or any loss of profits or revenues.</p>
+          <p>To the maximum extent permitted by law, OpenClaw shall not be liable for any indirect, incidental, special, consequential, or punitive damages, or any loss of profits or revenues.</p>
 
           <h2 className="text-base font-semibold mt-6">9. Governing Law</h2>
           <p>These Terms shall be governed by and construed in accordance with the laws of the European Union and applicable local laws, without regard to conflict of law provisions.</p>
@@ -50,7 +50,7 @@ export default function TermsOfService() {
           <p>We reserve the right to modify these Terms at any time. We will notify users of material changes via email or through the Service. Continued use after changes constitutes acceptance.</p>
 
           <h2 className="text-base font-semibold mt-6">11. Contact</h2>
-          <p>For questions about these Terms, contact us at: <span className="text-primary">legal@openclawforwindows.app</span></p>
+          <p>For questions about these Terms, contact us at: <span className="text-primary">legal@openclaw.app</span></p>
         </div>
       </main>
 

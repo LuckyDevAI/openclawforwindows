@@ -16,8 +16,8 @@ export default function Header() {
           className="flex items-center gap-2 cursor-pointer"
           onClick={() => navigate('/home')}
         >
-          <img src={logo} alt="OpenClawForWindows" className="h-6 w-6 rounded-sm object-contain" />
-          <span className="font-bold text-sm text-foreground tracking-tight">OpenClawForWindows</span>
+          <img src={logo} alt="OpenClaw" className="h-6 w-6 rounded-sm object-contain" />
+          <span className="font-bold text-sm text-foreground tracking-tight">OpenClaw</span>
         </div>
         <div className="flex items-center gap-1">
           <SettingsToolbar />

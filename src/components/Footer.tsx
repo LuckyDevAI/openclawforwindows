@@ -18,8 +18,8 @@ export default function Footer() {
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
           {/* Brand */}
           <div className="flex items-center gap-2">
-            <img src={logo} alt="OpenClawForWindows" className="h-5 w-5 rounded-sm object-contain" />
-            <span className="text-xs font-bold text-foreground tracking-tight">OpenClawForWindows</span>
+            <img src={logo} alt="OpenClaw" className="h-5 w-5 rounded-sm object-contain" />
+            <span className="text-xs font-bold text-foreground tracking-tight">OpenClaw</span>
             <span className="text-[10px] text-muted-foreground">
               <span className="text-primary">©</span>2025-2030
             </span>
