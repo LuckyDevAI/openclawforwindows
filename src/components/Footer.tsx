@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
-import { Workflow } from 'lucide-react';
 import { useSettings } from '@/contexts/SettingsContext';
+import logo from '@/assets/logo.jpeg';
 
 const FOOTER_LINKS = [
   { key: 'footer.terms' as const, path: '/terms' },
@@ -18,7 +18,7 @@ export default function Footer() {
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
           {/* Brand */}
           <div className="flex items-center gap-2">
-            <Workflow className="h-4 w-4 text-primary" />
+            <img src={logo} alt="OpenClawForWindows" className="h-5 w-5 rounded-sm object-contain" />
             <span className="text-xs font-bold text-foreground tracking-tight">OpenClawForWindows</span>
             <span className="text-[10px] text-muted-foreground">
               <span className="text-primary">©</span>2025-2030
