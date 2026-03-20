@@ -19,14 +19,12 @@ serve(async (req) => {
   );
 
   try {
-    // Auth check
     const authHeader = req.headers.get("Authorization");
     if (!authHeader) throw new Error("No authorization header");
     const token = authHeader.replace("Bearer ", "");
     const { data: userData, error: userError } = await supabaseAdmin.auth.getUser(token);
     if (userError || !userData.user) throw new Error("Not authenticated");
 
-    // Check admin role
     const { data: roleData } = await supabaseAdmin
       .from("user_roles")
       .select("role")
@@ -41,10 +39,10 @@ serve(async (req) => {
       });
     }
 
-    const { action } = await req.json();
+    const body = await req.json();
+    const { action } = body;
 
     if (action === "list-users") {
-      // List all auth users with their profiles and subscription info
       const { data: authUsers, error: listError } = await supabaseAdmin.auth.admin.listUsers({ perPage: 100 });
       if (listError) throw listError;
 
@@ -52,29 +50,23 @@ serve(async (req) => {
 
       const users = [];
       for (const u of authUsers.users) {
-        // Get profile
         const { data: profile } = await supabaseAdmin
           .from("profiles")
           .select("display_name, avatar_url")
           .eq("id", u.id)
           .maybeSingle();
 
-        // Get role
         const { data: roles } = await supabaseAdmin
           .from("user_roles")
           .select("role")
           .eq("user_id", u.id);
 
-        // Get Stripe subscription
         let subscription = null;
         if (u.email) {
           try {
             const customers = await stripe.customers.list({ email: u.email, limit: 1 });
             if (customers.data.length > 0) {
-              const subs = await stripe.subscriptions.list({
-                customer: customers.data[0].id,
-                limit: 1,
-              });
+              const subs = await stripe.subscriptions.list({ customer: customers.data[0].id, limit: 1 });
               if (subs.data.length > 0) {
                 const sub = subs.data[0];
                 subscription = {
@@ -86,9 +78,7 @@ serve(async (req) => {
                 };
               }
             }
-          } catch {
-            // Stripe error, skip
-          }
+          } catch { /* skip */ }
         }
 
         users.push({
@@ -109,26 +99,17 @@ serve(async (req) => {
     }
 
     if (action === "update-subscription") {
-      const { email, newEndDate } = await req.json().catch(() => ({}));
-      // Re-parse from original body
-      const body = JSON.parse(await new Response(req.body).text().catch(() => "{}"));
-      const targetEmail = body.email;
-      const targetEndDate = body.newEndDate;
-
-      if (!targetEmail || !targetEndDate) throw new Error("email and newEndDate required");
+      const { email: targetEmail, newEndDate } = body;
+      if (!targetEmail || !newEndDate) throw new Error("email and newEndDate required");
 
       const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY") || "", { apiVersion: "2025-08-27.basil" });
       const customers = await stripe.customers.list({ email: targetEmail, limit: 1 });
       if (customers.data.length === 0) throw new Error("No Stripe customer found");
 
-      const subs = await stripe.subscriptions.list({
-        customer: customers.data[0].id,
-        limit: 1,
-      });
+      const subs = await stripe.subscriptions.list({ customer: customers.data[0].id, limit: 1 });
       if (subs.data.length === 0) throw new Error("No subscription found");
 
-      // Update the subscription's trial_end to effectively extend it
-      const newEnd = Math.floor(new Date(targetEndDate).getTime() / 1000);
+      const newEnd = Math.floor(new Date(newEndDate).getTime() / 1000);
       await stripe.subscriptions.update(subs.data[0].id, {
         trial_end: newEnd,
         proration_behavior: "none",
@@ -140,21 +121,37 @@ serve(async (req) => {
     }
 
     if (action === "set-role") {
-      const body = JSON.parse(await new Response(req.body).text().catch(() => "{}"));
-      const targetUserId = body.userId;
-      const targetRole = body.role;
-
+      const { userId: targetUserId, role: targetRole } = body;
       if (!targetUserId || !targetRole) throw new Error("userId and role required");
 
       if (targetRole === "remove") {
         await supabaseAdmin.from("user_roles").delete().eq("user_id", targetUserId);
       } else {
-        await supabaseAdmin.from("user_roles").upsert(
-          { user_id: targetUserId, role: targetRole },
-          { onConflict: "user_id,role" }
-        );
+        // Remove existing roles first, then insert new one
+        await supabaseAdmin.from("user_roles").delete().eq("user_id", targetUserId);
+        await supabaseAdmin.from("user_roles").insert({ user_id: targetUserId, role: targetRole });
       }
 
+      return new Response(JSON.stringify({ success: true }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    if (action === "make-me-admin") {
+      // Special bootstrap: if no admins exist, let the caller become admin
+      const { count } = await supabaseAdmin
+        .from("user_roles")
+        .select("*", { count: "exact", head: true })
+        .eq("role", "admin");
+
+      if ((count ?? 0) > 0) {
+        return new Response(JSON.stringify({ error: "Admin already exists" }), {
+          status: 403,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+
+      await supabaseAdmin.from("user_roles").insert({ user_id: userData.user.id, role: "admin" });
       return new Response(JSON.stringify({ success: true }), {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
