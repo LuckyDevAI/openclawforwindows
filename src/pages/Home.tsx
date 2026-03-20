@@ -18,7 +18,7 @@ import {
 } from 'lucide-react';
 
 export default function Home() {
-  const { user, signOut, subscription } = useAuth();
+  const { user, subscription } = useAuth();
   const { t } = useSettings();
   const navigate = useNavigate();
   const { toast } = useToast();
