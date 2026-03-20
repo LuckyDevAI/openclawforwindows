@@ -79,7 +79,7 @@ export default function Pricing() {
           )}
           <CardHeader className="text-center pb-2">
             <CardTitle className="text-4xl font-bold tabular-nums">
-              €10,90
+              €19,90
               <span className="text-sm font-normal text-muted-foreground">{t('pricing.year')}</span>
             </CardTitle>
             <CardDescription className="text-xs">{t('pricing.trial')}</CardDescription>
