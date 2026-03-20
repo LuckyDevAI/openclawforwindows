@@ -31,6 +31,14 @@ export default function Home() {
   const [nameInput, setNameInput] = useState('');
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const [uploadingAvatar, setUploadingAvatar] = useState(false);
+  const [showOnboarding, setShowOnboarding] = useState(false);
+
+  // Check if onboarding needed
+  useEffect(() => {
+    if (user && !localStorage.getItem(`openclaw_onboarding_${user.id}`)) {
+      setShowOnboarding(true);
+    }
+  }, [user]);
 
   // Load profile
   useEffect(() => {
