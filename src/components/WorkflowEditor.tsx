@@ -150,7 +150,7 @@ export default function WorkflowEditor() {
         edges: canvasRef.current.getEdges(),
       });
     }
-    const newProj = createProject('Nuovo progetto');
+    const newProj = createProject(t('editor.new_project'));
     setCurrentProject(newProj);
     setProjectName(newProj.name);
     setSelectedNode(null);
