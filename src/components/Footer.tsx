@@ -21,7 +21,7 @@ export default function Footer() {
             <Workflow className="h-4 w-4 text-primary" />
             <span className="text-xs font-bold text-foreground tracking-tight">OpenClawForWindows</span>
             <span className="text-[10px] text-muted-foreground">
-              <span className="text-primary">©️</span>2025-2030
+              <span className="text-primary">©</span>2025-2030
             </span>
           </div>
 
