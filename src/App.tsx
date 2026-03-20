@@ -36,6 +36,7 @@ const App = () => (
               <Route path="/eula" element={<EULA />} />
               <Route path="/cookies" element={<CookiePolicy />} />
               <Route path="/pricing" element={<ProtectedRoute><Pricing /></ProtectedRoute>} />
+              <Route path="/install" element={<ProtectedRoute><Install /></ProtectedRoute>} />
               <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
               <Route path="/" element={<ProtectedRoute><SubscriptionGate><Index /></SubscriptionGate></ProtectedRoute>} />
               <Route path="/admin" element={<ProtectedRoute><SubscriptionGate><Admin /></SubscriptionGate></ProtectedRoute>} />
