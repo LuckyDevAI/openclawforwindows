@@ -3,7 +3,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import logo from '@/assets/logo.png';
 import SettingsToolbar from '@/components/SettingsToolbar';
 import { Button } from '@/components/ui/button';
-import { Crown, LogOut, Download } from 'lucide-react';
+import { Crown, LogOut } from 'lucide-react';
 
 export default function Header() {
   const { signOut } = useAuth();
@@ -21,9 +21,6 @@ export default function Header() {
         </div>
         <div className="flex items-center gap-1">
           <SettingsToolbar />
-          <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => navigate('/install')}>
-            <Download className="h-3.5 w-3.5" />
-          </Button>
           <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => navigate('/pricing')}>
             <Crown className="h-3.5 w-3.5" />
           </Button>
