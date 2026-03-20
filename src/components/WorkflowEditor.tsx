@@ -32,26 +32,7 @@ import {
   getActiveProjectId,
   type WorkflowProject,
 } from '@/lib/projectStorage';
-import { Input } from '@/components/ui/input';
-import { Separator } from '@/components/ui/separator';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { useToast } from '@/hooks/use-toast';
-import {
-  listProjects,
-  getProject,
-  saveProject,
-  deleteProject,
-  renameProject,
-  createProject,
-  getActiveProjectId,
-  type WorkflowProject,
-} from '@/lib/projectStorage';
+
 
 export default function WorkflowEditor() {
   const { signOut } = useAuth();
