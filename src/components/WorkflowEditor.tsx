@@ -85,6 +85,23 @@ export default function WorkflowEditor() {
     toast({ title: 'Salvato', description: `"${projectName}" salvato con successo.` });
   }, [currentProject, projectName, toast]);
 
+  // Sync execution statuses to canvas
+  useEffect(() => {
+    canvasRef.current?.setExecStatuses(nodeStatuses);
+  }, [nodeStatuses]);
+
+  const handleExecute = useCallback(async () => {
+    if (!canvasRef.current) return;
+    const nodes = canvasRef.current.getNodes();
+    const edges = canvasRef.current.getEdges();
+    if (nodes.length === 0) {
+      toast({ title: 'Nessun nodo', description: 'Aggiungi almeno un nodo prima di eseguire.', variant: 'destructive' });
+      return;
+    }
+    setShowLog(true);
+    await runWorkflow(nodes, edges);
+  }, [runWorkflow, toast]);
+
   // Keyboard shortcut Ctrl+S
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
