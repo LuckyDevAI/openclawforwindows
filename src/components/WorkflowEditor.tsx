@@ -6,7 +6,9 @@ import {
   Workflow, LogOut, Plus, Trash2, Pencil, Check, X, Square,
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
+import { useSettings } from '@/contexts/SettingsContext';
 import NodePalette from '@/components/NodePalette';
+import SettingsToolbar from '@/components/SettingsToolbar';
 import WorkflowCanvas, { type CanvasHandle } from '@/components/WorkflowCanvas';
 import PropertiesPanel from '@/components/PropertiesPanel';
 import ExecutionLog from '@/components/ExecutionLog';
