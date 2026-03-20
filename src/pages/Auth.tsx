@@ -22,7 +22,7 @@ export default function Auth() {
   const { user } = useAuth();
 
   useEffect(() => {
-    if (user) navigate('/', { replace: true });
+    if (user) navigate('/home', { replace: true });
   }, [user, navigate]);
 
   const handleEmail = async (e: React.FormEvent) => {
@@ -40,7 +40,7 @@ export default function Auth() {
       } else {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
-        navigate('/');
+        navigate('/home');
       }
     } catch (err: any) {
       toast({ title: 'Errore', description: err.message, variant: 'destructive' });
