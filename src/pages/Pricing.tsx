@@ -89,7 +89,7 @@ export default function Pricing() {
     <div className="min-h-screen flex flex-col bg-background">
       <Header />
       <div className="flex flex-1 flex-col items-center justify-center p-4">
-      <div className="w-full max-w-md space-y-6">
+        <div className="w-full max-w-md space-y-6">
         <div className="text-center space-y-2">
           <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl overflow-hidden">
             <img src={logo} alt="OpenClaw" className="h-16 w-16 object-cover" />
