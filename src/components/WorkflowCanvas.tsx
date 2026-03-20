@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useImperativeHandle, useRef, useState, forwardRef } from 'react';
 import {
   ReactFlow,
   Background,
@@ -19,24 +19,47 @@ import { nodeTypes } from './WorkflowNode';
 let nodeId = 0;
 const getId = () => `node_${++nodeId}`;
 
+export interface CanvasHandle {
+  update: (id: string, data: Record<string, unknown>) => void;
+  getNode: (id: string) => Node | undefined;
+  getNodes: () => Node[];
+  getEdges: () => Edge[];
+  loadState: (nodes: Node[], edges: Edge[]) => void;
+}
+
 interface Props {
   selectedNodeId: string | null;
   onNodeSelect: (node: Node | null) => void;
   onNodeDataUpdate: (nodeId: string, data: Record<string, unknown>) => void;
-  nodesRef: React.MutableRefObject<{ update: (id: string, data: Record<string, unknown>) => void; getNode: (id: string) => Node | undefined } | null>;
 }
 
-export default function WorkflowCanvas({ selectedNodeId, onNodeSelect, nodesRef }: Props) {
+const WorkflowCanvas = forwardRef<CanvasHandle, Props>(({ selectedNodeId, onNodeSelect }, ref) => {
   const reactFlowWrapper = useRef<HTMLDivElement>(null);
   const [nodes, setNodes, onNodesChange] = useNodesState<Node>([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
   const [reactFlowInstance, setReactFlowInstance] = useState<any>(null);
 
-  // Expose node operations to parent
-  nodesRef.current = {
+  const nodesRef = useRef(nodes);
+  const edgesRef = useRef(edges);
+  useEffect(() => { nodesRef.current = nodes; }, [nodes]);
+  useEffect(() => { edgesRef.current = edges; }, [edges]);
+
+  useImperativeHandle(ref, () => ({
     update: (id, data) => setNodes(nds => nds.map(n => n.id === id ? { ...n, data } : n)),
-    getNode: (id) => nodes.find(n => n.id === id),
-  };
+    getNode: (id) => nodesRef.current.find(n => n.id === id),
+    getNodes: () => nodesRef.current,
+    getEdges: () => edgesRef.current,
+    loadState: (newNodes, newEdges) => {
+      setNodes(newNodes);
+      setEdges(newEdges);
+      // Reset nodeId counter to avoid collisions
+      const maxId = newNodes.reduce((max, n) => {
+        const num = parseInt(n.id.replace('node_', ''), 10);
+        return isNaN(num) ? max : Math.max(max, num);
+      }, 0);
+      nodeId = maxId;
+    },
+  }));
 
   const onConnect = useCallback(
     (params: Connection) => setEdges(eds => addEdge({ ...params, animated: true }, eds)),
@@ -104,4 +127,7 @@ export default function WorkflowCanvas({ selectedNodeId, onNodeSelect, nodesRef 
       </ReactFlow>
     </div>
   );
-}
+});
+
+WorkflowCanvas.displayName = 'WorkflowCanvas';
+export default WorkflowCanvas;

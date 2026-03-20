@@ -1,27 +1,173 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { type Node } from '@xyflow/react';
-import { Play, Save, FolderOpen, Settings, PanelLeftClose, PanelLeft, Workflow, LogOut } from 'lucide-react';
+import {
+  Play, Save, FolderOpen, Settings, PanelLeftClose, PanelLeft,
+  Workflow, LogOut, Plus, Trash2, Pencil, Check, X,
+} from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import NodePalette from '@/components/NodePalette';
-import WorkflowCanvas from '@/components/WorkflowCanvas';
+import WorkflowCanvas, { type CanvasHandle } from '@/components/WorkflowCanvas';
 import PropertiesPanel from '@/components/PropertiesPanel';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { useToast } from '@/hooks/use-toast';
+import {
+  listProjects,
+  getProject,
+  saveProject,
+  deleteProject,
+  renameProject,
+  createProject,
+  getActiveProjectId,
+  type WorkflowProject,
+} from '@/lib/projectStorage';
 
 export default function WorkflowEditor() {
   const { signOut } = useAuth();
+  const { toast } = useToast();
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [selectedNode, setSelectedNode] = useState<Node | null>(null);
-  const canvasRef = useRef<{ update: (id: string, data: Record<string, unknown>) => void; getNode: (id: string) => Node | undefined } | null>(null);
+  const canvasRef = useRef<CanvasHandle>(null);
 
-  const handleNodeSelect = (node: Node | null) => {
-    setSelectedNode(node);
+  // Project state
+  const [currentProject, setCurrentProject] = useState<WorkflowProject | null>(null);
+  const [projectName, setProjectName] = useState('');
+  const [isRenaming, setIsRenaming] = useState(false);
+  const [renameValue, setRenameValue] = useState('');
+  const [openDialogOpen, setOpenDialogOpen] = useState(false);
+  const [projects, setProjects] = useState<WorkflowProject[]>([]);
+
+  // Load last active project on mount
+  useEffect(() => {
+    const activeId = getActiveProjectId();
+    if (activeId) {
+      const proj = getProject(activeId);
+      if (proj) {
+        setCurrentProject(proj);
+        setProjectName(proj.name);
+        // Defer loading until canvas is ready
+        setTimeout(() => {
+          canvasRef.current?.loadState(proj.nodes, proj.edges);
+        }, 100);
+        return;
+      }
+    }
+    // No active project — create a new one
+    const newProj = createProject('Progetto senza titolo');
+    setCurrentProject(newProj);
+    setProjectName(newProj.name);
+  }, []);
+
+  const handleSave = useCallback(() => {
+    if (!currentProject || !canvasRef.current) return;
+    const updated: WorkflowProject = {
+      ...currentProject,
+      name: projectName,
+      nodes: canvasRef.current.getNodes(),
+      edges: canvasRef.current.getEdges(),
+    };
+    saveProject(updated);
+    setCurrentProject(updated);
+    toast({ title: 'Salvato', description: `"${projectName}" salvato con successo.` });
+  }, [currentProject, projectName, toast]);
+
+  // Keyboard shortcut Ctrl+S
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+        e.preventDefault();
+        handleSave();
+      }
+    };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, [handleSave]);
+
+  const handleOpen = () => {
+    setProjects(listProjects());
+    setOpenDialogOpen(true);
   };
+
+  const handleLoadProject = (proj: WorkflowProject) => {
+    // Save current first
+    if (currentProject && canvasRef.current) {
+      saveProject({
+        ...currentProject,
+        name: projectName,
+        nodes: canvasRef.current.getNodes(),
+        edges: canvasRef.current.getEdges(),
+      });
+    }
+    setCurrentProject(proj);
+    setProjectName(proj.name);
+    setSelectedNode(null);
+    canvasRef.current?.loadState(proj.nodes, proj.edges);
+    setOpenDialogOpen(false);
+    toast({ title: 'Aperto', description: `"${proj.name}" caricato.` });
+  };
+
+  const handleNewProject = () => {
+    // Save current first
+    if (currentProject && canvasRef.current) {
+      saveProject({
+        ...currentProject,
+        name: projectName,
+        nodes: canvasRef.current.getNodes(),
+        edges: canvasRef.current.getEdges(),
+      });
+    }
+    const newProj = createProject('Nuovo progetto');
+    setCurrentProject(newProj);
+    setProjectName(newProj.name);
+    setSelectedNode(null);
+    canvasRef.current?.loadState([], []);
+    setOpenDialogOpen(false);
+    toast({ title: 'Creato', description: 'Nuovo progetto creato.' });
+  };
+
+  const handleDeleteProject = (id: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    deleteProject(id);
+    setProjects(listProjects());
+    if (currentProject?.id === id) {
+      const remaining = listProjects();
+      if (remaining.length > 0) {
+        handleLoadProject(remaining[0]);
+      } else {
+        handleNewProject();
+      }
+    }
+  };
+
+  const startRename = () => {
+    setRenameValue(projectName);
+    setIsRenaming(true);
+  };
+
+  const confirmRename = () => {
+    if (!renameValue.trim() || !currentProject) return;
+    setProjectName(renameValue.trim());
+    renameProject(currentProject.id, renameValue.trim());
+    setCurrentProject(prev => prev ? { ...prev, name: renameValue.trim() } : prev);
+    setIsRenaming(false);
+    toast({ title: 'Rinominato', description: `Progetto rinominato in "${renameValue.trim()}".` });
+  };
+
+  const cancelRename = () => setIsRenaming(false);
+
+  const handleNodeSelect = (node: Node | null) => setSelectedNode(node);
 
   const handleUpdateData = (nodeId: string, data: Record<string, unknown>) => {
     canvasRef.current?.update(nodeId, data);
-    // Also update local selected node so panel reflects changes immediately
     setSelectedNode(prev => prev && prev.id === nodeId ? { ...prev, data } : prev);
   };
 
@@ -56,12 +202,42 @@ export default function WorkflowEditor() {
             {sidebarOpen ? <PanelLeftClose className="h-4 w-4" /> : <PanelLeft className="h-4 w-4" />}
           </Button>
           <Separator orientation="vertical" className="h-5" />
-          <span className="text-xs font-medium text-muted-foreground">Progetto senza titolo</span>
+
+          {/* Project name / rename */}
+          {isRenaming ? (
+            <div className="flex items-center gap-1">
+              <Input
+                value={renameValue}
+                onChange={e => setRenameValue(e.target.value)}
+                onKeyDown={e => {
+                  if (e.key === 'Enter') confirmRename();
+                  if (e.key === 'Escape') cancelRename();
+                }}
+                className="h-7 w-48 text-xs"
+                autoFocus
+              />
+              <Button variant="ghost" size="icon" className="h-7 w-7" onClick={confirmRename}>
+                <Check className="h-3 w-3" />
+              </Button>
+              <Button variant="ghost" size="icon" className="h-7 w-7" onClick={cancelRename}>
+                <X className="h-3 w-3" />
+              </Button>
+            </div>
+          ) : (
+            <button
+              onClick={startRename}
+              className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground hover:text-foreground transition-colors group"
+            >
+              {projectName}
+              <Pencil className="h-3 w-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+            </button>
+          )}
+
           <div className="flex-1" />
-          <Button variant="ghost" size="sm" className="h-8 gap-1.5 text-xs">
+          <Button variant="ghost" size="sm" className="h-8 gap-1.5 text-xs" onClick={handleOpen}>
             <FolderOpen className="h-3.5 w-3.5" /> Apri
           </Button>
-          <Button variant="ghost" size="sm" className="h-8 gap-1.5 text-xs">
+          <Button variant="ghost" size="sm" className="h-8 gap-1.5 text-xs" onClick={handleSave}>
             <Save className="h-3.5 w-3.5" /> Salva
           </Button>
           <Link to="/admin">
@@ -82,10 +258,10 @@ export default function WorkflowEditor() {
         <div className="flex flex-1 min-h-0">
           <main className="flex-1 relative">
             <WorkflowCanvas
+              ref={canvasRef}
               selectedNodeId={selectedNode?.id || null}
               onNodeSelect={handleNodeSelect}
               onNodeDataUpdate={handleUpdateData}
-              nodesRef={canvasRef}
             />
             {/* Empty state hint */}
             <div className="pointer-events-none absolute inset-0 flex items-center justify-center" id="empty-hint">
@@ -104,6 +280,53 @@ export default function WorkflowEditor() {
           />
         </div>
       </div>
+
+      {/* Open Project Dialog */}
+      <Dialog open={openDialogOpen} onOpenChange={setOpenDialogOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="text-sm font-bold">Apri progetto</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-3">
+            <Button variant="outline" size="sm" className="w-full h-9 gap-1.5 text-xs" onClick={handleNewProject}>
+              <Plus className="h-3.5 w-3.5" /> Nuovo progetto
+            </Button>
+            <Separator />
+            <ScrollArea className="max-h-64">
+              {projects.length === 0 ? (
+                <p className="text-xs text-center text-muted-foreground py-4">Nessun progetto salvato</p>
+              ) : (
+                <div className="space-y-1">
+                  {projects.map(proj => (
+                    <div
+                      key={proj.id}
+                      onClick={() => handleLoadProject(proj)}
+                      className={`flex items-center justify-between px-3 py-2.5 rounded-md cursor-pointer transition-colors hover:bg-secondary/50 ${
+                        proj.id === currentProject?.id ? 'bg-secondary' : ''
+                      }`}
+                    >
+                      <div className="min-w-0 flex-1">
+                        <p className="text-xs font-medium text-foreground truncate">{proj.name}</p>
+                        <p className="text-[10px] text-muted-foreground">
+                          {proj.nodes.length} nodi · {new Date(proj.updatedAt).toLocaleDateString('it-IT', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}
+                        </p>
+                      </div>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-7 w-7 text-destructive hover:text-destructive shrink-0"
+                        onClick={(e) => handleDeleteProject(proj.id, e)}
+                      >
+                        <Trash2 className="h-3 w-3" />
+                      </Button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </ScrollArea>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
