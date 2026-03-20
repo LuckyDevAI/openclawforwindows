@@ -298,6 +298,15 @@ export default function WorkflowEditor() {
                 <p className="text-sm text-muted-foreground">Trascina i nodi dalla sidebar per iniziare</p>
               </div>
             </div>
+
+            {/* Execution Log */}
+            {showLog && (
+              <ExecutionLog
+                log={execLog}
+                executing={executing}
+                onClose={() => setShowLog(false)}
+              />
+            )}
           </main>
 
           {/* Right Properties Panel */}
