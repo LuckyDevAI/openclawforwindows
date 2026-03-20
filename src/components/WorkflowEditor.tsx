@@ -277,7 +277,7 @@ export default function WorkflowEditor() {
             </Button>
           ) : (
             <Button size="sm" className="h-8 gap-1.5 text-xs font-semibold" onClick={handleExecute}>
-              <Play className="h-3.5 w-3.5" /> Esegui
+              <Play className="h-3.5 w-3.5" /> {t('editor.run')}
             </Button>
           )}
           <Button variant="ghost" size="icon" className="h-8 w-8" onClick={signOut}>
