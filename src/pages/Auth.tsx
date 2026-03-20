@@ -96,15 +96,6 @@ export default function Auth() {
               Continua con Google
             </Button>
 
-            {/* Passkey */}
-            <Button
-              variant="outline"
-              className="w-full h-10 gap-2 text-xs font-medium"
-              onClick={handlePasskey}
-            >
-              <KeyRound className="h-4 w-4" />
-              Accedi con Passkey
-            </Button>
 
             <div className="flex items-center gap-3">
               <Separator className="flex-1" />
