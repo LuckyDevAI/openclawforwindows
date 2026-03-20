@@ -98,7 +98,7 @@ export default function WorkflowEditor() {
     const nodes = canvasRef.current.getNodes();
     const edges = canvasRef.current.getEdges();
     if (nodes.length === 0) {
-      toast({ title: 'Nessun nodo', description: 'Aggiungi almeno un nodo prima di eseguire.', variant: 'destructive' });
+      toast({ title: t('editor.no_nodes'), variant: 'destructive' });
       return;
     }
     setShowLog(true);
