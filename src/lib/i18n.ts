@@ -331,6 +331,8 @@ const translations: Translations = {
     'admin.title': 'Panneau Admin', 'admin.dashboard': 'Tableau de bord', 'admin.workflows': 'Workflows',
     'admin.users': 'Utilisateurs', 'admin.settings': 'Paramètres', 'admin.search': 'Rechercher...',
     'settings.theme': 'Thème', 'settings.language': 'Langue', 'settings.light': 'Clair', 'settings.dark': 'Sombre',
+    'footer.terms': 'Conditions d\'utilisation', 'footer.privacy': 'Confidentialité & RGPD', 'footer.eula': 'CLUF', 'footer.cookies': 'Politique de cookies',
+    'footer.disclaimer': 'OpenClaw n\'est pas responsable de l\'utilisation abusive des automatisations créées par les utilisateurs. En utilisant le Service, vous acceptez nos Conditions d\'utilisation et notre Politique de confidentialité.',
   },
   de: {
     'app.name': 'OpenClaw', 'app.subtitle': 'Automatisierungs-Builder',
