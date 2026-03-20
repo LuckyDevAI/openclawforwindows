@@ -12,6 +12,8 @@ const logStep = (step: string, details?: any) => {
   console.log(`[CHECK-SUBSCRIPTION] ${step}${detailsStr}`);
 };
 
+const TRIAL_DAYS = 10;
+
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -39,55 +41,70 @@ serve(async (req) => {
     if (!user?.email) throw new Error("User not authenticated or email not available");
     logStep("User authenticated", { email: user.email });
 
+    // 1) Check local trial from profiles
+    const { data: profile } = await supabaseClient
+      .from("profiles")
+      .select("trial_start")
+      .eq("id", user.id)
+      .single();
+
+    const trialStart = profile?.trial_start ? new Date(profile.trial_start) : null;
+    let localTrialActive = false;
+    let localTrialEnd: string | null = null;
+
+    if (trialStart) {
+      const trialEndDate = new Date(trialStart.getTime() + TRIAL_DAYS * 24 * 60 * 60 * 1000);
+      localTrialEnd = trialEndDate.toISOString();
+      localTrialActive = new Date() < trialEndDate;
+      logStep("Local trial check", { trialStart: trialStart.toISOString(), trialEnd: localTrialEnd, active: localTrialActive });
+    }
+
+    // 2) Check Stripe subscription
     const stripe = new Stripe(stripeKey, { apiVersion: "2025-08-27.basil" });
     const customers = await stripe.customers.list({ email: user.email, limit: 1 });
 
-    if (customers.data.length === 0) {
-      logStep("No customer found");
-      return new Response(JSON.stringify({ subscribed: false, on_trial: false }), {
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-        status: 200,
+    let stripeSub = false;
+    let stripeOnTrial = false;
+    let subscriptionEnd: string | null = null;
+    let stripeTrialEnd: string | null = null;
+
+    if (customers.data.length > 0) {
+      const customerId = customers.data[0].id;
+      logStep("Found customer", { customerId });
+
+      const subscriptions = await stripe.subscriptions.list({
+        customer: customerId,
+        status: "active",
+        limit: 1,
       });
-    }
+      const trialingSubs = await stripe.subscriptions.list({
+        customer: customerId,
+        status: "trialing",
+        limit: 1,
+      });
 
-    const customerId = customers.data[0].id;
-    logStep("Found customer", { customerId });
-
-    // Check active subscriptions
-    const subscriptions = await stripe.subscriptions.list({
-      customer: customerId,
-      status: "active",
-      limit: 1,
-    });
-
-    // Also check trialing subscriptions
-    const trialingSubs = await stripe.subscriptions.list({
-      customer: customerId,
-      status: "trialing",
-      limit: 1,
-    });
-
-    const allSubs = [...subscriptions.data, ...trialingSubs.data];
-    const hasSub = allSubs.length > 0;
-    let onTrial = false;
-    let subscriptionEnd = null;
-    let trialEnd = null;
-
-    if (hasSub) {
-      const sub = allSubs[0];
-      subscriptionEnd = new Date(sub.current_period_end * 1000).toISOString();
-      onTrial = sub.status === "trialing";
-      if (sub.trial_end) {
-        trialEnd = new Date(sub.trial_end * 1000).toISOString();
+      const allSubs = [...subscriptions.data, ...trialingSubs.data];
+      if (allSubs.length > 0) {
+        const sub = allSubs[0];
+        stripeSub = true;
+        subscriptionEnd = new Date(sub.current_period_end * 1000).toISOString();
+        stripeOnTrial = sub.status === "trialing";
+        if (sub.trial_end) {
+          stripeTrialEnd = new Date(sub.trial_end * 1000).toISOString();
+        }
+        logStep("Stripe subscription found", { status: sub.status });
       }
-      logStep("Subscription found", { status: sub.status, onTrial });
     }
+
+    // User is subscribed if either Stripe sub OR local trial is active
+    const subscribed = stripeSub || localTrialActive;
+    const onTrial = localTrialActive && !stripeSub;
 
     return new Response(JSON.stringify({
-      subscribed: hasSub,
-      on_trial: onTrial,
+      subscribed,
+      on_trial: onTrial || stripeOnTrial,
       subscription_end: subscriptionEnd,
-      trial_end: trialEnd,
+      trial_end: onTrial ? localTrialEnd : stripeTrialEnd,
     }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
       status: 200,

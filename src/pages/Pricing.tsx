@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Workflow, Check, Loader2, Crown, ArrowLeft } from 'lucide-react';
+import { toast } from 'sonner';
 
 const featureKeys = [
   'feat.unlimited',
@@ -22,6 +23,28 @@ export default function Pricing() {
   const { t, lang } = useSettings();
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+  const handleStartTrial = async () => {
+    setLoading(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('start-trial');
+      if (error) throw error;
+      if (data?.success) {
+        toast.success('Prova gratuita attivata!');
+        await checkSubscription();
+        navigate('/');
+      }
+    } catch (err: any) {
+      if (err?.message?.includes('already started')) {
+        toast.error('Hai già usato la prova gratuita');
+      } else {
+        console.error('Trial error:', err);
+        toast.error('Errore nell\'attivazione della prova');
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleSubscribe = async () => {
     setLoading(true);
@@ -54,6 +77,8 @@ export default function Pricing() {
   };
 
   const isActive = subscription.subscribed;
+  const isOnTrial = subscription.onTrial;
+  const _trialExpired = !isActive && !isOnTrial;
 
   const dateFmt = (d: string) => new Date(d).toLocaleDateString(lang === 'en' ? 'en-GB' : lang);
 
@@ -73,7 +98,7 @@ export default function Pricing() {
             <div className="flex justify-center -mt-3">
               <Badge className="bg-accent text-accent-foreground text-[10px] gap-1">
                 <Crown className="h-3 w-3" />
-                {subscription.onTrial ? t('pricing.trial_active') : t('pricing.active')}
+                {isOnTrial ? t('pricing.trial_active') : t('pricing.active')}
               </Badge>
             </div>
           )}
@@ -97,16 +122,23 @@ export default function Pricing() {
             {isActive ? (
               <div className="space-y-2">
                 <p className="text-[10px] text-center text-muted-foreground">
-                  {subscription.onTrial && subscription.trialEnd
+                  {isOnTrial && subscription.trialEnd
                     ? `${t('pricing.trial_until')} ${dateFmt(subscription.trialEnd)}`
                     : subscription.subscriptionEnd
                       ? `${t('pricing.renews')} ${dateFmt(subscription.subscriptionEnd)}`
                       : ''}
                 </p>
-                <Button variant="outline" className="w-full h-9 text-xs" onClick={handleManage} disabled={loading}>
-                  {loading && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
-                  {t('pricing.manage')}
-                </Button>
+                {isOnTrial ? (
+                  <Button className="w-full h-10 text-xs font-semibold" onClick={handleSubscribe} disabled={loading}>
+                    {loading && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
+                    {'Abbonati ora'}
+                  </Button>
+                ) : (
+                  <Button variant="outline" className="w-full h-9 text-xs" onClick={handleManage} disabled={loading}>
+                    {loading && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
+                    {t('pricing.manage')}
+                  </Button>
+                )}
                 <Button
                   variant="ghost"
                   size="sm"
@@ -118,11 +150,21 @@ export default function Pricing() {
               </div>
             ) : (
               <div className="space-y-2">
-                <Button className="w-full h-10 text-xs font-semibold" onClick={handleSubscribe} disabled={loading}>
+                {/* Show trial button if user hasn't used trial yet, otherwise show subscribe */}
+                <Button className="w-full h-10 text-xs font-semibold" onClick={handleStartTrial} disabled={loading}>
                   {loading && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
                   {t('pricing.start_trial')}
                 </Button>
                 <p className="text-[10px] text-center text-muted-foreground">{t('pricing.no_charge')}</p>
+                <div className="relative flex items-center py-1">
+                  <div className="flex-grow border-t border-border" />
+                  <span className="mx-3 text-[10px] text-muted-foreground">{'oppure'}</span>
+                  <div className="flex-grow border-t border-border" />
+                </div>
+                <Button variant="outline" className="w-full h-9 text-xs" onClick={handleSubscribe} disabled={loading}>
+                  {loading && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
+                  {'Abbonati subito'}
+                </Button>
               </div>
             )}
           </CardContent>
