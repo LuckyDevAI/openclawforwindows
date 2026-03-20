@@ -3,10 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { useSettings } from '@/contexts/SettingsContext';
 import { supabase } from '@/integrations/supabase/client';
+import logo from '@/assets/logo.jpeg';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Workflow, Check, Loader2, Crown, ArrowLeft } from 'lucide-react';
+import { Check, Loader2, Crown, ArrowLeft } from 'lucide-react';
 import { toast } from 'sonner';
 
 const featureKeys = [
@@ -86,8 +87,8 @@ export default function Pricing() {
     <div className="flex min-h-screen flex-col items-center justify-center bg-background p-4">
       <div className="w-full max-w-md space-y-6">
         <div className="text-center space-y-2">
-          <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/15">
-            <Workflow className="h-7 w-7 text-primary" />
+          <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/15 overflow-hidden">
+            <img src={logo} alt="OpenClaw" className="h-12 w-12 object-contain" />
           </div>
           <h1 className="text-xl font-bold text-foreground tracking-tight">{t('pricing.title')}</h1>
           <p className="text-sm text-muted-foreground">{t('pricing.subtitle')}</p>
