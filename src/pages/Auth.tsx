@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import logo from '@/assets/logo.jpeg';
+import logo from '@/assets/logo.png';
 import { useNavigate } from 'react-router-dom';
 import { lovable } from '@/integrations/lovable';
 import { supabase } from '@/integrations/supabase/client';
