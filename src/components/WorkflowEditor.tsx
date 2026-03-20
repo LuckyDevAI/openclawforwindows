@@ -6,7 +6,9 @@ import {
   Workflow, LogOut, Plus, Trash2, Pencil, Check, X, Square,
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
+import { useSettings } from '@/contexts/SettingsContext';
 import NodePalette from '@/components/NodePalette';
+import SettingsToolbar from '@/components/SettingsToolbar';
 import WorkflowCanvas, { type CanvasHandle } from '@/components/WorkflowCanvas';
 import PropertiesPanel from '@/components/PropertiesPanel';
 import ExecutionLog from '@/components/ExecutionLog';
@@ -36,6 +38,7 @@ import {
 
 export default function WorkflowEditor() {
   const { signOut } = useAuth();
+  const { t } = useSettings();
   const { toast } = useToast();
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [selectedNode, setSelectedNode] = useState<Node | null>(null);
@@ -67,7 +70,7 @@ export default function WorkflowEditor() {
       }
     }
     // No active project — create a new one
-    const newProj = createProject('Progetto senza titolo');
+    const newProj = createProject(t('editor.untitled'));
     setCurrentProject(newProj);
     setProjectName(newProj.name);
   }, []);
@@ -82,7 +85,7 @@ export default function WorkflowEditor() {
     };
     saveProject(updated);
     setCurrentProject(updated);
-    toast({ title: 'Salvato', description: `"${projectName}" salvato con successo.` });
+    toast({ title: t('editor.saved'), description: `"${projectName}"` });
   }, [currentProject, projectName, toast]);
 
   // Sync execution statuses to canvas
@@ -95,7 +98,7 @@ export default function WorkflowEditor() {
     const nodes = canvasRef.current.getNodes();
     const edges = canvasRef.current.getEdges();
     if (nodes.length === 0) {
-      toast({ title: 'Nessun nodo', description: 'Aggiungi almeno un nodo prima di eseguire.', variant: 'destructive' });
+      toast({ title: t('editor.no_nodes'), variant: 'destructive' });
       return;
     }
     setShowLog(true);
@@ -134,7 +137,7 @@ export default function WorkflowEditor() {
     setSelectedNode(null);
     canvasRef.current?.loadState(proj.nodes, proj.edges);
     setOpenDialogOpen(false);
-    toast({ title: 'Aperto', description: `"${proj.name}" caricato.` });
+    toast({ title: t('editor.opened'), description: `"${proj.name}"` });
   };
 
   const handleNewProject = () => {
@@ -147,13 +150,13 @@ export default function WorkflowEditor() {
         edges: canvasRef.current.getEdges(),
       });
     }
-    const newProj = createProject('Nuovo progetto');
+    const newProj = createProject(t('editor.new_project'));
     setCurrentProject(newProj);
     setProjectName(newProj.name);
     setSelectedNode(null);
     canvasRef.current?.loadState([], []);
     setOpenDialogOpen(false);
-    toast({ title: 'Creato', description: 'Nuovo progetto creato.' });
+    toast({ title: t('editor.created') });
   };
 
   const handleDeleteProject = (id: string, e: React.MouseEvent) => {
@@ -181,7 +184,7 @@ export default function WorkflowEditor() {
     renameProject(currentProject.id, renameValue.trim());
     setCurrentProject(prev => prev ? { ...prev, name: renameValue.trim() } : prev);
     setIsRenaming(false);
-    toast({ title: 'Rinominato', description: `Progetto rinominato in "${renameValue.trim()}".` });
+    toast({ title: t('editor.renamed'), description: `"${renameValue.trim()}"` });
   };
 
   const cancelRename = () => setIsRenaming(false);
@@ -257,10 +260,10 @@ export default function WorkflowEditor() {
 
           <div className="flex-1" />
           <Button variant="ghost" size="sm" className="h-8 gap-1.5 text-xs" onClick={handleOpen}>
-            <FolderOpen className="h-3.5 w-3.5" /> Apri
+            <FolderOpen className="h-3.5 w-3.5" /> {t('editor.open')}
           </Button>
           <Button variant="ghost" size="sm" className="h-8 gap-1.5 text-xs" onClick={handleSave}>
-            <Save className="h-3.5 w-3.5" /> Salva
+            <Save className="h-3.5 w-3.5" /> {t('editor.save')}
           </Button>
           <Link to="/admin">
             <Button variant="ghost" size="sm" className="h-8 gap-1.5 text-xs">
@@ -270,13 +273,14 @@ export default function WorkflowEditor() {
           <Separator orientation="vertical" className="h-5" />
           {executing ? (
             <Button size="sm" variant="destructive" className="h-8 gap-1.5 text-xs font-semibold" onClick={stopExecution}>
-              <Square className="h-3.5 w-3.5" /> Ferma
+              <Square className="h-3.5 w-3.5" /> {t('editor.stop')}
             </Button>
           ) : (
             <Button size="sm" className="h-8 gap-1.5 text-xs font-semibold" onClick={handleExecute}>
-              <Play className="h-3.5 w-3.5" /> Esegui
+              <Play className="h-3.5 w-3.5" /> {t('editor.run')}
             </Button>
           )}
+          <SettingsToolbar />
           <Button variant="ghost" size="icon" className="h-8 w-8" onClick={signOut}>
             <LogOut className="h-3.5 w-3.5" />
           </Button>
@@ -295,7 +299,7 @@ export default function WorkflowEditor() {
             <div className="pointer-events-none absolute inset-0 flex items-center justify-center" id="empty-hint">
               <div className="text-center opacity-30">
                 <Workflow className="mx-auto h-12 w-12 text-muted-foreground mb-3" />
-                <p className="text-sm text-muted-foreground">Trascina i nodi dalla sidebar per iniziare</p>
+                <p className="text-sm text-muted-foreground">{t('editor.drag_hint')}</p>
               </div>
             </div>
 
@@ -322,16 +326,16 @@ export default function WorkflowEditor() {
       <Dialog open={openDialogOpen} onOpenChange={setOpenDialogOpen}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle className="text-sm font-bold">Apri progetto</DialogTitle>
+            <DialogTitle className="text-sm font-bold">{t('editor.open_project')}</DialogTitle>
           </DialogHeader>
           <div className="space-y-3">
             <Button variant="outline" size="sm" className="w-full h-9 gap-1.5 text-xs" onClick={handleNewProject}>
-              <Plus className="h-3.5 w-3.5" /> Nuovo progetto
+              <Plus className="h-3.5 w-3.5" /> {t('editor.new_project')}
             </Button>
             <Separator />
             <ScrollArea className="max-h-64">
               {projects.length === 0 ? (
-                <p className="text-xs text-center text-muted-foreground py-4">Nessun progetto salvato</p>
+                <p className="text-xs text-center text-muted-foreground py-4">{t('editor.no_projects')}</p>
               ) : (
                 <div className="space-y-1">
                   {projects.map(proj => (
