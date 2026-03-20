@@ -12,6 +12,7 @@ import Home from "./pages/Home.tsx";
 import Admin from "./pages/Admin.tsx";
 import Auth from "./pages/Auth.tsx";
 import Pricing from "./pages/Pricing.tsx";
+import Install from "./pages/Install.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import TermsOfService from "./pages/legal/TermsOfService.tsx";
 import PrivacyPolicy from "./pages/legal/PrivacyPolicy.tsx";
