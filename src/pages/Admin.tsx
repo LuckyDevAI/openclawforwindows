@@ -338,19 +338,19 @@ export default function Admin() {
                               : '—'}
                           </TableCell>
                           <TableCell className="text-right">
-                            {u.subscription && (
+                            <div className="flex gap-1 justify-end">
                               <Button
                                 variant="outline"
                                 size="sm"
                                 className="h-7 text-[10px] gap-1"
                                 onClick={() => {
                                   setEditingUser(u);
-                                  setNewEndDate(u.subscription!.current_period_end.split('T')[0]);
+                                  setNewEndDate(u.subscription?.current_period_end?.split('T')[0] || new Date().toISOString().split('T')[0]);
                                 }}
                               >
-                                <Calendar className="h-3 w-3" /> Modifica scadenza
+                                <Calendar className="h-3 w-3" /> {u.subscription ? 'Modifica scadenza' : 'Imposta scadenza'}
                               </Button>
-                            )}
+                            </div>
                           </TableCell>
                         </TableRow>
                       ))}
