@@ -270,6 +270,11 @@ const translations: Translations = {
     'settings.language': 'Language',
     'settings.light': 'Light',
     'settings.dark': 'Dark',
+    'footer.terms': 'Terms of Service',
+    'footer.privacy': 'Privacy & GDPR',
+    'footer.eula': 'EULA',
+    'footer.cookies': 'Cookie Policy',
+    'footer.disclaimer': 'OpenClaw is not responsible for misuse of automations created by users. By using the Service you agree to our Terms of Service and Privacy Policy.',
   },
   es: {
     'app.name': 'OpenClaw', 'app.subtitle': 'Constructor de Automatización',
