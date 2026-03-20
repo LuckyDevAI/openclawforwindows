@@ -3,7 +3,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import logo from '@/assets/logo.png';
 import SettingsToolbar from '@/components/SettingsToolbar';
 import { Button } from '@/components/ui/button';
-import { Crown, LogOut, Download } from 'lucide-react';
+import { Crown, LogOut } from 'lucide-react';
 
 export default function Header() {
   const { signOut } = useAuth();
