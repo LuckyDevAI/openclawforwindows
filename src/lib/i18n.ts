@@ -197,6 +197,11 @@ const translations: Translations = {
     'settings.language': 'Lingua',
     'settings.light': 'Chiaro',
     'settings.dark': 'Scuro',
+    'footer.terms': 'Termini di Servizio',
+    'footer.privacy': 'Privacy & GDPR',
+    'footer.eula': 'EULA',
+    'footer.cookies': 'Cookie Policy',
+    'footer.disclaimer': 'OpenClaw non è responsabile per l\'uso improprio delle automazioni create dagli utenti. Utilizzando il servizio accetti i nostri Termini di Servizio e la Privacy Policy.',
   },
   en: {
     'app.name': 'OpenClaw',
