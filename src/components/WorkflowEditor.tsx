@@ -137,7 +137,7 @@ export default function WorkflowEditor() {
     setSelectedNode(null);
     canvasRef.current?.loadState(proj.nodes, proj.edges);
     setOpenDialogOpen(false);
-    toast({ title: 'Aperto', description: `"${proj.name}" caricato.` });
+    toast({ title: t('editor.opened'), description: `"${proj.name}"` });
   };
 
   const handleNewProject = () => {
