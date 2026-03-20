@@ -139,11 +139,51 @@ export default function Install() {
             </div>
 
             <div className="space-y-3">
+              {/* OpenClaw Installer — standalone card */}
+              <Card className="border-primary/40 bg-primary/5">
+                <CardContent className="flex items-start gap-3 py-4 px-4">
+                  <div className="h-9 w-9 rounded-lg bg-primary/15 flex items-center justify-center shrink-0 mt-0.5">
+                    <Download className="h-5 w-5 text-primary" />
+                  </div>
+                  <div className="flex-1 min-w-0 space-y-2">
+                    <div>
+                      <p className="text-sm font-semibold text-foreground">Installer OpenClawForWindows</p>
+                      <p className="text-xs text-muted-foreground mt-0.5">
+                        Scarica l'installer ufficiale o installa via npm. L'installer configura automaticamente la cartella dedicata.
+                      </p>
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      <a
+                        href="https://github.com/openclaw-ai/openclaw/releases/latest"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <Button size="sm" className="h-8 text-xs gap-1.5">
+                          <Download className="h-3.5 w-3.5" /> Scarica .exe
+                          <ExternalLink className="h-3 w-3" />
+                        </Button>
+                      </a>
+                      <a
+                        href="https://www.npmjs.com/package/openclaw"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <Button variant="outline" size="sm" className="h-8 text-xs gap-1.5">
+                          npm install -g openclaw
+                          <ExternalLink className="h-3 w-3" />
+                        </Button>
+                      </a>
+                    </div>
+                    <CopyBlock code="npm install -g openclaw@latest" label="Oppure installa via terminale:" />
+                  </div>
+                </CardContent>
+              </Card>
+
               {[
                 {
                   key: 'node' as const,
                   title: 'Node.js 24 (o 22.16+)',
-                  desc: "Necessario per eseguire OpenClaw. L'installer può installarlo automaticamente.",
+                  desc: "Necessario per eseguire OpenClawForWindows. L'installer può installarlo automaticamente.",
                   link: 'https://nodejs.org/',
                   command: 'node --version',
                 },
