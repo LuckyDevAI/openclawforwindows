@@ -280,6 +280,7 @@ export default function WorkflowEditor() {
               <Play className="h-3.5 w-3.5" /> {t('editor.run')}
             </Button>
           )}
+          <SettingsToolbar />
           <Button variant="ghost" size="icon" className="h-8 w-8" onClick={signOut}>
             <LogOut className="h-3.5 w-3.5" />
           </Button>
