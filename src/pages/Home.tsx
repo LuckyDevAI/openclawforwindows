@@ -16,6 +16,7 @@ import {
   Workflow, Plus, Trash2, Crown, Clock,
   FolderOpen, Pencil, Check, X, Camera, Loader2,
 } from 'lucide-react';
+import OnboardingWizard from '@/components/OnboardingWizard';
 
 export default function Home() {
   const { user, subscription } = useAuth();
@@ -30,6 +31,14 @@ export default function Home() {
   const [nameInput, setNameInput] = useState('');
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const [uploadingAvatar, setUploadingAvatar] = useState(false);
+  const [showOnboarding, setShowOnboarding] = useState(false);
+
+  // Check if onboarding needed
+  useEffect(() => {
+    if (user && !localStorage.getItem(`openclaw_onboarding_${user.id}`)) {
+      setShowOnboarding(true);
+    }
+  }, [user]);
 
   // Load profile
   useEffect(() => {
@@ -131,6 +140,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
+      <OnboardingWizard open={showOnboarding} onComplete={() => setShowOnboarding(false)} />
       <Header />
 
       <main className="flex-1 max-w-4xl mx-auto px-4 py-8 space-y-8">
