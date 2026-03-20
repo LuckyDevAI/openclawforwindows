@@ -3,13 +3,35 @@ import { Link } from 'react-router-dom';
 import { type Node } from '@xyflow/react';
 import {
   Play, Save, FolderOpen, Settings, PanelLeftClose, PanelLeft,
-  Workflow, LogOut, Plus, Trash2, Pencil, Check, X,
+  Workflow, LogOut, Plus, Trash2, Pencil, Check, X, Square,
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import NodePalette from '@/components/NodePalette';
 import WorkflowCanvas, { type CanvasHandle } from '@/components/WorkflowCanvas';
 import PropertiesPanel from '@/components/PropertiesPanel';
+import ExecutionLog from '@/components/ExecutionLog';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Separator } from '@/components/ui/separator';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { useToast } from '@/hooks/use-toast';
+import { useWorkflowExecution } from '@/hooks/useWorkflowExecution';
+import {
+  listProjects,
+  getProject,
+  saveProject,
+  deleteProject,
+  renameProject,
+  createProject,
+  getActiveProjectId,
+  type WorkflowProject,
+} from '@/lib/projectStorage';
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import {
