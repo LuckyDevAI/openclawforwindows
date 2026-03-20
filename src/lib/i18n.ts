@@ -360,6 +360,8 @@ const translations: Translations = {
     'admin.title': 'Admin-Panel', 'admin.dashboard': 'Dashboard', 'admin.workflows': 'Workflows',
     'admin.users': 'Benutzer', 'admin.settings': 'Einstellungen', 'admin.search': 'Suchen...',
     'settings.theme': 'Design', 'settings.language': 'Sprache', 'settings.light': 'Hell', 'settings.dark': 'Dunkel',
+    'footer.terms': 'Nutzungsbedingungen', 'footer.privacy': 'Datenschutz & DSGVO', 'footer.eula': 'EULA', 'footer.cookies': 'Cookie-Richtlinie',
+    'footer.disclaimer': 'OpenClaw ist nicht verantwortlich für den Missbrauch von Automatisierungen, die von Benutzern erstellt werden. Durch die Nutzung des Dienstes akzeptieren Sie unsere Nutzungsbedingungen und Datenschutzrichtlinie.',
   },
   // Remaining languages use English as base with key translations
   pt: { ...null as any },
