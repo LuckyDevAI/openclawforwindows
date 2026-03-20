@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { type Node } from '@xyflow/react';
 import { Play, Save, FolderOpen, Settings, PanelLeftClose, PanelLeft, Workflow } from 'lucide-react';
 import NodePalette from '@/components/NodePalette';
@@ -61,9 +62,11 @@ export default function WorkflowEditor() {
           <Button variant="ghost" size="sm" className="h-8 gap-1.5 text-xs">
             <Save className="h-3.5 w-3.5" /> Salva
           </Button>
-          <Button variant="ghost" size="sm" className="h-8 gap-1.5 text-xs">
-            <Settings className="h-3.5 w-3.5" />
-          </Button>
+          <Link to="/admin">
+            <Button variant="ghost" size="sm" className="h-8 gap-1.5 text-xs">
+              <Settings className="h-3.5 w-3.5" />
+            </Button>
+          </Link>
           <Separator orientation="vertical" className="h-5" />
           <Button size="sm" className="h-8 gap-1.5 text-xs font-semibold">
             <Play className="h-3.5 w-3.5" /> Esegui
