@@ -3,10 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { useSettings } from '@/contexts/SettingsContext';
 import { supabase } from '@/integrations/supabase/client';
+import logo from '@/assets/logo.jpeg';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Workflow, Check, Loader2, Crown, ArrowLeft } from 'lucide-react';
+import { Check, Loader2, Crown, ArrowLeft } from 'lucide-react';
 import { toast } from 'sonner';
 
 const featureKeys = [
