@@ -268,9 +268,15 @@ export default function WorkflowEditor() {
             </Button>
           </Link>
           <Separator orientation="vertical" className="h-5" />
-          <Button size="sm" className="h-8 gap-1.5 text-xs font-semibold">
-            <Play className="h-3.5 w-3.5" /> Esegui
-          </Button>
+          {executing ? (
+            <Button size="sm" variant="destructive" className="h-8 gap-1.5 text-xs font-semibold" onClick={stopExecution}>
+              <Square className="h-3.5 w-3.5" /> Ferma
+            </Button>
+          ) : (
+            <Button size="sm" className="h-8 gap-1.5 text-xs font-semibold" onClick={handleExecute}>
+              <Play className="h-3.5 w-3.5" /> Esegui
+            </Button>
+          )}
           <Button variant="ghost" size="icon" className="h-8 w-8" onClick={signOut}>
             <LogOut className="h-3.5 w-3.5" />
           </Button>
