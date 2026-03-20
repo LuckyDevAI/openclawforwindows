@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
+import Footer from '@/components/Footer';
 import {
   ArrowLeft, BarChart3, Users, Workflow, Settings, Search, Trash2, Copy, Pause, Play,
   Shield, Key, Activity, AlertTriangle, CheckCircle2, Clock, TrendingUp, Zap, Eye,
