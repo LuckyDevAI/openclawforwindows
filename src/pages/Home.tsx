@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { useSettings } from '@/contexts/SettingsContext';
@@ -7,34 +7,40 @@ import { listProjects, deleteProject, type WorkflowProject } from '@/lib/project
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import SettingsToolbar from '@/components/SettingsToolbar';
+import { useToast } from '@/hooks/use-toast';
 import {
   Workflow, Plus, Trash2, LogOut, Crown, Clock,
-  FolderOpen, Pencil, Check, X,
+  FolderOpen, Pencil, Check, X, Camera, Loader2,
 } from 'lucide-react';
 
 export default function Home() {
   const { user, signOut, subscription } = useAuth();
   const { t } = useSettings();
   const navigate = useNavigate();
+  const { toast } = useToast();
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [projects, setProjects] = useState<WorkflowProject[]>([]);
   const [displayName, setDisplayName] = useState('');
   const [editingName, setEditingName] = useState(false);
   const [nameInput, setNameInput] = useState('');
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
+  const [uploadingAvatar, setUploadingAvatar] = useState(false);
 
   // Load profile
   useEffect(() => {
     if (!user) return;
     supabase
       .from('profiles')
-      .select('display_name')
+      .select('display_name, avatar_url')
       .eq('id', user.id)
       .single()
       .then(({ data }) => {
         if (data?.display_name) setDisplayName(data.display_name);
         else setDisplayName(user.email?.split('@')[0] ?? '');
+        if (data?.avatar_url) setAvatarUrl(data.avatar_url);
       });
   }, [user]);
 
@@ -58,6 +64,56 @@ export default function Home() {
       .eq('id', user.id);
     setDisplayName(nameInput.trim());
     setEditingName(false);
+  };
+
+  const handleAvatarUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file || !user) return;
+
+    // Validate file
+    if (!file.type.startsWith('image/')) {
+      toast({ title: 'Errore', description: 'Seleziona un file immagine.', variant: 'destructive' });
+      return;
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      toast({ title: 'Errore', description: 'Immagine troppo grande (max 5MB).', variant: 'destructive' });
+      return;
+    }
+
+    setUploadingAvatar(true);
+    try {
+      const ext = file.name.split('.').pop() || 'jpg';
+      const filePath = `${user.id}/avatar.${ext}`;
+
+      // Upload (upsert to overwrite previous)
+      const { error: uploadError } = await supabase.storage
+        .from('avatars')
+        .upload(filePath, file, { upsert: true, contentType: file.type });
+      if (uploadError) throw uploadError;
+
+      // Get public URL
+      const { data: urlData } = supabase.storage
+        .from('avatars')
+        .getPublicUrl(filePath);
+      
+      const publicUrl = `${urlData.publicUrl}?t=${Date.now()}`;
+
+      // Save to profile
+      await supabase
+        .from('profiles')
+        .update({ avatar_url: publicUrl } as any)
+        .eq('id', user.id);
+
+      setAvatarUrl(publicUrl);
+      toast({ title: '✓', description: 'Avatar aggiornato.' });
+    } catch (err: any) {
+      console.error('Avatar upload error:', err);
+      toast({ title: 'Errore', description: err.message, variant: 'destructive' });
+    } finally {
+      setUploadingAvatar(false);
+      // Reset input so same file can be re-selected
+      if (fileInputRef.current) fileInputRef.current.value = '';
+    }
   };
 
   const handleDelete = (id: string) => {
@@ -94,11 +150,34 @@ export default function Home() {
       <main className="max-w-4xl mx-auto px-4 py-8 space-y-8">
         {/* Profile Section */}
         <section className="flex items-center gap-4">
-          <Avatar className="h-14 w-14 border-2 border-primary/20">
-            <AvatarFallback className="bg-primary/10 text-primary font-bold text-lg">
-              {initials}
-            </AvatarFallback>
-          </Avatar>
+          {/* Avatar with upload overlay */}
+          <div className="relative group">
+            <Avatar className="h-14 w-14 border-2 border-primary/20">
+              {avatarUrl && <AvatarImage src={avatarUrl} alt={displayName} />}
+              <AvatarFallback className="bg-primary/10 text-primary font-bold text-lg">
+                {initials}
+              </AvatarFallback>
+            </Avatar>
+            <button
+              onClick={() => fileInputRef.current?.click()}
+              disabled={uploadingAvatar}
+              className="absolute inset-0 flex items-center justify-center rounded-full bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer disabled:cursor-wait"
+            >
+              {uploadingAvatar ? (
+                <Loader2 className="h-4 w-4 text-white animate-spin" />
+              ) : (
+                <Camera className="h-4 w-4 text-white" />
+              )}
+            </button>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/png,image/jpeg,image/webp,image/gif"
+              className="hidden"
+              onChange={handleAvatarUpload}
+            />
+          </div>
+
           <div className="flex-1 min-w-0">
             {editingName ? (
               <div className="flex items-center gap-2">
