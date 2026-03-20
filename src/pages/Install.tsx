@@ -711,6 +711,110 @@ export default function Install() {
               </CardContent>
             </Card>
 
+            {/* Comparatore Provider AI */}
+            <Card>
+              <CardHeader className="pb-3">
+                <CardTitle className="text-sm">📊 Confronto Provider AI</CardTitle>
+                <CardDescription className="text-xs">Pro, contro e costi a colpo d'occhio</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-0">
+                <div className="overflow-x-auto -mx-2">
+                  <table className="w-full text-[11px] border-collapse">
+                    <thead>
+                      <tr className="border-b border-border">
+                        <th className="text-left py-2 px-2 font-semibold text-foreground">Provider</th>
+                        <th className="text-left py-2 px-2 font-semibold text-foreground">Costo</th>
+                        <th className="text-left py-2 px-2 font-semibold text-green-500">Pro</th>
+                        <th className="text-left py-2 px-2 font-semibold text-destructive">Contro</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {[
+                        {
+                          name: 'OpenAI',
+                          badge: 'Popolare',
+                          badgeVariant: 'default' as const,
+                          cost: 'Da $0.50/1M token',
+                          pros: ['Modelli più avanzati (GPT-4o)', 'Ecosistema maturo', 'Documentazione eccellente'],
+                          cons: ['Costoso per uso intensivo', 'Dati inviati a server USA', 'Rate limit stretti sul free tier'],
+                        },
+                        {
+                          name: 'Qwen (DashScope)',
+                          badge: 'Cina',
+                          badgeVariant: 'secondary' as const,
+                          cost: 'Da ¥0.5/1M token',
+                          pros: ['Ottimo per cinese/multilingue', 'Prezzi competitivi', 'Modelli open-weight'],
+                          cons: ['Server in Cina (latenza)', 'Docs principalmente in cinese', 'Meno integrazioni terze parti'],
+                        },
+                        {
+                          name: 'DeepSeek',
+                          badge: 'Economico',
+                          badgeVariant: 'secondary' as const,
+                          cost: 'Da $0.14/1M token',
+                          pros: ['Prezzo ultra-competitivo', 'Reasoning avanzato (R1)', 'API compatibile OpenAI'],
+                          cons: ['Meno modelli disponibili', 'Server in Cina', 'Uptime meno garantito'],
+                        },
+                        {
+                          name: 'Mistral',
+                          badge: 'EU',
+                          badgeVariant: 'secondary' as const,
+                          cost: 'Da €0.10/1M token',
+                          pros: ['Server in Europa (GDPR)', 'Codestral ottimo per codice', 'Modelli open-source'],
+                          cons: ['Meno potente di GPT-4o', 'Ecosistema più giovane', 'Free tier limitato'],
+                        },
+                        {
+                          name: 'Ollama',
+                          badge: 'Locale',
+                          badgeVariant: 'outline' as const,
+                          cost: 'Gratuito',
+                          pros: ['100% offline e privato', 'Nessun costo ricorrente', 'Nessun rate limit'],
+                          cons: ['Richiede hardware potente', 'Modelli meno avanzati', 'Setup più complesso'],
+                        },
+                      ].map((provider, i) => (
+                        <tr key={provider.name} className={i < 4 ? 'border-b border-border/50' : ''}>
+                          <td className="py-2.5 px-2 align-top">
+                            <span className="font-semibold text-foreground">{provider.name}</span>
+                            <br />
+                            <Badge variant={provider.badgeVariant} className="text-[9px] mt-0.5">{provider.badge}</Badge>
+                          </td>
+                          <td className="py-2.5 px-2 align-top text-muted-foreground font-mono">
+                            {provider.cost}
+                          </td>
+                          <td className="py-2.5 px-2 align-top">
+                            <ul className="space-y-0.5">
+                              {provider.pros.map((p) => (
+                                <li key={p} className="flex items-start gap-1 text-muted-foreground">
+                                  <Check className="h-3 w-3 text-green-500 shrink-0 mt-0.5" />
+                                  <span>{p}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </td>
+                          <td className="py-2.5 px-2 align-top">
+                            <ul className="space-y-0.5">
+                              {provider.cons.map((c) => (
+                                <li key={c} className="flex items-start gap-1 text-muted-foreground">
+                                  <span className="text-destructive shrink-0 mt-0.5">✕</span>
+                                  <span>{c}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                <div className="mt-3 pt-3 border-t border-border">
+                  <p className="text-[10px] text-muted-foreground leading-relaxed">
+                    💡 <strong>Consiglio:</strong> inizia con <strong>Ollama</strong> per testare gratuitamente in locale,
+                    poi passa a <strong>DeepSeek</strong> o <strong>Mistral</strong> per il miglior rapporto qualità/prezzo in produzione.
+                    Usa <strong>OpenAI</strong> solo se ti servono le capacità più avanzate.
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+
             <Card>
               <CardHeader className="pb-3">
                 <CardTitle className="text-sm">Verifica il Gateway</CardTitle>
