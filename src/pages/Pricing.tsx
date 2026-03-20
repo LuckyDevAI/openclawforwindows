@@ -36,7 +36,7 @@ export default function Pricing() {
       }
     } catch (err: any) {
       if (err?.message?.includes('already started')) {
-        toast.error(t('pricing.trial_already') || 'Hai già usato la prova gratuita');
+        toast.error('Hai già usato la prova gratuita');
       } else {
         console.error('Trial error:', err);
         toast.error('Errore nell\'attivazione della prova');
