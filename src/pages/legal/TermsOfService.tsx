@@ -50,7 +50,7 @@ export default function TermsOfService() {
           <p>We reserve the right to modify these Terms at any time. We will notify users of material changes via email or through the Service. Continued use after changes constitutes acceptance.</p>
 
           <h2 className="text-base font-semibold mt-6">11. Contact</h2>
-          <p>For questions about these Terms, contact us at: <span className="text-primary">legal@openclawforwindows.app</span></p>
+          <p>For questions about these Terms, contact us at: <span className="text-primary">legal@openclaw.app</span></p>
         </div>
       </main>
 
