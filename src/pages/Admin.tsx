@@ -555,6 +555,56 @@ export default function Admin() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      {/* Profile edit dialog */}
+      <Dialog open={!!profileDialog} onOpenChange={open => !open && setProfileDialog(null)}>
+        <DialogContent className="sm:max-w-sm">
+          <DialogHeader>
+            <DialogTitle className="text-sm">Modifica profilo</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-3 py-2">
+            <p className="text-xs text-muted-foreground">{profileDialog?.email}</p>
+            <div className="space-y-1.5">
+              <label className="text-xs font-medium">Nome visualizzato</label>
+              <Input
+                value={editDisplayName}
+                onChange={e => setEditDisplayName(e.target.value)}
+                className="h-9 text-xs"
+                placeholder="Nome utente"
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="ghost" size="sm" onClick={() => setProfileDialog(null)}>Annulla</Button>
+            <Button size="sm" onClick={handleUpdateProfile} disabled={saving}>
+              {saving && <Loader2 className="h-3.5 w-3.5 animate-spin mr-1" />}
+              Salva
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Delete user dialog */}
+      <Dialog open={!!deleteDialog} onOpenChange={open => !open && setDeleteDialog(null)}>
+        <DialogContent className="sm:max-w-sm">
+          <DialogHeader>
+            <DialogTitle className="text-sm">Elimina utente</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-3 py-2">
+            <p className="text-xs text-muted-foreground">
+              Sei sicuro di voler eliminare <span className="font-medium text-foreground">{deleteDialog?.display_name || deleteDialog?.email}</span>?
+            </p>
+            <p className="text-[10px] text-destructive">Questa azione è irreversibile. L'utente e tutti i suoi dati verranno eliminati.</p>
+          </div>
+          <DialogFooter>
+            <Button variant="ghost" size="sm" onClick={() => setDeleteDialog(null)}>Annulla</Button>
+            <Button variant="destructive" size="sm" onClick={handleDeleteUser} disabled={saving}>
+              {saving && <Loader2 className="h-3.5 w-3.5 animate-spin mr-1" />}
+              Elimina
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
       <Footer />
     </div>
   );
