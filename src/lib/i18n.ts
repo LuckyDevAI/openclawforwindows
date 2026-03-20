@@ -119,6 +119,12 @@ type TranslationKeys = {
   'settings.language': string;
   'settings.light': string;
   'settings.dark': string;
+  // Footer / Legal
+  'footer.terms': string;
+  'footer.privacy': string;
+  'footer.eula': string;
+  'footer.cookies': string;
+  'footer.disclaimer': string;
 };
 
 type Translations = Record<LangCode, TranslationKeys>;
@@ -191,6 +197,11 @@ const translations: Translations = {
     'settings.language': 'Lingua',
     'settings.light': 'Chiaro',
     'settings.dark': 'Scuro',
+    'footer.terms': 'Termini di Servizio',
+    'footer.privacy': 'Privacy & GDPR',
+    'footer.eula': 'EULA',
+    'footer.cookies': 'Cookie Policy',
+    'footer.disclaimer': 'OpenClaw non è responsabile per l\'uso improprio delle automazioni create dagli utenti. Utilizzando il servizio accetti i nostri Termini di Servizio e la Privacy Policy.',
   },
   en: {
     'app.name': 'OpenClaw',
@@ -259,6 +270,11 @@ const translations: Translations = {
     'settings.language': 'Language',
     'settings.light': 'Light',
     'settings.dark': 'Dark',
+    'footer.terms': 'Terms of Service',
+    'footer.privacy': 'Privacy & GDPR',
+    'footer.eula': 'EULA',
+    'footer.cookies': 'Cookie Policy',
+    'footer.disclaimer': 'OpenClaw is not responsible for misuse of automations created by users. By using the Service you agree to our Terms of Service and Privacy Policy.',
   },
   es: {
     'app.name': 'OpenClaw', 'app.subtitle': 'Constructor de Automatización',
@@ -286,6 +302,8 @@ const translations: Translations = {
     'admin.title': 'Panel Admin', 'admin.dashboard': 'Dashboard', 'admin.workflows': 'Workflows',
     'admin.users': 'Usuarios', 'admin.settings': 'Configuración', 'admin.search': 'Buscar...',
     'settings.theme': 'Tema', 'settings.language': 'Idioma', 'settings.light': 'Claro', 'settings.dark': 'Oscuro',
+    'footer.terms': 'Términos de Servicio', 'footer.privacy': 'Privacidad y GDPR', 'footer.eula': 'EULA', 'footer.cookies': 'Política de Cookies',
+    'footer.disclaimer': 'OpenClaw no es responsable del uso indebido de las automatizaciones creadas por los usuarios. Al usar el Servicio, aceptas nuestros Términos de Servicio y Política de Privacidad.',
   },
   fr: {
     'app.name': 'OpenClaw', 'app.subtitle': "Constructeur d'Automatisation",
@@ -313,6 +331,8 @@ const translations: Translations = {
     'admin.title': 'Panneau Admin', 'admin.dashboard': 'Tableau de bord', 'admin.workflows': 'Workflows',
     'admin.users': 'Utilisateurs', 'admin.settings': 'Paramètres', 'admin.search': 'Rechercher...',
     'settings.theme': 'Thème', 'settings.language': 'Langue', 'settings.light': 'Clair', 'settings.dark': 'Sombre',
+    'footer.terms': 'Conditions d\'utilisation', 'footer.privacy': 'Confidentialité & RGPD', 'footer.eula': 'CLUF', 'footer.cookies': 'Politique de cookies',
+    'footer.disclaimer': 'OpenClaw n\'est pas responsable de l\'utilisation abusive des automatisations créées par les utilisateurs. En utilisant le Service, vous acceptez nos Conditions d\'utilisation et notre Politique de confidentialité.',
   },
   de: {
     'app.name': 'OpenClaw', 'app.subtitle': 'Automatisierungs-Builder',
@@ -340,6 +360,8 @@ const translations: Translations = {
     'admin.title': 'Admin-Panel', 'admin.dashboard': 'Dashboard', 'admin.workflows': 'Workflows',
     'admin.users': 'Benutzer', 'admin.settings': 'Einstellungen', 'admin.search': 'Suchen...',
     'settings.theme': 'Design', 'settings.language': 'Sprache', 'settings.light': 'Hell', 'settings.dark': 'Dunkel',
+    'footer.terms': 'Nutzungsbedingungen', 'footer.privacy': 'Datenschutz & DSGVO', 'footer.eula': 'EULA', 'footer.cookies': 'Cookie-Richtlinie',
+    'footer.disclaimer': 'OpenClaw ist nicht verantwortlich für den Missbrauch von Automatisierungen, die von Benutzern erstellt werden. Durch die Nutzung des Dienstes akzeptieren Sie unsere Nutzungsbedingungen und Datenschutzrichtlinie.',
   },
   // Remaining languages use English as base with key translations
   pt: { ...null as any },

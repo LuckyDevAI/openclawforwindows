@@ -13,6 +13,10 @@ import Admin from "./pages/Admin.tsx";
 import Auth from "./pages/Auth.tsx";
 import Pricing from "./pages/Pricing.tsx";
 import NotFound from "./pages/NotFound.tsx";
+import TermsOfService from "./pages/legal/TermsOfService.tsx";
+import PrivacyPolicy from "./pages/legal/PrivacyPolicy.tsx";
+import EULA from "./pages/legal/EULA.tsx";
+import CookiePolicy from "./pages/legal/CookiePolicy.tsx";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +30,10 @@ const App = () => (
           <AuthProvider>
             <Routes>
               <Route path="/auth" element={<Auth />} />
+              <Route path="/terms" element={<TermsOfService />} />
+              <Route path="/privacy" element={<PrivacyPolicy />} />
+              <Route path="/eula" element={<EULA />} />
+              <Route path="/cookies" element={<CookiePolicy />} />
               <Route path="/pricing" element={<ProtectedRoute><Pricing /></ProtectedRoute>} />
               <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
               <Route path="/" element={<ProtectedRoute><SubscriptionGate><Index /></SubscriptionGate></ProtectedRoute>} />

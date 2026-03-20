@@ -9,6 +9,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import SettingsToolbar from '@/components/SettingsToolbar';
+import Footer from '@/components/Footer';
 import { useToast } from '@/hooks/use-toast';
 import {
   Workflow, Plus, Trash2, LogOut, Crown, Clock,
@@ -128,7 +129,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background flex flex-col">
       {/* Header */}
       <header className="border-b border-border bg-card/60 backdrop-blur-sm sticky top-0 z-30">
         <div className="max-w-4xl mx-auto flex items-center justify-between h-12 px-4">
@@ -148,7 +149,7 @@ export default function Home() {
         </div>
       </header>
 
-      <main className="max-w-4xl mx-auto px-4 py-8 space-y-8">
+      <main className="flex-1 max-w-4xl mx-auto px-4 py-8 space-y-8">
         {/* Profile Section */}
         <section className="flex items-center gap-4">
           {/* Avatar with upload overlay */}
@@ -282,6 +283,8 @@ export default function Home() {
           )}
         </section>
       </main>
+
+      <Footer />
     </div>
   );
 }
