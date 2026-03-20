@@ -156,7 +156,7 @@ export default function WorkflowEditor() {
     setSelectedNode(null);
     canvasRef.current?.loadState([], []);
     setOpenDialogOpen(false);
-    toast({ title: 'Creato', description: 'Nuovo progetto creato.' });
+    toast({ title: t('editor.created') });
   };
 
   const handleDeleteProject = (id: string, e: React.MouseEvent) => {
