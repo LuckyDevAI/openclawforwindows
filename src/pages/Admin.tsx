@@ -197,7 +197,7 @@ export default function Admin() {
   const activeSubCount = users.filter(u => u.subscription && ['active', 'trialing'].includes(u.subscription.status)).length;
 
   return (
-    <div className="flex h-screen flex-col bg-background overflow-hidden">
+    <div className="flex min-h-screen flex-col bg-background">
       {/* Header */}
       <header className="flex h-12 items-center gap-3 border-b border-border bg-card/60 px-4 shrink-0">
         <Link to="/home">
