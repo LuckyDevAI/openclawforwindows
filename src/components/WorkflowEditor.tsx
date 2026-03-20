@@ -70,7 +70,7 @@ export default function WorkflowEditor() {
       }
     }
     // No active project — create a new one
-    const newProj = createProject('Progetto senza titolo');
+    const newProj = createProject(t('editor.untitled'));
     setCurrentProject(newProj);
     setProjectName(newProj.name);
   }, []);
