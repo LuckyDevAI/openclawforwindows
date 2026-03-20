@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useSettings } from '@/contexts/SettingsContext';
-import logo from '@/assets/logo.jpeg';
+import logo from '@/assets/logo.png';
 
 const FOOTER_LINKS = [
   { key: 'footer.terms' as const, path: '/terms' },
