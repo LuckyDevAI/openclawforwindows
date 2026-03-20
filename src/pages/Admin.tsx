@@ -55,6 +55,9 @@ export default function Admin() {
   const [saving, setSaving] = useState(false);
   const [roleDialog, setRoleDialog] = useState<AdminUser | null>(null);
   const [newRole, setNewRole] = useState('');
+  const [profileDialog, setProfileDialog] = useState<AdminUser | null>(null);
+  const [editDisplayName, setEditDisplayName] = useState('');
+  const [deleteDialog, setDeleteDialog] = useState<AdminUser | null>(null);
   const { toast } = useToast();
   const { user } = useAuth();
 
