@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 
 export default function WorkflowEditor() {
+  const { signOut } = useAuth();
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [selectedNode, setSelectedNode] = useState<Node | null>(null);
   const canvasRef = useRef<{ update: (id: string, data: Record<string, unknown>) => void; getNode: (id: string) => Node | undefined } | null>(null);
