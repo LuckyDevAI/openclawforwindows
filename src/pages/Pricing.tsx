@@ -131,7 +131,7 @@ export default function Pricing() {
                 {isOnTrial ? (
                   <Button className="w-full h-10 text-xs font-semibold" onClick={handleSubscribe} disabled={loading}>
                     {loading && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
-                    {t('pricing.subscribe_now') || 'Abbonati ora'}
+                    {'Abbonati ora'}
                   </Button>
                 ) : (
                   <Button variant="outline" className="w-full h-9 text-xs" onClick={handleManage} disabled={loading}>
