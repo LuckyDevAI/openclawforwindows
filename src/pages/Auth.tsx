@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import logo from '@/assets/logo.jpeg';
 import { useNavigate } from 'react-router-dom';
+import { lovable } from '@/integrations/lovable';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
