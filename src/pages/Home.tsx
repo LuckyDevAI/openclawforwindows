@@ -9,6 +9,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import SettingsToolbar from '@/components/SettingsToolbar';
+import Footer from '@/components/Footer';
 import { useToast } from '@/hooks/use-toast';
 import {
   Workflow, Plus, Trash2, LogOut, Crown, Clock,
