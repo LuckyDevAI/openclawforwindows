@@ -269,6 +269,11 @@ export default function WorkflowEditor() {
           <Button variant="ghost" size="sm" className="h-8 gap-1.5 text-xs" onClick={handleSave}>
             <Save className="h-3.5 w-3.5" /> {t('editor.save')}
           </Button>
+          <Link to="/install">
+            <Button variant="ghost" size="sm" className="h-8 gap-1.5 text-xs">
+              <Download className="h-3.5 w-3.5" /> {t('editor.install') || 'Installa'}
+            </Button>
+          </Link>
           <Link to="/admin">
             <Button variant="ghost" size="sm" className="h-8 gap-1.5 text-xs">
               <Settings className="h-3.5 w-3.5" />
