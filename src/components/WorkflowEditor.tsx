@@ -32,6 +32,7 @@ import {
   renameProject,
   createProject,
   getActiveProjectId,
+  migrateLocalProjects,
   type WorkflowProject,
 } from '@/lib/projectStorage';
 
@@ -54,28 +55,30 @@ export default function WorkflowEditor() {
   const [openDialogOpen, setOpenDialogOpen] = useState(false);
   const [projects, setProjects] = useState<WorkflowProject[]>([]);
 
-  // Load last active project on mount
+  // Migrate localStorage and load last active project on mount
   useEffect(() => {
-    const activeId = getActiveProjectId();
-    if (activeId) {
-      const proj = getProject(activeId);
-      if (proj) {
-        setCurrentProject(proj);
-        setProjectName(proj.name);
-        // Defer loading until canvas is ready
-        setTimeout(() => {
-          canvasRef.current?.loadState(proj.nodes, proj.edges);
-        }, 100);
-        return;
+    const init = async () => {
+      await migrateLocalProjects();
+      const activeId = getActiveProjectId();
+      if (activeId) {
+        const proj = await getProject(activeId);
+        if (proj) {
+          setCurrentProject(proj);
+          setProjectName(proj.name);
+          setTimeout(() => {
+            canvasRef.current?.loadState(proj.nodes, proj.edges);
+          }, 100);
+          return;
+        }
       }
-    }
-    // No active project — create a new one
-    const newProj = createProject(t('editor.untitled'));
-    setCurrentProject(newProj);
-    setProjectName(newProj.name);
+      const newProj = await createProject(t('editor.untitled'));
+      setCurrentProject(newProj);
+      setProjectName(newProj.name);
+    };
+    init();
   }, []);
 
-  const handleSave = useCallback(() => {
+  const handleSave = useCallback(async () => {
     if (!currentProject || !canvasRef.current) return;
     const updated: WorkflowProject = {
       ...currentProject,
@@ -83,7 +86,7 @@ export default function WorkflowEditor() {
       nodes: canvasRef.current.getNodes(),
       edges: canvasRef.current.getEdges(),
     };
-    saveProject(updated);
+    await saveProject(updated);
     setCurrentProject(updated);
     toast({ title: t('editor.saved'), description: `"${projectName}"` });
   }, [currentProject, projectName, toast]);
@@ -117,15 +120,16 @@ export default function WorkflowEditor() {
     return () => window.removeEventListener('keydown', handler);
   }, [handleSave]);
 
-  const handleOpen = () => {
-    setProjects(listProjects());
+  const handleOpen = async () => {
+    const all = await listProjects();
+    setProjects(all);
     setOpenDialogOpen(true);
   };
 
-  const handleLoadProject = (proj: WorkflowProject) => {
+  const handleLoadProject = async (proj: WorkflowProject) => {
     // Save current first
     if (currentProject && canvasRef.current) {
-      saveProject({
+      await saveProject({
         ...currentProject,
         name: projectName,
         nodes: canvasRef.current.getNodes(),
@@ -140,17 +144,17 @@ export default function WorkflowEditor() {
     toast({ title: t('editor.opened'), description: `"${proj.name}"` });
   };
 
-  const handleNewProject = () => {
+  const handleNewProject = async () => {
     // Save current first
     if (currentProject && canvasRef.current) {
-      saveProject({
+      await saveProject({
         ...currentProject,
         name: projectName,
         nodes: canvasRef.current.getNodes(),
         edges: canvasRef.current.getEdges(),
       });
     }
-    const newProj = createProject(t('editor.new_project'));
+    const newProj = await createProject(t('editor.new_project'));
     setCurrentProject(newProj);
     setProjectName(newProj.name);
     setSelectedNode(null);
@@ -159,16 +163,16 @@ export default function WorkflowEditor() {
     toast({ title: t('editor.created') });
   };
 
-  const handleDeleteProject = (id: string, e: React.MouseEvent) => {
+  const handleDeleteProject = async (id: string, e: React.MouseEvent) => {
     e.stopPropagation();
-    deleteProject(id);
-    setProjects(listProjects());
+    await deleteProject(id);
+    const remaining = await listProjects();
+    setProjects(remaining);
     if (currentProject?.id === id) {
-      const remaining = listProjects();
       if (remaining.length > 0) {
-        handleLoadProject(remaining[0]);
+        await handleLoadProject(remaining[0]);
       } else {
-        handleNewProject();
+        await handleNewProject();
       }
     }
   };
@@ -178,10 +182,10 @@ export default function WorkflowEditor() {
     setIsRenaming(true);
   };
 
-  const confirmRename = () => {
+  const confirmRename = async () => {
     if (!renameValue.trim() || !currentProject) return;
     setProjectName(renameValue.trim());
-    renameProject(currentProject.id, renameValue.trim());
+    await renameProject(currentProject.id, renameValue.trim());
     setCurrentProject(prev => prev ? { ...prev, name: renameValue.trim() } : prev);
     setIsRenaming(false);
     toast({ title: t('editor.renamed'), description: `"${renameValue.trim()}"` });
