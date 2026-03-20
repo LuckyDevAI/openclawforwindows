@@ -195,8 +195,8 @@ export default function Install() {
                 },
                 {
                   key: 'apiKey' as const,
-                  title: 'API Key (Anthropic, OpenAI, Google, Qwen/DashScope, ecc.)',
-                  desc: "Necessaria per il modello AI. Supporta Anthropic, OpenAI, Google, Qwen (Alibaba Cloud) e altri.",
+                  title: 'API Key (Anthropic, OpenAI, Google, Qwen, DeepSeek, Mistral, ecc.)',
+                  desc: "Necessaria per il modello AI. Supporta Anthropic, OpenAI, Google, Qwen, DeepSeek, Mistral e altri.",
                   link: 'https://docs.openclaw.ai/providers',
                 },
               ].map((item) => (
