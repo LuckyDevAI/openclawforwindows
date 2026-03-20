@@ -1,7 +1,8 @@
 import { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { type Node } from '@xyflow/react';
-import { Play, Save, FolderOpen, Settings, PanelLeftClose, PanelLeft, Workflow } from 'lucide-react';
+import { Play, Save, FolderOpen, Settings, PanelLeftClose, PanelLeft, Workflow, LogOut } from 'lucide-react';
+import { useAuth } from '@/contexts/AuthContext';
 import NodePalette from '@/components/NodePalette';
 import WorkflowCanvas from '@/components/WorkflowCanvas';
 import PropertiesPanel from '@/components/PropertiesPanel';
@@ -9,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 
 export default function WorkflowEditor() {
+  const { signOut } = useAuth();
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [selectedNode, setSelectedNode] = useState<Node | null>(null);
   const canvasRef = useRef<{ update: (id: string, data: Record<string, unknown>) => void; getNode: (id: string) => Node | undefined } | null>(null);
@@ -70,6 +72,9 @@ export default function WorkflowEditor() {
           <Separator orientation="vertical" className="h-5" />
           <Button size="sm" className="h-8 gap-1.5 text-xs font-semibold">
             <Play className="h-3.5 w-3.5" /> Esegui
+          </Button>
+          <Button variant="ghost" size="icon" className="h-8 w-8" onClick={signOut}>
+            <LogOut className="h-3.5 w-3.5" />
           </Button>
         </header>
 
