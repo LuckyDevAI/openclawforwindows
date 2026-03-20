@@ -73,6 +73,9 @@ export default function WorkflowEditor() {
           <Button size="sm" className="h-8 gap-1.5 text-xs font-semibold">
             <Play className="h-3.5 w-3.5" /> Esegui
           </Button>
+          <Button variant="ghost" size="icon" className="h-8 w-8" onClick={signOut}>
+            <LogOut className="h-3.5 w-3.5" />
+          </Button>
         </header>
 
         {/* Canvas + Properties */}
