@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { type Node } from '@xyflow/react';
 import {
   Play, Save, FolderOpen, Settings, PanelLeftClose, PanelLeft,
-  Workflow, LogOut, Plus, Trash2, Pencil, Check, X, Square,
+  Workflow, LogOut, Plus, Trash2, Pencil, Check, X, Square, Download,
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useSettings } from '@/contexts/SettingsContext';
@@ -269,6 +269,11 @@ export default function WorkflowEditor() {
           <Button variant="ghost" size="sm" className="h-8 gap-1.5 text-xs" onClick={handleSave}>
             <Save className="h-3.5 w-3.5" /> {t('editor.save')}
           </Button>
+          <Link to="/install">
+            <Button variant="ghost" size="sm" className="h-8 gap-1.5 text-xs">
+              <Download className="h-3.5 w-3.5" /> Installa
+            </Button>
+          </Link>
           <Link to="/admin">
             <Button variant="ghost" size="sm" className="h-8 gap-1.5 text-xs">
               <Settings className="h-3.5 w-3.5" />
