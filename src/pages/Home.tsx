@@ -13,7 +13,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { useToast } from '@/hooks/use-toast';
 import {
-  Workflow, Plus, Trash2, LogOut, Crown, Clock,
+  Workflow, Plus, Trash2, Crown, Clock,
   FolderOpen, Pencil, Check, X, Camera, Loader2,
 } from 'lucide-react';
 
