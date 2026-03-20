@@ -46,7 +46,7 @@ export default function Home() {
 
   // Load projects
   useEffect(() => {
-    setProjects(listProjects());
+    listProjects().then(setProjects);
   }, []);
 
   const initials = displayName
