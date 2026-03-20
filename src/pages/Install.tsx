@@ -628,6 +628,89 @@ export default function Install() {
               </CardContent>
             </Card>
 
+            {/* Ollama (Locale) */}
+            <Card>
+              <CardHeader className="pb-3">
+                <CardTitle className="text-sm flex items-center gap-2">
+                  Ollama (Locale)
+                  <Badge variant="secondary" className="text-[10px]">Gratuito</Badge>
+                  <Badge variant="outline" className="text-[10px]">Nessuna API Key</Badge>
+                </CardTitle>
+                <CardDescription className="text-xs">
+                  Esegui modelli AI direttamente sul tuo PC, offline e senza costi. Nessun account richiesto.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-2">
+                  <p className="text-xs font-medium text-foreground">1. Scarica e installa Ollama</p>
+                  <p className="text-[11px] text-muted-foreground">
+                    Vai su{' '}
+                    <a href="https://ollama.com/download" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                      ollama.com/download <ExternalLink className="inline h-3 w-3" />
+                    </a>
+                    {' '}e scarica l'installer per Windows. L'installazione è automatica.
+                  </p>
+                </div>
+
+                <div className="space-y-2">
+                  <p className="text-xs font-medium text-foreground">2. Scarica un modello</p>
+                  <CopyBlock code="ollama pull llama3.1" label="Modello consigliato:" />
+                  <CopyBlock code="ollama pull mistral" label="Alternativa leggera:" />
+                  <p className="text-[11px] text-muted-foreground">
+                    Il download del modello può richiedere alcuni minuti a seconda della connessione.
+                  </p>
+                </div>
+
+                <div className="space-y-2">
+                  <p className="text-xs font-medium text-foreground">3. Avvia il server</p>
+                  <CopyBlock code="ollama serve" />
+                  <p className="text-[11px] text-muted-foreground">
+                    Il server sarà disponibile su <code className="text-foreground">http://localhost:11434</code>. Ollama si avvia automaticamente in background dopo l'installazione.
+                  </p>
+                </div>
+
+                <div className="space-y-2">
+                  <p className="text-xs font-medium text-foreground">4. Configura OpenClaw per Ollama</p>
+                  <CopyBlock code='$env:OLLAMA_BASE_URL="http://localhost:11434"' label="PowerShell:" />
+                  <CopyBlock code='set OLLAMA_BASE_URL=http://localhost:11434' label="CMD:" />
+                </div>
+
+                <div className="space-y-2">
+                  <p className="text-xs font-medium text-foreground">5. Testa il modello</p>
+                  <CopyBlock code='ollama run llama3.1 "Ciao, come stai?"' label="Test rapido:" />
+                </div>
+
+                <Separator />
+
+                <div className="space-y-1.5">
+                  <p className="text-xs font-medium text-foreground">Modelli consigliati</p>
+                  <div className="grid grid-cols-2 gap-2">
+                    {[
+                      { name: 'llama3.1', desc: '8B — Ottimo tuttofare' },
+                      { name: 'mistral', desc: '7B — Veloce, multilingua' },
+                      { name: 'codellama', desc: '7B — Ottimizzato codice' },
+                      { name: 'gemma2', desc: '9B — Google, compatto' },
+                    ].map((m) => (
+                      <div key={m.name} className="bg-muted/40 border border-border rounded-md px-2.5 py-2 text-center">
+                        <code className="text-[10px] font-mono text-primary">{m.name}</code>
+                        <p className="text-[10px] text-muted-foreground mt-0.5">{m.desc}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="bg-muted/30 border border-border rounded-md px-3 py-2 space-y-1">
+                  <p className="text-[11px] font-medium text-foreground">💻 Requisiti hardware</p>
+                  <ul className="text-[10px] text-muted-foreground space-y-0.5 list-disc list-inside">
+                    <li>Modelli 7B: almeno 8 GB di RAM</li>
+                    <li>Modelli 13B: almeno 16 GB di RAM</li>
+                    <li>GPU consigliata ma non obbligatoria (NVIDIA con CUDA o AMD con ROCm)</li>
+                    <li>Completamente offline — nessun dato esce dal tuo PC</li>
+                  </ul>
+                </div>
+              </CardContent>
+            </Card>
+
             <Card>
               <CardHeader className="pb-3">
                 <CardTitle className="text-sm">Verifica il Gateway</CardTitle>
