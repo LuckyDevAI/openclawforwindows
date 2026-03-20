@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
+import Footer from '@/components/Footer';
 import {
   ArrowLeft, BarChart3, Users, Workflow, Settings, Search, Trash2, Copy, Pause, Play,
   Shield, Key, Activity, AlertTriangle, CheckCircle2, Clock, TrendingUp, Zap, Eye,
@@ -196,7 +197,7 @@ export default function Admin() {
   const activeSubCount = users.filter(u => u.subscription && ['active', 'trialing'].includes(u.subscription.status)).length;
 
   return (
-    <div className="flex h-screen flex-col bg-background overflow-hidden">
+    <div className="flex min-h-screen flex-col bg-background">
       {/* Header */}
       <header className="flex h-12 items-center gap-3 border-b border-border bg-card/60 px-4 shrink-0">
         <Link to="/home">
@@ -491,6 +492,7 @@ export default function Admin() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+      <Footer />
     </div>
   );
 }

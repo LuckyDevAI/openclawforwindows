@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
-import logo from '@/assets/logo.jpeg';
+
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { useSettings } from '@/contexts/SettingsContext';
@@ -9,16 +9,16 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import SettingsToolbar from '@/components/SettingsToolbar';
+import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { useToast } from '@/hooks/use-toast';
 import {
-  Workflow, Plus, Trash2, LogOut, Crown, Clock,
+  Workflow, Plus, Trash2, Crown, Clock,
   FolderOpen, Pencil, Check, X, Camera, Loader2,
 } from 'lucide-react';
 
 export default function Home() {
-  const { user, signOut, subscription } = useAuth();
+  const { user, subscription } = useAuth();
   const { t } = useSettings();
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -131,24 +131,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      {/* Header */}
-      <header className="border-b border-border bg-card/60 backdrop-blur-sm sticky top-0 z-30">
-        <div className="max-w-4xl mx-auto flex items-center justify-between h-12 px-4">
-          <div className="flex items-center gap-2">
-            <img src={logo} alt="OpenClawForWindows" className="h-6 w-6 rounded-sm object-contain" />
-            <span className="font-bold text-sm text-foreground tracking-tight">OpenClawForWindows</span>
-          </div>
-          <div className="flex items-center gap-1">
-            <SettingsToolbar />
-            <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => navigate('/pricing')}>
-              <Crown className="h-3.5 w-3.5" />
-            </Button>
-            <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground" onClick={signOut}>
-              <LogOut className="h-3.5 w-3.5" />
-            </Button>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       <main className="flex-1 max-w-4xl mx-auto px-4 py-8 space-y-8">
         {/* Profile Section */}
