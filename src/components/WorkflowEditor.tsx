@@ -38,6 +38,7 @@ import {
 
 export default function WorkflowEditor() {
   const { signOut } = useAuth();
+  const { t } = useSettings();
   const { toast } = useToast();
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [selectedNode, setSelectedNode] = useState<Node | null>(null);
