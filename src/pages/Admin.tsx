@@ -411,17 +411,39 @@ export default function Admin() {
                               : '—'}
                           </TableCell>
                           <TableCell className="text-right">
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              className="h-7 text-[10px] gap-1"
-                              onClick={() => {
-                                setRoleDialog(u);
-                                setNewRole(u.roles[0] || 'user');
-                              }}
-                            >
-                              <Shield className="h-3 w-3" /> Cambia ruolo
-                            </Button>
+                            <div className="flex gap-1 justify-end">
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                className="h-7 text-[10px] gap-1"
+                                onClick={() => {
+                                  setProfileDialog(u);
+                                  setEditDisplayName(u.display_name || '');
+                                }}
+                              >
+                                <Pencil className="h-3 w-3" /> Modifica
+                              </Button>
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                className="h-7 text-[10px] gap-1"
+                                onClick={() => {
+                                  setRoleDialog(u);
+                                  setNewRole(u.roles[0] || 'user');
+                                }}
+                              >
+                                <Shield className="h-3 w-3" /> Ruolo
+                              </Button>
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                className="h-7 text-[10px] gap-1 text-destructive hover:text-destructive"
+                                onClick={() => setDeleteDialog(u)}
+                                disabled={u.id === user?.id}
+                              >
+                                <UserX className="h-3 w-3" />
+                              </Button>
+                            </div>
                           </TableCell>
                         </TableRow>
                       ))}
