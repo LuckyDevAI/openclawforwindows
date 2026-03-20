@@ -184,7 +184,7 @@ export default function WorkflowEditor() {
     renameProject(currentProject.id, renameValue.trim());
     setCurrentProject(prev => prev ? { ...prev, name: renameValue.trim() } : prev);
     setIsRenaming(false);
-    toast({ title: 'Rinominato', description: `Progetto rinominato in "${renameValue.trim()}".` });
+    toast({ title: t('editor.renamed'), description: `"${renameValue.trim()}"` });
   };
 
   const cancelRename = () => setIsRenaming(false);
