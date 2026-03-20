@@ -78,7 +78,7 @@ export default function Pricing() {
 
   const isActive = subscription.subscribed;
   const isOnTrial = subscription.onTrial;
-  const trialExpired = !isActive && !isOnTrial;
+  const _trialExpired = !isActive && !isOnTrial;
 
   const dateFmt = (d: string) => new Date(d).toLocaleDateString(lang === 'en' ? 'en-GB' : lang);
 
