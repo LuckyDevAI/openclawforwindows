@@ -301,9 +301,9 @@ export default function WorkflowEditor() {
             />
             {/* Empty state hint */}
             <div className="pointer-events-none absolute inset-0 flex items-center justify-center" id="empty-hint">
-              <div className="text-center opacity-30">
-                <Workflow className="mx-auto h-12 w-12 text-muted-foreground mb-3" />
-                <p className="text-sm text-muted-foreground">{t('editor.drag_hint')}</p>
+              <div className="text-center">
+                <Workflow className="mx-auto h-12 w-12 text-muted-foreground/60 mb-3" />
+                <p className="text-sm text-foreground/70 font-medium">{t('editor.drag_hint')}</p>
               </div>
             </div>
 
