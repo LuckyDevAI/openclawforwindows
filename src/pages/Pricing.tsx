@@ -30,7 +30,7 @@ export default function Pricing() {
       const { data, error } = await supabase.functions.invoke('start-trial');
       if (error) throw error;
       if (data?.success) {
-        toast.success(t('pricing.trial_started') || 'Prova gratuita attivata!');
+        toast.success('Prova gratuita attivata!');
         await checkSubscription();
         navigate('/');
       }
