@@ -163,7 +163,7 @@ export default function Pricing() {
                 </div>
                 <Button variant="outline" className="w-full h-9 text-xs" onClick={handleSubscribe} disabled={loading}>
                   {loading && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
-                  {t('pricing.subscribe_now') || 'Abbonati subito'}
+                  {'Abbonati subito'}
                 </Button>
               </div>
             )}
