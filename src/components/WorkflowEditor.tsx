@@ -335,7 +335,7 @@ export default function WorkflowEditor() {
             <Separator />
             <ScrollArea className="max-h-64">
               {projects.length === 0 ? (
-                <p className="text-xs text-center text-muted-foreground py-4">Nessun progetto salvato</p>
+                <p className="text-xs text-center text-muted-foreground py-4">{t('editor.no_projects')}</p>
               ) : (
                 <div className="space-y-1">
                   {projects.map(proj => (
