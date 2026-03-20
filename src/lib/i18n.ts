@@ -100,10 +100,6 @@ type TranslationKeys = {
   'pricing.trial_active': string;
   'pricing.trial_until': string;
   'pricing.renews': string;
-  'pricing.trial_started': string;
-  'pricing.trial_already': string;
-  'pricing.subscribe_now': string;
-  'pricing.or': string;
   // Features
   'feat.unlimited': string;
   'feat.all_nodes': string;
