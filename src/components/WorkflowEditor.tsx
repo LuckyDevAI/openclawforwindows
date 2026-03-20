@@ -330,7 +330,7 @@ export default function WorkflowEditor() {
           </DialogHeader>
           <div className="space-y-3">
             <Button variant="outline" size="sm" className="w-full h-9 gap-1.5 text-xs" onClick={handleNewProject}>
-              <Plus className="h-3.5 w-3.5" /> Nuovo progetto
+              <Plus className="h-3.5 w-3.5" /> {t('editor.new_project')}
             </Button>
             <Separator />
             <ScrollArea className="max-h-64">
