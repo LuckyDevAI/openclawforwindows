@@ -8,6 +8,7 @@ import { SettingsProvider } from "@/contexts/SettingsContext";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import SubscriptionGate from "@/components/SubscriptionGate";
 import Index from "./pages/Index.tsx";
+import Home from "./pages/Home.tsx";
 import Admin from "./pages/Admin.tsx";
 import Auth from "./pages/Auth.tsx";
 import Pricing from "./pages/Pricing.tsx";
@@ -26,6 +27,7 @@ const App = () => (
             <Routes>
               <Route path="/auth" element={<Auth />} />
               <Route path="/pricing" element={<ProtectedRoute><Pricing /></ProtectedRoute>} />
+              <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
               <Route path="/" element={<ProtectedRoute><SubscriptionGate><Index /></SubscriptionGate></ProtectedRoute>} />
               <Route path="/admin" element={<ProtectedRoute><SubscriptionGate><Admin /></SubscriptionGate></ProtectedRoute>} />
               <Route path="*" element={<NotFound />} />

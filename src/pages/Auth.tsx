@@ -22,7 +22,7 @@ export default function Auth() {
   const { user } = useAuth();
 
   useEffect(() => {
-    if (user) navigate('/', { replace: true });
+    if (user) navigate('/home', { replace: true });
   }, [user, navigate]);
 
   const handleEmail = async (e: React.FormEvent) => {
