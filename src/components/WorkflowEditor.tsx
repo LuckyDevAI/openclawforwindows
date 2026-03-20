@@ -273,7 +273,7 @@ export default function WorkflowEditor() {
           <Separator orientation="vertical" className="h-5" />
           {executing ? (
             <Button size="sm" variant="destructive" className="h-8 gap-1.5 text-xs font-semibold" onClick={stopExecution}>
-              <Square className="h-3.5 w-3.5" /> Ferma
+              <Square className="h-3.5 w-3.5" /> {t('editor.stop')}
             </Button>
           ) : (
             <Button size="sm" className="h-8 gap-1.5 text-xs font-semibold" onClick={handleExecute}>
