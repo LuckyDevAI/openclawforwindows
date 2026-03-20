@@ -85,7 +85,7 @@ export default function WorkflowEditor() {
     };
     saveProject(updated);
     setCurrentProject(updated);
-    toast({ title: 'Salvato', description: `"${projectName}" salvato con successo.` });
+    toast({ title: t('editor.saved'), description: `"${projectName}"` });
   }, [currentProject, projectName, toast]);
 
   // Sync execution statuses to canvas
