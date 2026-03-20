@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
-import { Workflow } from 'lucide-react';
 import { useSettings } from '@/contexts/SettingsContext';
+import logo from '@/assets/logo.jpeg';
 
 const FOOTER_LINKS = [
   { key: 'footer.terms' as const, path: '/terms' },
