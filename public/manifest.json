@@ -1,6 +1,6 @@
 {
-  "name": "OpenClaw — Automation Builder",
-  "short_name": "OpenClaw",
+  "name": "OpenClawForWindows — Automation Builder",
+  "short_name": "OpenClawForWindows",
   "description": "Visual drag & drop automation builder for Windows",
   "start_url": "/",
   "display": "standalone",

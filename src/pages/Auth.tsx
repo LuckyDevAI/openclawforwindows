@@ -72,9 +72,9 @@ export default function Auth() {
         <Card className="w-full max-w-sm border-border bg-card">
           <CardHeader className="text-center pb-4">
             <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-primary/15 overflow-hidden">
-              <img src={logo} alt="OpenClaw" className="h-10 w-10 object-contain" />
+              <img src={logo} alt="OpenClawForWindows" className="h-10 w-10 object-contain" />
             </div>
-            <CardTitle className="text-lg font-bold tracking-tight">OpenClaw</CardTitle>
+            <CardTitle className="text-lg font-bold tracking-tight">OpenClawForWindows</CardTitle>
             <CardDescription className="text-xs">
               {mode === 'login' ? 'Accedi al tuo account' : 'Crea un nuovo account'}
             </CardDescription>

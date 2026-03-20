@@ -67,7 +67,7 @@ function CopyBlock({ code, label }: { code: string; label?: string }) {
 
 export default function Install() {
   const [step, setStep] = useState(0);
-  const [installPath, setInstallPath] = useState('C:\\OpenClaw');
+  const [installPath, setInstallPath] = useState('C:\\OpenClawForWindows');
   const [checks, setChecks] = useState({
     node: false,
     powershell: false,
@@ -147,7 +147,7 @@ export default function Install() {
                   </div>
                   <div className="flex-1 min-w-0 space-y-2">
                     <div>
-                      <p className="text-sm font-semibold text-foreground">Installer OpenClaw</p>
+                      <p className="text-sm font-semibold text-foreground">Installer OpenClawForWindows</p>
                       <p className="text-xs text-muted-foreground mt-0.5">
                         Scarica l'installer ufficiale o installa via npm. L'installer configura automaticamente la cartella dedicata.
                       </p>
@@ -183,7 +183,7 @@ export default function Install() {
                 {
                   key: 'node' as const,
                   title: 'Node.js 24 (o 22.16+)',
-                  desc: "Necessario per eseguire OpenClaw. L'installer può installarlo automaticamente.",
+                  desc: "Necessario per eseguire OpenClawForWindows. L'installer può installarlo automaticamente.",
                   link: 'https://nodejs.org/',
                   command: 'node --version',
                 },
