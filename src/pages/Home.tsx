@@ -16,6 +16,7 @@ import {
   Workflow, Plus, Trash2, Crown, Clock,
   FolderOpen, Pencil, Check, X, Camera, Loader2,
 } from 'lucide-react';
+import OnboardingWizard from '@/components/OnboardingWizard';
 
 export default function Home() {
   const { user, subscription } = useAuth();
