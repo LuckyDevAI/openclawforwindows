@@ -88,10 +88,10 @@ export default function OnboardingWizard({ open, onComplete }: OnboardingWizardP
           {step === 0 && (
             <div className="flex-1 flex flex-col items-center justify-center text-center gap-5 animate-in fade-in slide-in-from-bottom-3 duration-500">
               <div className="h-20 w-20 rounded-2xl overflow-hidden shadow-lg shadow-primary/20">
-                <img src={logo} alt="OpenClawForWindows" className="h-full w-full object-cover" />
+                <img src={logo} alt="OpenClaw" className="h-full w-full object-cover" />
               </div>
               <DialogHeader className="space-y-2">
-                <DialogTitle className="text-xl font-bold">Benvenuto in OpenClawForWindows!</DialogTitle>
+                <DialogTitle className="text-xl font-bold">Benvenuto in OpenClaw!</DialogTitle>
                 <DialogDescription className="text-sm leading-relaxed">
                   Crea workflow di automazione visuale con nodi drag-and-drop.
                   <br />Ti guideremo nella configurazione in pochi secondi.
