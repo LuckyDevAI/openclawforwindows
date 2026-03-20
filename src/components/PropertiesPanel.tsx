@@ -27,8 +27,14 @@ const NODE_FIELDS: Record<string, Field[]> = {
   ],
   'trigger-schedule': [
     { key: 'name', label: 'Nome', type: 'text', placeholder: 'Nome' },
-    { key: 'cron', label: 'Espressione Cron', type: 'text', placeholder: '0 * * * *' },
+    { key: 'scheduleMode', label: 'Modalità', type: 'select', options: ['Orari programmati', 'Espressione Cron', 'All\'avvio del PC'] },
+    { key: 'startTime', label: 'Ora inizio', type: 'text', placeholder: '08:00' },
+    { key: 'endTime', label: 'Ora fine (consigliato)', type: 'text', placeholder: '18:00' },
+    { key: 'interval', label: 'Intervallo (minuti)', type: 'select', options: ['5', '10', '15', '30', '60', '120', '360'] },
+    { key: 'days', label: 'Giorni', type: 'select', options: ['Tutti i giorni', 'Lun-Ven', 'Sab-Dom', 'Personalizzato'] },
+    { key: 'cron', label: 'Espressione Cron (avanzato)', type: 'text', placeholder: '0 * * * *' },
     { key: 'timezone', label: 'Fuso Orario', type: 'select', options: ['UTC', 'Europe/Rome', 'US/Eastern', 'Asia/Tokyo'] },
+    { key: 'runOnStartup', label: 'Esegui all\'avvio del PC', type: 'toggle' },
   ],
   'trigger-webhook': [
     { key: 'name', label: 'Nome', type: 'text', placeholder: 'Nome' },
