@@ -203,7 +203,7 @@ export default function WorkflowEditor() {
   const handleClosePanel = () => setSelectedNode(null);
 
   return (
-    <div className="flex h-screen w-full overflow-hidden bg-background">
+    <div className="flex h-full w-full overflow-hidden bg-background">
       {/* Left Sidebar */}
       <aside
         className={`
