@@ -271,7 +271,7 @@ export default function WorkflowEditor() {
           </Button>
           <Link to="/install">
             <Button variant="ghost" size="sm" className="h-8 gap-1.5 text-xs">
-              <Download className="h-3.5 w-3.5" /> {t('editor.install') || 'Installa'}
+              <Download className="h-3.5 w-3.5" /> Installa
             </Button>
           </Link>
           <Link to="/admin">
