@@ -1,7 +1,8 @@
 import { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { type Node } from '@xyflow/react';
-import { Play, Save, FolderOpen, Settings, PanelLeftClose, PanelLeft, Workflow } from 'lucide-react';
+import { Play, Save, FolderOpen, Settings, PanelLeftClose, PanelLeft, Workflow, LogOut } from 'lucide-react';
+import { useAuth } from '@/contexts/AuthContext';
 import NodePalette from '@/components/NodePalette';
 import WorkflowCanvas from '@/components/WorkflowCanvas';
 import PropertiesPanel from '@/components/PropertiesPanel';
