@@ -2,9 +2,9 @@ import { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import Footer from '@/components/Footer';
 import {
-  ArrowLeft, BarChart3, Users, Workflow, Settings, Search, Trash2, Copy, Pause, Play,
-  Shield, Key, Activity, AlertTriangle, CheckCircle2, Clock, TrendingUp, Zap, Eye,
-  CreditCard, Calendar, Loader2, RefreshCw, Crown,
+  ArrowLeft, BarChart3, Users, Settings, Search, Trash2, Copy,
+  Shield, Key, AlertTriangle, Crown,
+  CreditCard, Calendar, Loader2, RefreshCw, Pencil, UserX,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
