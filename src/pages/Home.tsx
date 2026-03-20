@@ -131,24 +131,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      {/* Header */}
-      <header className="border-b border-border bg-card/60 backdrop-blur-sm sticky top-0 z-30">
-        <div className="max-w-4xl mx-auto flex items-center justify-between h-12 px-4">
-          <div className="flex items-center gap-2">
-            <img src={logo} alt="OpenClawForWindows" className="h-6 w-6 rounded-sm object-contain" />
-            <span className="font-bold text-sm text-foreground tracking-tight">OpenClawForWindows</span>
-          </div>
-          <div className="flex items-center gap-1">
-            <SettingsToolbar />
-            <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => navigate('/pricing')}>
-              <Crown className="h-3.5 w-3.5" />
-            </Button>
-            <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground" onClick={signOut}>
-              <LogOut className="h-3.5 w-3.5" />
-            </Button>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       <main className="flex-1 max-w-4xl mx-auto px-4 py-8 space-y-8">
         {/* Profile Section */}
