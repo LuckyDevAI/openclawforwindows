@@ -326,7 +326,7 @@ export default function WorkflowEditor() {
       <Dialog open={openDialogOpen} onOpenChange={setOpenDialogOpen}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle className="text-sm font-bold">Apri progetto</DialogTitle>
+            <DialogTitle className="text-sm font-bold">{t('editor.open_project')}</DialogTitle>
           </DialogHeader>
           <div className="space-y-3">
             <Button variant="outline" size="sm" className="w-full h-9 gap-1.5 text-xs" onClick={handleNewProject}>
