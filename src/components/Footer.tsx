@@ -14,7 +14,7 @@ export default function Footer() {
 
   return (
     <footer className="border-t border-border bg-card/40 backdrop-blur-sm">
-      <div className="max-w-5xl mx-auto px-4 py-6">
+      <div className="max-w-5xl mx-auto px-4 py-3">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
           {/* Brand */}
           <div className="flex items-center gap-2">
@@ -39,7 +39,7 @@ export default function Footer() {
           </nav>
         </div>
 
-        <p className="mt-4 text-center text-[10px] text-muted-foreground/60 leading-relaxed max-w-lg mx-auto">
+        <p className="mt-2 text-center text-[10px] text-muted-foreground/60 leading-snug max-w-lg mx-auto">
           {t('footer.disclaimer')}
         </p>
       </div>
