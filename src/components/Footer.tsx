@@ -40,6 +40,8 @@ export default function Footer() {
         </div>
 
         <p className="mt-2 text-center text-[10px] text-muted-foreground/60 leading-snug max-w-lg mx-auto">
+          {t('footer.disclaimer')}
+        </p>
       </div>
     </footer>
   );
