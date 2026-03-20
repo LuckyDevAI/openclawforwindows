@@ -149,6 +149,44 @@ export default function Admin() {
     }
   };
 
+  const handleUpdateProfile = async () => {
+    if (!profileDialog) return;
+    setSaving(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('admin-users', {
+        body: { action: 'update-profile', userId: profileDialog.id, displayName: editDisplayName },
+      });
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
+      toast({ title: 'Successo', description: 'Profilo aggiornato' });
+      setProfileDialog(null);
+      loadUsers();
+    } catch (e: any) {
+      toast({ title: 'Errore', description: e.message, variant: 'destructive' });
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleDeleteUser = async () => {
+    if (!deleteDialog) return;
+    setSaving(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('admin-users', {
+        body: { action: 'delete-user', userId: deleteDialog.id },
+      });
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
+      toast({ title: 'Successo', description: 'Utente eliminato' });
+      setDeleteDialog(null);
+      loadUsers();
+    } catch (e: any) {
+      toast({ title: 'Errore', description: e.message, variant: 'destructive' });
+    } finally {
+      setSaving(false);
+    }
+  };
+
   // Not admin — bootstrap screen
   if (isAdmin === false) {
     return (
