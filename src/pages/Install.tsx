@@ -390,8 +390,86 @@ export default function Install() {
               <CardContent className="space-y-3">
                 <CopyBlock code="openclaw onboard --install-daemon" label="Avvia il wizard:" />
                 <p className="text-[11px] text-muted-foreground">
-                  Il wizard chiederà: provider AI (Anthropic, OpenAI, Google…), API key, e configurerà il Gateway automaticamente.
+                  Il wizard chiederà: provider AI (Anthropic, OpenAI, Google, Qwen…), API key, e configurerà il Gateway automaticamente.
                 </p>
+              </CardContent>
+            </Card>
+
+            {/* Qwen / DashScope */}
+            <Card>
+              <CardHeader className="pb-3">
+                <CardTitle className="text-sm flex items-center gap-2">
+                  Qwen (Alibaba Cloud / DashScope)
+                  <Badge variant="secondary" className="text-[10px]">Nuovo</Badge>
+                </CardTitle>
+                <CardDescription className="text-xs">
+                  Configura Qwen3.5 tramite DashScope per usare i modelli Alibaba Cloud.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-2">
+                  <p className="text-xs font-medium text-foreground">1. Crea un account Alibaba Cloud</p>
+                  <p className="text-[11px] text-muted-foreground">
+                    Vai su{' '}
+                    <a href="https://www.alibabacloud.com/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                      Alibaba Cloud <ExternalLink className="inline h-3 w-3" />
+                    </a>
+                    {' '}e registrati. Potrebbe essere richiesta la verifica con numero di telefono o carta di credito.
+                  </p>
+                </div>
+
+                <div className="space-y-2">
+                  <p className="text-xs font-medium text-foreground">2. Ottieni la tua API Key</p>
+                  <p className="text-[11px] text-muted-foreground">
+                    Accedi alla{' '}
+                    <a href="https://dashscope.console.aliyun.com/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                      console DashScope <ExternalLink className="inline h-3 w-3" />
+                    </a>
+                    {' '}→ "API Key Management" → Genera nuova chiave.
+                  </p>
+                </div>
+
+                <div className="space-y-2">
+                  <p className="text-xs font-medium text-foreground">3. Installa l'SDK (opzionale)</p>
+                  <CopyBlock code="pip install dashscope" />
+                </div>
+
+                <div className="space-y-2">
+                  <p className="text-xs font-medium text-foreground">4. Configura come variabile d'ambiente</p>
+                  <CopyBlock code='$env:DASHSCOPE_API_KEY="LA_TUA_API_KEY"' label="PowerShell:" />
+                  <CopyBlock code='set DASHSCOPE_API_KEY=LA_TUA_API_KEY' label="CMD:" />
+                </div>
+
+                <Separator />
+
+                <div className="space-y-1.5">
+                  <p className="text-xs font-medium text-foreground">Modelli disponibili</p>
+                  <div className="grid grid-cols-3 gap-2">
+                    {[
+                      { name: 'qwen-max', desc: 'Compiti complessi' },
+                      { name: 'qwen-plus', desc: 'Bilanciato' },
+                      { name: 'qwen-turbo', desc: 'Veloce ed economico' },
+                    ].map((m) => (
+                      <div key={m.name} className="bg-muted/40 border border-border rounded-md px-2.5 py-2 text-center">
+                        <code className="text-[10px] font-mono text-primary">{m.name}</code>
+                        <p className="text-[10px] text-muted-foreground mt-0.5">{m.desc}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="bg-muted/30 border border-border rounded-md px-3 py-2 space-y-1">
+                  <p className="text-[11px] font-medium text-foreground">⚠️ Note importanti</p>
+                  <ul className="text-[10px] text-muted-foreground space-y-0.5 list-disc list-inside">
+                    <li>Errore <code className="text-foreground">401</code>: API Key non valida o scaduta</li>
+                    <li>Errore <code className="text-foreground">429</code>: Superato il limite di richieste/minuto</li>
+                    <li>
+                      <a href="https://help.aliyun.com/zh/model-studio/developer-reference/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                        Documentazione DashScope <ExternalLink className="inline h-2.5 w-2.5" />
+                      </a>
+                    </li>
+                  </ul>
+                </div>
               </CardContent>
             </Card>
 
