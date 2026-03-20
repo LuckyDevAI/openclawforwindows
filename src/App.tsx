@@ -39,7 +39,7 @@ const App = () => (
               <Route path="/install" element={<ProtectedRoute><Install /></ProtectedRoute>} />
               <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
               <Route path="/" element={<ProtectedRoute><SubscriptionGate><Index /></SubscriptionGate></ProtectedRoute>} />
-              <Route path="/admin" element={<ProtectedRoute><SubscriptionGate><Admin /></SubscriptionGate></ProtectedRoute>} />
+              <Route path="/admin" element={<ProtectedRoute><Admin /></ProtectedRoute>} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </AuthProvider>

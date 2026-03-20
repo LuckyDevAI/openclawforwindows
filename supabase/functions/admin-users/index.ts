@@ -120,6 +120,32 @@ serve(async (req) => {
       });
     }
 
+    if (action === "update-profile") {
+      const { userId: targetUserId, displayName, avatarUrl } = body;
+      if (!targetUserId) throw new Error("userId required");
+      const updates: Record<string, string> = {};
+      if (displayName !== undefined) updates.display_name = displayName;
+      if (avatarUrl !== undefined) updates.avatar_url = avatarUrl;
+      const { error: updErr } = await supabaseAdmin
+        .from("profiles")
+        .update(updates)
+        .eq("id", targetUserId);
+      if (updErr) throw updErr;
+      return new Response(JSON.stringify({ success: true }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    if (action === "delete-user") {
+      const { userId: targetUserId } = body;
+      if (!targetUserId) throw new Error("userId required");
+      const { error: delErr } = await supabaseAdmin.auth.admin.deleteUser(targetUserId);
+      if (delErr) throw delErr;
+      return new Response(JSON.stringify({ success: true }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
     if (action === "set-role") {
       const { userId: targetUserId, role: targetRole } = body;
       if (!targetUserId || !targetRole) throw new Error("userId and role required");

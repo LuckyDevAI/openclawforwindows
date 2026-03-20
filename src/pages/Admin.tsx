@@ -2,9 +2,9 @@ import { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import Footer from '@/components/Footer';
 import {
-  ArrowLeft, BarChart3, Users, Workflow, Settings, Search, Trash2, Copy, Pause, Play,
-  Shield, Key, Activity, AlertTriangle, CheckCircle2, Clock, TrendingUp, Zap, Eye,
-  CreditCard, Calendar, Loader2, RefreshCw, Crown,
+  ArrowLeft, BarChart3, Users, Settings, Search, Trash2, Copy,
+  Shield, Key, AlertTriangle, Crown,
+  CreditCard, Calendar, Loader2, RefreshCw, Pencil, UserX,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -55,6 +55,9 @@ export default function Admin() {
   const [saving, setSaving] = useState(false);
   const [roleDialog, setRoleDialog] = useState<AdminUser | null>(null);
   const [newRole, setNewRole] = useState('');
+  const [profileDialog, setProfileDialog] = useState<AdminUser | null>(null);
+  const [editDisplayName, setEditDisplayName] = useState('');
+  const [deleteDialog, setDeleteDialog] = useState<AdminUser | null>(null);
   const { toast } = useToast();
   const { user } = useAuth();
 
@@ -138,6 +141,44 @@ export default function Admin() {
       if (data?.error) throw new Error(data.error);
       toast({ title: 'Successo', description: 'Ruolo aggiornato' });
       setRoleDialog(null);
+      loadUsers();
+    } catch (e: any) {
+      toast({ title: 'Errore', description: e.message, variant: 'destructive' });
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleUpdateProfile = async () => {
+    if (!profileDialog) return;
+    setSaving(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('admin-users', {
+        body: { action: 'update-profile', userId: profileDialog.id, displayName: editDisplayName },
+      });
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
+      toast({ title: 'Successo', description: 'Profilo aggiornato' });
+      setProfileDialog(null);
+      loadUsers();
+    } catch (e: any) {
+      toast({ title: 'Errore', description: e.message, variant: 'destructive' });
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleDeleteUser = async () => {
+    if (!deleteDialog) return;
+    setSaving(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('admin-users', {
+        body: { action: 'delete-user', userId: deleteDialog.id },
+      });
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
+      toast({ title: 'Successo', description: 'Utente eliminato' });
+      setDeleteDialog(null);
       loadUsers();
     } catch (e: any) {
       toast({ title: 'Errore', description: e.message, variant: 'destructive' });
@@ -297,19 +338,19 @@ export default function Admin() {
                               : '—'}
                           </TableCell>
                           <TableCell className="text-right">
-                            {u.subscription && (
+                            <div className="flex gap-1 justify-end">
                               <Button
                                 variant="outline"
                                 size="sm"
                                 className="h-7 text-[10px] gap-1"
                                 onClick={() => {
                                   setEditingUser(u);
-                                  setNewEndDate(u.subscription!.current_period_end.split('T')[0]);
+                                  setNewEndDate(u.subscription?.current_period_end?.split('T')[0] || new Date().toISOString().split('T')[0]);
                                 }}
                               >
-                                <Calendar className="h-3 w-3" /> Modifica scadenza
+                                <Calendar className="h-3 w-3" /> {u.subscription ? 'Modifica scadenza' : 'Imposta scadenza'}
                               </Button>
-                            )}
+                            </div>
                           </TableCell>
                         </TableRow>
                       ))}
@@ -370,17 +411,39 @@ export default function Admin() {
                               : '—'}
                           </TableCell>
                           <TableCell className="text-right">
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              className="h-7 text-[10px] gap-1"
-                              onClick={() => {
-                                setRoleDialog(u);
-                                setNewRole(u.roles[0] || 'user');
-                              }}
-                            >
-                              <Shield className="h-3 w-3" /> Cambia ruolo
-                            </Button>
+                            <div className="flex gap-1 justify-end">
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                className="h-7 text-[10px] gap-1"
+                                onClick={() => {
+                                  setProfileDialog(u);
+                                  setEditDisplayName(u.display_name || '');
+                                }}
+                              >
+                                <Pencil className="h-3 w-3" /> Modifica
+                              </Button>
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                className="h-7 text-[10px] gap-1"
+                                onClick={() => {
+                                  setRoleDialog(u);
+                                  setNewRole(u.roles[0] || 'user');
+                                }}
+                              >
+                                <Shield className="h-3 w-3" /> Ruolo
+                              </Button>
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                className="h-7 text-[10px] gap-1 text-destructive hover:text-destructive"
+                                onClick={() => setDeleteDialog(u)}
+                                disabled={u.id === user?.id}
+                              >
+                                <UserX className="h-3 w-3" />
+                              </Button>
+                            </div>
                           </TableCell>
                         </TableRow>
                       ))}
@@ -488,6 +551,56 @@ export default function Admin() {
             <Button size="sm" onClick={handleSetRole} disabled={saving}>
               {saving && <Loader2 className="h-3.5 w-3.5 animate-spin mr-1" />}
               Salva
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Profile edit dialog */}
+      <Dialog open={!!profileDialog} onOpenChange={open => !open && setProfileDialog(null)}>
+        <DialogContent className="sm:max-w-sm">
+          <DialogHeader>
+            <DialogTitle className="text-sm">Modifica profilo</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-3 py-2">
+            <p className="text-xs text-muted-foreground">{profileDialog?.email}</p>
+            <div className="space-y-1.5">
+              <label className="text-xs font-medium">Nome visualizzato</label>
+              <Input
+                value={editDisplayName}
+                onChange={e => setEditDisplayName(e.target.value)}
+                className="h-9 text-xs"
+                placeholder="Nome utente"
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="ghost" size="sm" onClick={() => setProfileDialog(null)}>Annulla</Button>
+            <Button size="sm" onClick={handleUpdateProfile} disabled={saving}>
+              {saving && <Loader2 className="h-3.5 w-3.5 animate-spin mr-1" />}
+              Salva
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Delete user dialog */}
+      <Dialog open={!!deleteDialog} onOpenChange={open => !open && setDeleteDialog(null)}>
+        <DialogContent className="sm:max-w-sm">
+          <DialogHeader>
+            <DialogTitle className="text-sm">Elimina utente</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-3 py-2">
+            <p className="text-xs text-muted-foreground">
+              Sei sicuro di voler eliminare <span className="font-medium text-foreground">{deleteDialog?.display_name || deleteDialog?.email}</span>?
+            </p>
+            <p className="text-[10px] text-destructive">Questa azione è irreversibile. L'utente e tutti i suoi dati verranno eliminati.</p>
+          </div>
+          <DialogFooter>
+            <Button variant="ghost" size="sm" onClick={() => setDeleteDialog(null)}>Annulla</Button>
+            <Button variant="destructive" size="sm" onClick={handleDeleteUser} disabled={saving}>
+              {saving && <Loader2 className="h-3.5 w-3.5 animate-spin mr-1" />}
+              Elimina
             </Button>
           </DialogFooter>
         </DialogContent>
