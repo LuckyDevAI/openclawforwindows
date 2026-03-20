@@ -3,12 +3,13 @@ import { Link } from 'react-router-dom';
 import { type Node } from '@xyflow/react';
 import {
   Play, Save, FolderOpen, Settings, PanelLeftClose, PanelLeft,
-  Workflow, LogOut, Plus, Trash2, Pencil, Check, X,
+  Workflow, LogOut, Plus, Trash2, Pencil, Check, X, Square,
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import NodePalette from '@/components/NodePalette';
 import WorkflowCanvas, { type CanvasHandle } from '@/components/WorkflowCanvas';
 import PropertiesPanel from '@/components/PropertiesPanel';
+import ExecutionLog from '@/components/ExecutionLog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
@@ -20,6 +21,7 @@ import {
 } from '@/components/ui/dialog';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useToast } from '@/hooks/use-toast';
+import { useWorkflowExecution } from '@/hooks/useWorkflowExecution';
 import {
   listProjects,
   getProject,
@@ -31,12 +33,15 @@ import {
   type WorkflowProject,
 } from '@/lib/projectStorage';
 
+
 export default function WorkflowEditor() {
   const { signOut } = useAuth();
   const { toast } = useToast();
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [selectedNode, setSelectedNode] = useState<Node | null>(null);
   const canvasRef = useRef<CanvasHandle>(null);
+  const { executing, nodeStatuses, execLog, runWorkflow, stopExecution } = useWorkflowExecution();
+  const [showLog, setShowLog] = useState(false);
 
   // Project state
   const [currentProject, setCurrentProject] = useState<WorkflowProject | null>(null);
@@ -79,6 +84,23 @@ export default function WorkflowEditor() {
     setCurrentProject(updated);
     toast({ title: 'Salvato', description: `"${projectName}" salvato con successo.` });
   }, [currentProject, projectName, toast]);
+
+  // Sync execution statuses to canvas
+  useEffect(() => {
+    canvasRef.current?.setExecStatuses(nodeStatuses);
+  }, [nodeStatuses]);
+
+  const handleExecute = useCallback(async () => {
+    if (!canvasRef.current) return;
+    const nodes = canvasRef.current.getNodes();
+    const edges = canvasRef.current.getEdges();
+    if (nodes.length === 0) {
+      toast({ title: 'Nessun nodo', description: 'Aggiungi almeno un nodo prima di eseguire.', variant: 'destructive' });
+      return;
+    }
+    setShowLog(true);
+    await runWorkflow(nodes, edges);
+  }, [runWorkflow, toast]);
 
   // Keyboard shortcut Ctrl+S
   useEffect(() => {
@@ -246,9 +268,15 @@ export default function WorkflowEditor() {
             </Button>
           </Link>
           <Separator orientation="vertical" className="h-5" />
-          <Button size="sm" className="h-8 gap-1.5 text-xs font-semibold">
-            <Play className="h-3.5 w-3.5" /> Esegui
-          </Button>
+          {executing ? (
+            <Button size="sm" variant="destructive" className="h-8 gap-1.5 text-xs font-semibold" onClick={stopExecution}>
+              <Square className="h-3.5 w-3.5" /> Ferma
+            </Button>
+          ) : (
+            <Button size="sm" className="h-8 gap-1.5 text-xs font-semibold" onClick={handleExecute}>
+              <Play className="h-3.5 w-3.5" /> Esegui
+            </Button>
+          )}
           <Button variant="ghost" size="icon" className="h-8 w-8" onClick={signOut}>
             <LogOut className="h-3.5 w-3.5" />
           </Button>
@@ -270,6 +298,15 @@ export default function WorkflowEditor() {
                 <p className="text-sm text-muted-foreground">Trascina i nodi dalla sidebar per iniziare</p>
               </div>
             </div>
+
+            {/* Execution Log */}
+            {showLog && (
+              <ExecutionLog
+                log={execLog}
+                executing={executing}
+                onClose={() => setShowLog(false)}
+              />
+            )}
           </main>
 
           {/* Right Properties Panel */}

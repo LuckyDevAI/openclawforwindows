@@ -15,6 +15,7 @@ import {
 import '@xyflow/react/dist/style.css';
 
 import { nodeTypes } from './WorkflowNode';
+import type { NodeExecStatus } from '@/hooks/useWorkflowExecution';
 
 let nodeId = 0;
 const getId = () => `node_${++nodeId}`;
@@ -25,6 +26,7 @@ export interface CanvasHandle {
   getNodes: () => Node[];
   getEdges: () => Edge[];
   loadState: (nodes: Node[], edges: Edge[]) => void;
+  setExecStatuses: (statuses: Record<string, NodeExecStatus>) => void;
 }
 
 interface Props {
@@ -52,12 +54,17 @@ const WorkflowCanvas = forwardRef<CanvasHandle, Props>(({ selectedNodeId, onNode
     loadState: (newNodes, newEdges) => {
       setNodes(newNodes);
       setEdges(newEdges);
-      // Reset nodeId counter to avoid collisions
       const maxId = newNodes.reduce((max, n) => {
         const num = parseInt(n.id.replace('node_', ''), 10);
         return isNaN(num) ? max : Math.max(max, num);
       }, 0);
       nodeId = maxId;
+    },
+    setExecStatuses: (statuses) => {
+      setNodes(nds => nds.map(n => ({
+        ...n,
+        data: { ...n.data, execStatus: statuses[n.id] || 'idle' },
+      })));
     },
   }));
 
