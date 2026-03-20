@@ -473,6 +473,161 @@ export default function Install() {
               </CardContent>
             </Card>
 
+            {/* DeepSeek */}
+            <Card>
+              <CardHeader className="pb-3">
+                <CardTitle className="text-sm flex items-center gap-2">
+                  DeepSeek
+                  <Badge variant="secondary" className="text-[10px]">Alternativo</Badge>
+                </CardTitle>
+                <CardDescription className="text-xs">
+                  Modelli AI open-weight ad alte prestazioni da DeepSeek. Ottimo rapporto qualità/prezzo.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-2">
+                  <p className="text-xs font-medium text-foreground">1. Crea un account DeepSeek</p>
+                  <p className="text-[11px] text-muted-foreground">
+                    Vai su{' '}
+                    <a href="https://platform.deepseek.com/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                      DeepSeek Platform <ExternalLink className="inline h-3 w-3" />
+                    </a>
+                    {' '}e registrati. Ricarica il credito per iniziare.
+                  </p>
+                </div>
+
+                <div className="space-y-2">
+                  <p className="text-xs font-medium text-foreground">2. Genera la tua API Key</p>
+                  <p className="text-[11px] text-muted-foreground">
+                    Dalla dashboard vai su{' '}
+                    <a href="https://platform.deepseek.com/api_keys" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                      API Keys <ExternalLink className="inline h-3 w-3" />
+                    </a>
+                    {' '}→ "Create new secret key".
+                  </p>
+                </div>
+
+                <div className="space-y-2">
+                  <p className="text-xs font-medium text-foreground">3. Configura come variabile d'ambiente</p>
+                  <CopyBlock code='$env:DEEPSEEK_API_KEY="LA_TUA_API_KEY"' label="PowerShell:" />
+                  <CopyBlock code='set DEEPSEEK_API_KEY=LA_TUA_API_KEY' label="CMD:" />
+                </div>
+
+                <div className="space-y-2">
+                  <p className="text-xs font-medium text-foreground">4. Endpoint API (compatibile OpenAI)</p>
+                  <CopyBlock code="https://api.deepseek.com/v1/chat/completions" label="Base URL:" />
+                  <p className="text-[11px] text-muted-foreground">
+                    DeepSeek usa un'API compatibile con il formato OpenAI. Puoi usare qualsiasi client OpenAI cambiando solo la base URL.
+                  </p>
+                </div>
+
+                <Separator />
+
+                <div className="space-y-1.5">
+                  <p className="text-xs font-medium text-foreground">Modelli disponibili</p>
+                  <div className="grid grid-cols-3 gap-2">
+                    {[
+                      { name: 'deepseek-chat', desc: 'Chat generale (V3)' },
+                      { name: 'deepseek-reasoner', desc: 'Ragionamento (R1)' },
+                      { name: 'deepseek-coder', desc: 'Generazione codice' },
+                    ].map((m) => (
+                      <div key={m.name} className="bg-muted/40 border border-border rounded-md px-2.5 py-2 text-center">
+                        <code className="text-[10px] font-mono text-primary">{m.name}</code>
+                        <p className="text-[10px] text-muted-foreground mt-0.5">{m.desc}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="bg-muted/30 border border-border rounded-md px-3 py-2 space-y-1">
+                  <p className="text-[11px] font-medium text-foreground">💡 Suggerimento</p>
+                  <p className="text-[10px] text-muted-foreground">
+                    DeepSeek R1 eccelle nel ragionamento matematico e logico. Usa <code className="text-foreground">deepseek-chat</code> per uso generale e <code className="text-foreground">deepseek-reasoner</code> per problemi complessi.
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Mistral */}
+            <Card>
+              <CardHeader className="pb-3">
+                <CardTitle className="text-sm flex items-center gap-2">
+                  Mistral AI
+                  <Badge variant="secondary" className="text-[10px]">Alternativo</Badge>
+                </CardTitle>
+                <CardDescription className="text-xs">
+                  Modelli AI europei ad alte prestazioni. Eccellenti per multilingua e codice.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-2">
+                  <p className="text-xs font-medium text-foreground">1. Crea un account Mistral</p>
+                  <p className="text-[11px] text-muted-foreground">
+                    Vai su{' '}
+                    <a href="https://console.mistral.ai/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                      Mistral Console <ExternalLink className="inline h-3 w-3" />
+                    </a>
+                    {' '}e registrati. Attiva un piano a consumo o prova gratuita.
+                  </p>
+                </div>
+
+                <div className="space-y-2">
+                  <p className="text-xs font-medium text-foreground">2. Genera la tua API Key</p>
+                  <p className="text-[11px] text-muted-foreground">
+                    Dalla console vai su{' '}
+                    <a href="https://console.mistral.ai/api-keys/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                      API Keys <ExternalLink className="inline h-3 w-3" />
+                    </a>
+                    {' '}→ "Create new key".
+                  </p>
+                </div>
+
+                <div className="space-y-2">
+                  <p className="text-xs font-medium text-foreground">3. Installa il client (opzionale)</p>
+                  <CopyBlock code="pip install mistralai" />
+                </div>
+
+                <div className="space-y-2">
+                  <p className="text-xs font-medium text-foreground">4. Configura come variabile d'ambiente</p>
+                  <CopyBlock code='$env:MISTRAL_API_KEY="LA_TUA_API_KEY"' label="PowerShell:" />
+                  <CopyBlock code='set MISTRAL_API_KEY=LA_TUA_API_KEY' label="CMD:" />
+                </div>
+
+                <div className="space-y-2">
+                  <p className="text-xs font-medium text-foreground">5. Endpoint API</p>
+                  <CopyBlock code="https://api.mistral.ai/v1/chat/completions" label="Base URL:" />
+                </div>
+
+                <Separator />
+
+                <div className="space-y-1.5">
+                  <p className="text-xs font-medium text-foreground">Modelli disponibili</p>
+                  <div className="grid grid-cols-2 gap-2">
+                    {[
+                      { name: 'mistral-large', desc: 'Massime prestazioni' },
+                      { name: 'mistral-medium', desc: 'Bilanciato' },
+                      { name: 'mistral-small', desc: 'Veloce ed economico' },
+                      { name: 'codestral', desc: 'Ottimizzato per codice' },
+                    ].map((m) => (
+                      <div key={m.name} className="bg-muted/40 border border-border rounded-md px-2.5 py-2 text-center">
+                        <code className="text-[10px] font-mono text-primary">{m.name}</code>
+                        <p className="text-[10px] text-muted-foreground mt-0.5">{m.desc}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="bg-muted/30 border border-border rounded-md px-3 py-2 space-y-1">
+                  <p className="text-[11px] font-medium text-foreground">🇪🇺 Vantaggi Mistral</p>
+                  <ul className="text-[10px] text-muted-foreground space-y-0.5 list-disc list-inside">
+                    <li>Hosting EU — conformità GDPR nativa</li>
+                    <li><code className="text-foreground">codestral</code> è tra i migliori per generazione di codice</li>
+                    <li>Eccellente supporto multilingua (italiano, francese, tedesco, ecc.)</li>
+                  </ul>
+                </div>
+              </CardContent>
+            </Card>
+
             <Card>
               <CardHeader className="pb-3">
                 <CardTitle className="text-sm">Verifica il Gateway</CardTitle>
