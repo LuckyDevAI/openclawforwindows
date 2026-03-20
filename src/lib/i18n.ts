@@ -303,7 +303,7 @@ const translations: Translations = {
     'admin.users': 'Usuarios', 'admin.settings': 'Configuración', 'admin.search': 'Buscar...',
     'settings.theme': 'Tema', 'settings.language': 'Idioma', 'settings.light': 'Claro', 'settings.dark': 'Oscuro',
     'footer.terms': 'Términos de Servicio', 'footer.privacy': 'Privacidad y GDPR', 'footer.eula': 'EULA', 'footer.cookies': 'Política de Cookies',
-    'footer.disclaimer': 'OpenClaw no es responsable del uso indebido de las automatizaciones creadas por los usuarios. Al usar el Servicio, aceptas nuestros Términos de Servicio y Política de Privacidad.',
+    'footer.disclaimer': 'OpenClawForWindows no es responsable del uso indebido de las automatizaciones creadas por los usuarios. Al usar el Servicio, aceptas nuestros Términos de Servicio y Política de Privacidad.',
   },
   fr: {
     'app.name': 'OpenClawForWindows', 'app.subtitle': "Constructeur d'Automatisation",
@@ -332,7 +332,7 @@ const translations: Translations = {
     'admin.users': 'Utilisateurs', 'admin.settings': 'Paramètres', 'admin.search': 'Rechercher...',
     'settings.theme': 'Thème', 'settings.language': 'Langue', 'settings.light': 'Clair', 'settings.dark': 'Sombre',
     'footer.terms': 'Conditions d\'utilisation', 'footer.privacy': 'Confidentialité & RGPD', 'footer.eula': 'CLUF', 'footer.cookies': 'Politique de cookies',
-    'footer.disclaimer': 'OpenClaw n\'est pas responsable de l\'utilisation abusive des automatisations créées par les utilisateurs. En utilisant le Service, vous acceptez nos Conditions d\'utilisation et notre Politique de confidentialité.',
+    'footer.disclaimer': 'OpenClawForWindows n\'est pas responsable de l\'utilisation abusive des automatisations créées par les utilisateurs. En utilisant le Service, vous acceptez nos Conditions d\'utilisation et notre Politique de confidentialité.',
   },
   de: {
     'app.name': 'OpenClawForWindows', 'app.subtitle': 'Automatisierungs-Builder',
@@ -361,7 +361,7 @@ const translations: Translations = {
     'admin.users': 'Benutzer', 'admin.settings': 'Einstellungen', 'admin.search': 'Suchen...',
     'settings.theme': 'Design', 'settings.language': 'Sprache', 'settings.light': 'Hell', 'settings.dark': 'Dunkel',
     'footer.terms': 'Nutzungsbedingungen', 'footer.privacy': 'Datenschutz & DSGVO', 'footer.eula': 'EULA', 'footer.cookies': 'Cookie-Richtlinie',
-    'footer.disclaimer': 'OpenClaw ist nicht verantwortlich für den Missbrauch von Automatisierungen, die von Benutzern erstellt werden. Durch die Nutzung des Dienstes akzeptieren Sie unsere Nutzungsbedingungen und Datenschutzrichtlinie.',
+    'footer.disclaimer': 'OpenClawForWindows ist nicht verantwortlich für den Missbrauch von Automatisierungen, die von Benutzern erstellt werden. Durch die Nutzung des Dienstes akzeptieren Sie unsere Nutzungsbedingungen und Datenschutzrichtlinie.',
   },
   // Remaining languages use English as base with key translations
   pt: { ...null as any },
