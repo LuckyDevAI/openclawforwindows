@@ -135,8 +135,8 @@ export default function Home() {
       <header className="border-b border-border bg-card/60 backdrop-blur-sm sticky top-0 z-30">
         <div className="max-w-4xl mx-auto flex items-center justify-between h-12 px-4">
           <div className="flex items-center gap-2">
-            <Workflow className="h-5 w-5 text-primary" />
-            <span className="font-bold text-sm text-foreground tracking-tight">OpenClaw</span>
+            <img src={logo} alt="OpenClawForWindows" className="h-6 w-6 rounded-sm object-contain" />
+            <span className="font-bold text-sm text-foreground tracking-tight">OpenClawForWindows</span>
           </div>
           <div className="flex items-center gap-1">
             <SettingsToolbar />
