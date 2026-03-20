@@ -87,8 +87,8 @@ export default function Pricing() {
     <div className="flex min-h-screen flex-col items-center justify-center bg-background p-4">
       <div className="w-full max-w-md space-y-6">
         <div className="text-center space-y-2">
-          <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/15 overflow-hidden">
-            <img src={logo} alt="OpenClaw" className="h-12 w-12 object-contain" />
+          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl overflow-hidden">
+            <img src={logo} alt="OpenClaw" className="h-16 w-16 object-cover" />
           </div>
           <h1 className="text-xl font-bold text-foreground tracking-tight">{t('pricing.title')}</h1>
           <p className="text-sm text-muted-foreground">{t('pricing.subtitle')}</p>
