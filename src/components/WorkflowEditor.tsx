@@ -40,6 +40,8 @@ export default function WorkflowEditor() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [selectedNode, setSelectedNode] = useState<Node | null>(null);
   const canvasRef = useRef<CanvasHandle>(null);
+  const { executing, nodeStatuses, execLog, runWorkflow, stopExecution } = useWorkflowExecution();
+  const [showLog, setShowLog] = useState(false);
 
   // Project state
   const [currentProject, setCurrentProject] = useState<WorkflowProject | null>(null);
