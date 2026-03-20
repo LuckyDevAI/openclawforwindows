@@ -1,4 +1,5 @@
 import type { Node, Edge } from '@xyflow/react';
+import { supabase } from '@/integrations/supabase/client';
 
 export interface WorkflowProject {
   id: string;
@@ -9,61 +10,142 @@ export interface WorkflowProject {
   updatedAt: string;
 }
 
-const STORAGE_KEY = 'openclaw_projects';
 const ACTIVE_KEY = 'openclaw_active_project';
+const LEGACY_KEY = 'openclaw_projects';
 
-function getAll(): WorkflowProject[] {
+// ─── Helpers ───────────────────────────────────────────────
+
+function getUserId(): string | null {
+  // Sync read from localStorage (supabase stores session there)
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? JSON.parse(raw) : [];
-  } catch {
+    const raw = localStorage.getItem(`sb-${import.meta.env.VITE_SUPABASE_PROJECT_ID}-auth-token`);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      return parsed?.user?.id ?? null;
+    }
+  } catch { /* ignore */ }
+  return null;
+}
+
+function rowToProject(row: any): WorkflowProject {
+  return {
+    id: row.id,
+    name: row.name,
+    nodes: (row.nodes ?? []) as Node[],
+    edges: (row.edges ?? []) as Edge[],
+    createdAt: row.created_at,
+    updatedAt: row.updated_at,
+  };
+}
+
+// ─── Migration from localStorage ───────────────────────────
+
+export async function migrateLocalProjects(): Promise<void> {
+  const raw = localStorage.getItem(LEGACY_KEY);
+  if (!raw) return;
+
+  const userId = getUserId();
+  if (!userId) return;
+
+  try {
+    const locals: WorkflowProject[] = JSON.parse(raw);
+    if (!Array.isArray(locals) || locals.length === 0) {
+      localStorage.removeItem(LEGACY_KEY);
+      return;
+    }
+
+    // Upsert all local projects to cloud
+    const rows = locals.map(p => ({
+      id: p.id,
+      user_id: userId,
+      name: p.name,
+      nodes: p.nodes as any,
+      edges: p.edges as any,
+      created_at: p.createdAt,
+      updated_at: p.updatedAt,
+    }));
+
+    const { error } = await supabase
+      .from('workflows')
+      .upsert(rows as any, { onConflict: 'id,user_id' });
+
+    if (!error) {
+      localStorage.removeItem(LEGACY_KEY);
+      console.log(`[OpenClaw] Migrated ${locals.length} workflows to cloud`);
+    }
+  } catch (e) {
+    console.error('[OpenClaw] Migration error:', e);
+  }
+}
+
+// ─── CRUD ──────────────────────────────────────────────────
+
+export async function listProjects(): Promise<WorkflowProject[]> {
+  const { data, error } = await supabase
+    .from('workflows')
+    .select('*')
+    .order('updated_at', { ascending: false });
+
+  if (error) {
+    console.error('listProjects error:', error);
     return [];
   }
+  return (data ?? []).map(rowToProject);
 }
 
-function saveAll(projects: WorkflowProject[]) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(projects));
+export async function getProject(id: string): Promise<WorkflowProject | undefined> {
+  const { data, error } = await supabase
+    .from('workflows')
+    .select('*')
+    .eq('id', id)
+    .maybeSingle();
+
+  if (error || !data) return undefined;
+  return rowToProject(data);
 }
 
-export function listProjects(): WorkflowProject[] {
-  return getAll().sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
-}
+export async function saveProject(project: WorkflowProject): Promise<void> {
+  const userId = getUserId();
+  if (!userId) return;
 
-export function getProject(id: string): WorkflowProject | undefined {
-  return getAll().find(p => p.id === id);
-}
+  const { error } = await supabase
+    .from('workflows')
+    .upsert({
+      id: project.id,
+      user_id: userId,
+      name: project.name,
+      nodes: project.nodes as any,
+      edges: project.edges as any,
+      created_at: project.createdAt,
+      updated_at: new Date().toISOString(),
+    } as any, { onConflict: 'id,user_id' });
 
-export function saveProject(project: WorkflowProject): void {
-  const all = getAll();
-  const idx = all.findIndex(p => p.id === project.id);
-  project.updatedAt = new Date().toISOString();
-  if (idx >= 0) {
-    all[idx] = project;
-  } else {
-    all.push(project);
-  }
-  saveAll(all);
+  if (error) console.error('saveProject error:', error);
   setActiveProjectId(project.id);
 }
 
-export function deleteProject(id: string): void {
-  saveAll(getAll().filter(p => p.id !== id));
+export async function deleteProject(id: string): Promise<void> {
+  const { error } = await supabase
+    .from('workflows')
+    .delete()
+    .eq('id', id);
+
+  if (error) console.error('deleteProject error:', error);
   if (getActiveProjectId() === id) {
     localStorage.removeItem(ACTIVE_KEY);
   }
 }
 
-export function renameProject(id: string, name: string): void {
-  const all = getAll();
-  const project = all.find(p => p.id === id);
-  if (project) {
-    project.name = name;
-    project.updatedAt = new Date().toISOString();
-    saveAll(all);
-  }
+export async function renameProject(id: string, name: string): Promise<void> {
+  const { error } = await supabase
+    .from('workflows')
+    .update({ name, updated_at: new Date().toISOString() } as any)
+    .eq('id', id);
+
+  if (error) console.error('renameProject error:', error);
 }
 
-export function createProject(name: string): WorkflowProject {
+export async function createProject(name: string): Promise<WorkflowProject> {
   const now = new Date().toISOString();
   const project: WorkflowProject = {
     id: `proj_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`,
@@ -73,7 +155,7 @@ export function createProject(name: string): WorkflowProject {
     createdAt: now,
     updatedAt: now,
   };
-  saveProject(project);
+  await saveProject(project);
   return project;
 }
 

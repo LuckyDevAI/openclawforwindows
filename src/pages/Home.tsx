@@ -46,7 +46,7 @@ export default function Home() {
 
   // Load projects
   useEffect(() => {
-    setProjects(listProjects());
+    listProjects().then(setProjects);
   }, []);
 
   const initials = displayName
@@ -116,9 +116,10 @@ export default function Home() {
     }
   };
 
-  const handleDelete = (id: string) => {
-    deleteProject(id);
-    setProjects(listProjects());
+  const handleDelete = async (id: string) => {
+    await deleteProject(id);
+    const updated = await listProjects();
+    setProjects(updated);
   };
 
   const handleOpenProject = (id: string) => {
