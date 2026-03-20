@@ -119,6 +119,12 @@ type TranslationKeys = {
   'settings.language': string;
   'settings.light': string;
   'settings.dark': string;
+  // Footer / Legal
+  'footer.terms': string;
+  'footer.privacy': string;
+  'footer.eula': string;
+  'footer.cookies': string;
+  'footer.disclaimer': string;
 };
 
 type Translations = Record<LangCode, TranslationKeys>;
