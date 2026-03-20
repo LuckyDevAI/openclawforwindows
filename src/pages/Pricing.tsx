@@ -158,7 +158,7 @@ export default function Pricing() {
                 <p className="text-[10px] text-center text-muted-foreground">{t('pricing.no_charge')}</p>
                 <div className="relative flex items-center py-1">
                   <div className="flex-grow border-t border-border" />
-                  <span className="mx-3 text-[10px] text-muted-foreground">{t('pricing.or') || 'oppure'}</span>
+                  <span className="mx-3 text-[10px] text-muted-foreground">{'oppure'}</span>
                   <div className="flex-grow border-t border-border" />
                 </div>
                 <Button variant="outline" className="w-full h-9 text-xs" onClick={handleSubscribe} disabled={loading}>
