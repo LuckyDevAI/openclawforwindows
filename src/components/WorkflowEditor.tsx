@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { type Node } from '@xyflow/react';
 import {
   Play, Save, FolderOpen, Settings, PanelLeftClose, PanelLeft,
-  Workflow, LogOut, Plus, Trash2, Pencil, Check, X, Square,
+  Workflow, LogOut, Plus, Trash2, Pencil, Check, X, Square, Download,
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useSettings } from '@/contexts/SettingsContext';
