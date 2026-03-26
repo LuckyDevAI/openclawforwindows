@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
@@ -30,6 +32,7 @@ import { useToast } from '@/hooks/use-toast';
 interface AgentInstallWizardProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  onAgentAdded?: () => void;
 }
 
 const PROVIDERS = [
@@ -145,16 +148,19 @@ function CopyBlock({ code, label }: { code: string; label?: string }) {
   );
 }
 
-export default function AgentInstallWizard({ open, onOpenChange }: AgentInstallWizardProps) {
+export default function AgentInstallWizard({ open, onOpenChange, onAgentAdded }: AgentInstallWizardProps) {
   const [step, setStep] = useState(0);
   const [selectedProvider, setSelectedProvider] = useState<typeof PROVIDERS[0] | null>(null);
   const [apiKey, setApiKey] = useState('');
+  const [agentName, setAgentName] = useState('');
+  const { user } = useAuth();
   const { toast } = useToast();
 
   const reset = () => {
     setStep(0);
     setSelectedProvider(null);
     setApiKey('');
+    setAgentName('');
   };
 
   const handleClose = () => {
@@ -165,6 +171,7 @@ export default function AgentInstallWizard({ open, onOpenChange }: AgentInstallW
   const handleSelectProvider = (provider: typeof PROVIDERS[0]) => {
     setSelectedProvider(provider);
     setApiKey('');
+    setAgentName('');
     setStep(1);
   };
 
@@ -172,11 +179,21 @@ export default function AgentInstallWizard({ open, onOpenChange }: AgentInstallW
     setStep(2);
   };
 
-  const handleFinish = () => {
+  const handleFinish = async () => {
+    if (!selectedProvider || !user) return;
+    // Save agent to database
+    const hint = apiKey ? `${apiKey.slice(0, 6)}...${apiKey.slice(-4)}` : null;
+    await supabase.from('agents').insert({
+      user_id: user.id,
+      provider: selectedProvider.id,
+      name: agentName.trim() || selectedProvider.name,
+      api_key_hint: hint,
+    });
     toast({
       title: '✓ Agente configurato',
-      description: `${selectedProvider?.name} è pronto per l'uso nei tuoi workflow.`,
+      description: `${agentName || selectedProvider.name} è pronto per l'uso nei tuoi workflow.`,
     });
+    onAgentAdded?.();
     handleClose();
   };
 
