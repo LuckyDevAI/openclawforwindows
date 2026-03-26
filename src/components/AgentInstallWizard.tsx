@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
@@ -30,6 +32,7 @@ import { useToast } from '@/hooks/use-toast';
 interface AgentInstallWizardProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  onAgentAdded?: () => void;
 }
 
 const PROVIDERS = [
@@ -145,16 +148,19 @@ function CopyBlock({ code, label }: { code: string; label?: string }) {
   );
 }
 
-export default function AgentInstallWizard({ open, onOpenChange }: AgentInstallWizardProps) {
+export default function AgentInstallWizard({ open, onOpenChange, onAgentAdded }: AgentInstallWizardProps) {
   const [step, setStep] = useState(0);
   const [selectedProvider, setSelectedProvider] = useState<typeof PROVIDERS[0] | null>(null);
   const [apiKey, setApiKey] = useState('');
+  const [agentName, setAgentName] = useState('');
+  const { user } = useAuth();
   const { toast } = useToast();
 
   const reset = () => {
     setStep(0);
     setSelectedProvider(null);
     setApiKey('');
+    setAgentName('');
   };
 
   const handleClose = () => {
@@ -165,6 +171,7 @@ export default function AgentInstallWizard({ open, onOpenChange }: AgentInstallW
   const handleSelectProvider = (provider: typeof PROVIDERS[0]) => {
     setSelectedProvider(provider);
     setApiKey('');
+    setAgentName('');
     setStep(1);
   };
 
@@ -172,11 +179,21 @@ export default function AgentInstallWizard({ open, onOpenChange }: AgentInstallW
     setStep(2);
   };
 
-  const handleFinish = () => {
+  const handleFinish = async () => {
+    if (!selectedProvider || !user) return;
+    // Save agent to database
+    const hint = apiKey ? `${apiKey.slice(0, 6)}...${apiKey.slice(-4)}` : null;
+    await supabase.from('agents').insert({
+      user_id: user.id,
+      provider: selectedProvider.id,
+      name: agentName.trim() || selectedProvider.name,
+      api_key_hint: hint,
+    });
     toast({
       title: '✓ Agente configurato',
-      description: `${selectedProvider?.name} è pronto per l'uso nei tuoi workflow.`,
+      description: `${agentName || selectedProvider.name} è pronto per l'uso nei tuoi workflow.`,
     });
+    onAgentAdded?.();
     handleClose();
   };
 
@@ -348,28 +365,36 @@ export default function AgentInstallWizard({ open, onOpenChange }: AgentInstallW
               <DialogHeader className="space-y-2">
                 <DialogTitle className="text-base font-bold">Agente pronto!</DialogTitle>
                 <DialogDescription className="text-sm leading-relaxed">
-                  <strong>{selectedProvider.name}</strong> è stato configurato con successo.
-                  <br />Ora puoi usarlo nei tuoi workflow di automazione.
+                  Dai un nome al tuo agente e salvalo.
                 </DialogDescription>
               </DialogHeader>
 
+              <Input
+                value={agentName}
+                onChange={(e) => setAgentName(e.target.value)}
+                placeholder={selectedProvider.name}
+                className="max-w-[260px] text-center text-sm"
+                autoFocus
+              />
+
               <CopyBlock
-                code={`openclaw agent add --provider ${selectedProvider.id} --name "Il mio agente"`}
+                code={`openclaw agent add --provider ${selectedProvider.id} --name "${agentName || selectedProvider.name}"`}
                 label="Aggiungi l'agente al progetto:"
               />
 
               <div className="flex flex-col gap-2 w-full max-w-[280px]">
                 <Button className="w-full gap-2 text-xs" onClick={handleFinish}>
-                  <Rocket className="h-4 w-4" /> Chiudi e inizia
+                  <Rocket className="h-4 w-4" /> Salva agente
                 </Button>
                 <Button
                   variant="outline"
                   className="w-full text-xs"
-                  onClick={() => {
-                    reset();
+                  onClick={async () => {
+                    await handleFinish();
+                    setTimeout(reset, 300);
                   }}
                 >
-                  Aggiungi un altro agente
+                  Salva e aggiungi un altro
                 </Button>
               </div>
             </div>

@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import OnboardingWizard from '@/components/OnboardingWizard';
 import AgentInstallWizard from '@/components/AgentInstallWizard';
+import AgentList, { type Agent } from '@/components/AgentList';
 
 export default function Home() {
   const { user, subscription } = useAuth();
@@ -34,6 +35,17 @@ export default function Home() {
   const [uploadingAvatar, setUploadingAvatar] = useState(false);
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [showAgentWizard, setShowAgentWizard] = useState(false);
+  const [agents, setAgents] = useState<Agent[]>([]);
+
+  const loadAgents = async () => {
+    if (!user) return;
+    const { data } = await supabase
+      .from('agents')
+      .select('*')
+      .eq('user_id', user.id)
+      .order('created_at', { ascending: false });
+    if (data) setAgents(data as unknown as Agent[]);
+  };
 
   // Check if onboarding needed
   useEffect(() => {
@@ -57,10 +69,11 @@ export default function Home() {
       });
   }, [user]);
 
-  // Load projects
+  // Load projects & agents
   useEffect(() => {
     listProjects().then(setProjects);
-  }, []);
+    loadAgents();
+  }, [user]);
 
   const initials = displayName
     .split(' ')
@@ -143,7 +156,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <OnboardingWizard open={showOnboarding} onComplete={() => setShowOnboarding(false)} />
-      <AgentInstallWizard open={showAgentWizard} onOpenChange={setShowAgentWizard} />
+      <AgentInstallWizard open={showAgentWizard} onOpenChange={setShowAgentWizard} onAgentAdded={loadAgents} />
       <Header />
 
       <main className="flex-1 max-w-4xl mx-auto px-4 py-8 space-y-8">
@@ -218,29 +231,38 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Agents */}
+        <section className="space-y-4">
+          <div className="flex items-center justify-between">
+            <h2 className="text-sm font-semibold text-foreground flex items-center gap-2">
+              <Bot className="h-4 w-4 text-primary" />
+              Agenti configurati
+            </h2>
+            <Button
+              size="sm"
+              variant="outline"
+              className="h-8 text-xs gap-1.5"
+              onClick={() => setShowAgentWizard(true)}
+            >
+              <Plus className="h-3.5 w-3.5" />
+              Nuovo agente
+            </Button>
+          </div>
+          <AgentList agents={agents} onRefresh={loadAgents} />
+        </section>
+
         {/* Workflow Projects */}
         <section className="space-y-4">
           <div className="flex items-center justify-between">
             <h2 className="text-sm font-semibold text-foreground">{t('admin.workflows')}</h2>
-            <div className="flex items-center gap-2">
-              <Button
-                size="sm"
-                variant="outline"
-                className="h-8 text-xs gap-1.5"
-                onClick={() => setShowAgentWizard(true)}
-              >
-                <Bot className="h-3.5 w-3.5" />
-                Nuovo agente
-              </Button>
-              <Button
-                size="sm"
-                className="h-8 text-xs gap-1.5"
-                onClick={() => navigate('/')}
-              >
-                <Plus className="h-3.5 w-3.5" />
-                {t('editor.new_project')}
-              </Button>
-            </div>
+            <Button
+              size="sm"
+              className="h-8 text-xs gap-1.5"
+              onClick={() => navigate('/')}
+            >
+              <Plus className="h-3.5 w-3.5" />
+              {t('editor.new_project')}
+            </Button>
           </div>
 
           {projects.length === 0 ? (
