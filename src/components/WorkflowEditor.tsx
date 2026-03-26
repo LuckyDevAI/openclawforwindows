@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { type Node } from '@xyflow/react';
 import {
   Play, Save, FolderOpen, Settings, PanelLeftClose, PanelLeft,
-  Workflow, LogOut, Plus, Trash2, Pencil, Check, X, Square, Download,
+  Workflow, LogOut, Plus, Trash2, Pencil, Check, X, Square, Download, Bot,
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useSettings } from '@/contexts/SettingsContext';
@@ -12,6 +12,7 @@ import SettingsToolbar from '@/components/SettingsToolbar';
 import WorkflowCanvas, { type CanvasHandle } from '@/components/WorkflowCanvas';
 import PropertiesPanel from '@/components/PropertiesPanel';
 import ExecutionLog from '@/components/ExecutionLog';
+import AgentInstallWizard from '@/components/AgentInstallWizard';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
@@ -46,6 +47,7 @@ export default function WorkflowEditor() {
   const canvasRef = useRef<CanvasHandle>(null);
   const { executing, nodeStatuses, execLog, runWorkflow, stopExecution } = useWorkflowExecution();
   const [showLog, setShowLog] = useState(false);
+  const [showAgentWizard, setShowAgentWizard] = useState(false);
 
   // Project state
   const [currentProject, setCurrentProject] = useState<WorkflowProject | null>(null);
@@ -274,6 +276,9 @@ export default function WorkflowEditor() {
               <Download className="h-3.5 w-3.5" /> Installa
             </Button>
           </Link>
+          <Button variant="ghost" size="sm" className="h-8 gap-1.5 text-xs" onClick={() => setShowAgentWizard(true)}>
+            <Bot className="h-3.5 w-3.5" /> Agente
+          </Button>
           <Link to="/admin">
             <Button variant="ghost" size="sm" className="h-8 gap-1.5 text-xs">
               <Settings className="h-3.5 w-3.5" />
@@ -377,6 +382,7 @@ export default function WorkflowEditor() {
           </div>
         </DialogContent>
       </Dialog>
+      <AgentInstallWizard open={showAgentWizard} onOpenChange={setShowAgentWizard} />
     </div>
   );
 }
