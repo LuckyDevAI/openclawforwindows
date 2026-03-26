@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useAuth } from '@/contexts/AuthContext';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
@@ -68,6 +69,7 @@ function CopyBlock({ code, label }: { code: string; label?: string }) {
 export default function Install() {
   const [step, setStep] = useState(0);
   const [installPath, setInstallPath] = useState('C:\\OpenClawForWindows');
+  const { user } = useAuth();
   const [checks, setChecks] = useState({
     node: false,
     powershell: false,
@@ -1054,8 +1056,11 @@ export default function Install() {
               <Button variant="outline" onClick={() => setStep(0)} className="gap-2 text-xs">
                 <ArrowLeft className="h-4 w-4" /> Rivedi installazione
               </Button>
-              <Button onClick={() => window.location.href = '/'} className="gap-2 text-xs">
-                Vai all'editor <ArrowRight className="h-4 w-4" />
+              <Button onClick={() => {
+                if (user) localStorage.setItem(`openclaw_install_${user.id}`, 'done');
+                window.location.href = '/home';
+              }} className="gap-2 text-xs">
+                Vai alla dashboard <ArrowRight className="h-4 w-4" />
               </Button>
             </div>
           </div>
