@@ -14,9 +14,10 @@ import Footer from '@/components/Footer';
 import { useToast } from '@/hooks/use-toast';
 import {
   Workflow, Plus, Trash2, Crown, Clock,
-  FolderOpen, Pencil, Check, X, Camera, Loader2,
+  FolderOpen, Pencil, Check, X, Camera, Loader2, Bot,
 } from 'lucide-react';
 import OnboardingWizard from '@/components/OnboardingWizard';
+import AgentInstallWizard from '@/components/AgentInstallWizard';
 
 export default function Home() {
   const { user, subscription } = useAuth();
@@ -32,6 +33,7 @@ export default function Home() {
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const [uploadingAvatar, setUploadingAvatar] = useState(false);
   const [showOnboarding, setShowOnboarding] = useState(false);
+  const [showAgentWizard, setShowAgentWizard] = useState(false);
 
   // Check if onboarding needed
   useEffect(() => {
@@ -141,6 +143,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <OnboardingWizard open={showOnboarding} onComplete={() => setShowOnboarding(false)} />
+      <AgentInstallWizard open={showAgentWizard} onOpenChange={setShowAgentWizard} />
       <Header />
 
       <main className="flex-1 max-w-4xl mx-auto px-4 py-8 space-y-8">
@@ -219,14 +222,25 @@ export default function Home() {
         <section className="space-y-4">
           <div className="flex items-center justify-between">
             <h2 className="text-sm font-semibold text-foreground">{t('admin.workflows')}</h2>
-            <Button
-              size="sm"
-              className="h-8 text-xs gap-1.5"
-              onClick={() => navigate('/')}
-            >
-              <Plus className="h-3.5 w-3.5" />
-              {t('editor.new_project')}
-            </Button>
+            <div className="flex items-center gap-2">
+              <Button
+                size="sm"
+                variant="outline"
+                className="h-8 text-xs gap-1.5"
+                onClick={() => setShowAgentWizard(true)}
+              >
+                <Bot className="h-3.5 w-3.5" />
+                Nuovo agente
+              </Button>
+              <Button
+                size="sm"
+                className="h-8 text-xs gap-1.5"
+                onClick={() => navigate('/')}
+              >
+                <Plus className="h-3.5 w-3.5" />
+                {t('editor.new_project')}
+              </Button>
+            </div>
           </div>
 
           {projects.length === 0 ? (

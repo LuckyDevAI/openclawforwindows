@@ -382,6 +382,7 @@ export default function WorkflowEditor() {
           </div>
         </DialogContent>
       </Dialog>
+      <AgentInstallWizard open={showAgentWizard} onOpenChange={setShowAgentWizard} />
     </div>
   );
 }
