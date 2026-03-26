@@ -13,6 +13,7 @@ const logStep = (step: string, details?: any) => {
 };
 
 const TRIAL_DAYS = 10;
+const LIFETIME_PRODUCT_ID = "prod_UDo3mzdfWpDlzz";
 
 serve(async (req) => {
   if (req.method === "OPTIONS") {
@@ -59,7 +60,7 @@ serve(async (req) => {
       logStep("Local trial check", { trialStart: trialStart.toISOString(), trialEnd: localTrialEnd, active: localTrialActive });
     }
 
-    // 2) Check Stripe subscription
+    // 2) Check Stripe
     const stripe = new Stripe(stripeKey, { apiVersion: "2025-08-27.basil" });
     const customers = await stripe.customers.list({ email: user.email, limit: 1 });
 
@@ -67,11 +68,14 @@ serve(async (req) => {
     let stripeOnTrial = false;
     let subscriptionEnd: string | null = null;
     let stripeTrialEnd: string | null = null;
+    let isLifetime = false;
+    let plan: string | null = null;
 
     if (customers.data.length > 0) {
       const customerId = customers.data[0].id;
       logStep("Found customer", { customerId });
 
+      // Check active/trialing subscriptions
       const subscriptions = await stripe.subscriptions.list({
         customer: customerId,
         status: "active",
@@ -87,6 +91,7 @@ serve(async (req) => {
       if (allSubs.length > 0) {
         const sub = allSubs[0];
         stripeSub = true;
+        plan = "annual";
         subscriptionEnd = new Date(sub.current_period_end * 1000).toISOString();
         stripeOnTrial = sub.status === "trialing";
         if (sub.trial_end) {
@@ -94,9 +99,39 @@ serve(async (req) => {
         }
         logStep("Stripe subscription found", { status: sub.status });
       }
+
+      // Check for lifetime one-time purchase
+      const payments = await stripe.paymentIntents.list({
+        customer: customerId,
+        limit: 50,
+      });
+
+      for (const pi of payments.data) {
+        if (pi.status === "succeeded") {
+          // Check if this payment was for the lifetime product
+          const sessions = await stripe.checkout.sessions.list({
+            payment_intent: pi.id,
+            limit: 1,
+          });
+          for (const session of sessions.data) {
+            const lineItems = await stripe.checkout.sessions.listLineItems(session.id);
+            for (const item of lineItems.data) {
+              if (item.price?.product === LIFETIME_PRODUCT_ID) {
+                isLifetime = true;
+                stripeSub = true;
+                plan = "lifetime";
+                logStep("Lifetime purchase found", { paymentIntent: pi.id });
+                break;
+              }
+            }
+            if (isLifetime) break;
+          }
+          if (isLifetime) break;
+        }
+      }
     }
 
-    // User is subscribed if either Stripe sub OR local trial is active
+    // User is subscribed if Stripe sub/lifetime OR local trial is active
     const subscribed = stripeSub || localTrialActive;
     const onTrial = localTrialActive && !stripeSub;
 
@@ -105,6 +140,8 @@ serve(async (req) => {
       on_trial: onTrial || stripeOnTrial,
       subscription_end: subscriptionEnd,
       trial_end: onTrial ? localTrialEnd : stripeTrialEnd,
+      is_lifetime: isLifetime,
+      plan,
     }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
       status: 200,

@@ -7,6 +7,17 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
+const PLANS = {
+  annual: {
+    price_id: "price_1TFMS9CRiYFDB9U60PVsyVk1",
+    mode: "subscription" as const,
+  },
+  lifetime: {
+    price_id: "price_1TFMROCRiYFDB9U6RHZfzNlz",
+    mode: "payment" as const,
+  },
+};
+
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -24,6 +35,19 @@ serve(async (req) => {
     const user = data.user;
     if (!user?.email) throw new Error("User not authenticated or email not available");
 
+    // Get plan from request body
+    let plan = "annual";
+    try {
+      const body = await req.json();
+      if (body?.plan && PLANS[body.plan as keyof typeof PLANS]) {
+        plan = body.plan;
+      }
+    } catch {
+      // default to annual
+    }
+
+    const selectedPlan = PLANS[plan as keyof typeof PLANS];
+
     const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY") || "", {
       apiVersion: "2025-08-27.basil",
     });
@@ -34,22 +58,21 @@ serve(async (req) => {
       customerId = customers.data[0].id;
     }
 
-    const session = await stripe.checkout.sessions.create({
+    const sessionParams: any = {
       customer: customerId,
       customer_email: customerId ? undefined : user.email,
-      line_items: [
-        {
-          price: "price_1TD6BKCRiYFDB9U6YlXuytS6",
-          quantity: 1,
-        },
-      ],
-      mode: "subscription",
-      subscription_data: {
-        trial_period_days: 10,
-      },
+      line_items: [{ price: selectedPlan.price_id, quantity: 1 }],
+      mode: selectedPlan.mode,
       success_url: `${req.headers.get("origin")}/`,
       cancel_url: `${req.headers.get("origin")}/pricing`,
-    });
+    };
+
+    // Add trial only for subscription mode
+    if (selectedPlan.mode === "subscription") {
+      sessionParams.subscription_data = { trial_period_days: 10 };
+    }
+
+    const session = await stripe.checkout.sessions.create(sessionParams);
 
     return new Response(JSON.stringify({ url: session.url }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
