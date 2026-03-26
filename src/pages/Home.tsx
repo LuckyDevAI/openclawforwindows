@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import OnboardingWizard from '@/components/OnboardingWizard';
 import AgentInstallWizard from '@/components/AgentInstallWizard';
+import AgentList, { type Agent } from '@/components/AgentList';
 
 export default function Home() {
   const { user, subscription } = useAuth();
@@ -34,6 +35,17 @@ export default function Home() {
   const [uploadingAvatar, setUploadingAvatar] = useState(false);
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [showAgentWizard, setShowAgentWizard] = useState(false);
+  const [agents, setAgents] = useState<Agent[]>([]);
+
+  const loadAgents = async () => {
+    if (!user) return;
+    const { data } = await supabase
+      .from('agents')
+      .select('*')
+      .eq('user_id', user.id)
+      .order('created_at', { ascending: false });
+    if (data) setAgents(data as unknown as Agent[]);
+  };
 
   // Check if onboarding needed
   useEffect(() => {
@@ -57,10 +69,11 @@ export default function Home() {
       });
   }, [user]);
 
-  // Load projects
+  // Load projects & agents
   useEffect(() => {
     listProjects().then(setProjects);
-  }, []);
+    loadAgents();
+  }, [user]);
 
   const initials = displayName
     .split(' ')
