@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -1057,8 +1056,11 @@ export default function Install() {
               <Button variant="outline" onClick={() => setStep(0)} className="gap-2 text-xs">
                 <ArrowLeft className="h-4 w-4" /> Rivedi installazione
               </Button>
-              <Button onClick={() => window.location.href = '/'} className="gap-2 text-xs">
-                Vai all'editor <ArrowRight className="h-4 w-4" />
+              <Button onClick={() => {
+                if (user) localStorage.setItem(`openclaw_install_${user.id}`, 'done');
+                window.location.href = '/home';
+              }} className="gap-2 text-xs">
+                Vai alla dashboard <ArrowRight className="h-4 w-4" />
               </Button>
             </div>
           </div>
