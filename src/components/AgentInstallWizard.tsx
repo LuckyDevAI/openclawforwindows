@@ -365,28 +365,36 @@ export default function AgentInstallWizard({ open, onOpenChange, onAgentAdded }:
               <DialogHeader className="space-y-2">
                 <DialogTitle className="text-base font-bold">Agente pronto!</DialogTitle>
                 <DialogDescription className="text-sm leading-relaxed">
-                  <strong>{selectedProvider.name}</strong> è stato configurato con successo.
-                  <br />Ora puoi usarlo nei tuoi workflow di automazione.
+                  Dai un nome al tuo agente e salvalo.
                 </DialogDescription>
               </DialogHeader>
 
+              <Input
+                value={agentName}
+                onChange={(e) => setAgentName(e.target.value)}
+                placeholder={selectedProvider.name}
+                className="max-w-[260px] text-center text-sm"
+                autoFocus
+              />
+
               <CopyBlock
-                code={`openclaw agent add --provider ${selectedProvider.id} --name "Il mio agente"`}
+                code={`openclaw agent add --provider ${selectedProvider.id} --name "${agentName || selectedProvider.name}"`}
                 label="Aggiungi l'agente al progetto:"
               />
 
               <div className="flex flex-col gap-2 w-full max-w-[280px]">
                 <Button className="w-full gap-2 text-xs" onClick={handleFinish}>
-                  <Rocket className="h-4 w-4" /> Chiudi e inizia
+                  <Rocket className="h-4 w-4" /> Salva agente
                 </Button>
                 <Button
                   variant="outline"
                   className="w-full text-xs"
-                  onClick={() => {
-                    reset();
+                  onClick={async () => {
+                    await handleFinish();
+                    setTimeout(reset, 300);
                   }}
                 >
-                  Aggiungi un altro agente
+                  Salva e aggiungi un altro
                 </Button>
               </div>
             </div>
