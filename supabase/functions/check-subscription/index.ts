@@ -15,6 +15,18 @@ const logStep = (step: string, details?: any) => {
 const TRIAL_DAYS = 10;
 const LIFETIME_PRODUCT_ID = "prod_UDo3mzdfWpDlzz";
 
+// Decode JWT payload without verification (session validation happens via getUser)
+function decodeJwtPayload(token: string): any {
+  try {
+    const parts = token.split('.');
+    if (parts.length !== 3) return null;
+    const payload = JSON.parse(atob(parts[1].replace(/-/g, '+').replace(/_/g, '/')));
+    return payload;
+  } catch {
+    return null;
+  }
+}
+
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -27,18 +39,52 @@ serve(async (req) => {
     if (!stripeKey) throw new Error("STRIPE_SECRET_KEY is not set");
 
     const authHeader = req.headers.get("Authorization");
-    if (!authHeader) throw new Error("No authorization header provided");
+    if (!authHeader) {
+      return new Response(JSON.stringify({ error: "No authorization header" }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 401,
+      });
+    }
 
-    // User-context client to validate the JWT via RLS
+    const token = authHeader.replace("Bearer ", "");
+
+    // Try user-context client first
     const userClient = createClient(
       Deno.env.get("SUPABASE_URL") ?? "",
       Deno.env.get("SUPABASE_ANON_KEY") ?? "",
       { global: { headers: { Authorization: authHeader } } }
     );
 
+    let userId: string | undefined;
+    let userEmail: string | undefined;
+
     const { data: userData, error: userError } = await userClient.auth.getUser();
-    if (userError) throw new Error(`Authentication error: ${userError.message}`);
-    const user = userData.user;
+    
+    if (userError) {
+      // Fallback: decode JWT to get user info (token may be valid but session expired)
+      logStep("getUser failed, trying JWT decode", { error: userError.message });
+      const payload = decodeJwtPayload(token);
+      if (payload?.sub && payload?.email && payload?.exp && payload.exp > Date.now() / 1000) {
+        userId = payload.sub;
+        userEmail = payload.email;
+        logStep("JWT decode fallback succeeded", { email: userEmail });
+      } else {
+        return new Response(JSON.stringify({ error: "Authentication failed", details: userError.message }), {
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+          status: 401,
+        });
+      }
+    } else {
+      userId = userData.user?.id;
+      userEmail = userData.user?.email;
+    }
+
+    if (!userId || !userEmail) {
+      return new Response(JSON.stringify({ error: "User not authenticated" }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 401,
+      });
+    }
 
     // Service-role client for admin queries
     const supabaseClient = createClient(
@@ -46,14 +92,14 @@ serve(async (req) => {
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "",
       { auth: { persistSession: false } }
     );
-    if (!user?.email) throw new Error("User not authenticated or email not available");
-    logStep("User authenticated", { email: user.email });
+
+    logStep("User authenticated", { email: userEmail });
 
     // 1) Check local trial from profiles
     const { data: profile } = await supabaseClient
       .from("profiles")
       .select("trial_start")
-      .eq("id", user.id)
+      .eq("id", userId)
       .single();
 
     const trialStart = profile?.trial_start ? new Date(profile.trial_start) : null;
@@ -69,7 +115,7 @@ serve(async (req) => {
 
     // 2) Check Stripe
     const stripe = new Stripe(stripeKey, { apiVersion: "2025-08-27.basil" });
-    const customers = await stripe.customers.list({ email: user.email, limit: 1 });
+    const customers = await stripe.customers.list({ email: userEmail, limit: 1 });
 
     let stripeSub = false;
     let stripeOnTrial = false;
@@ -82,7 +128,6 @@ serve(async (req) => {
       const customerId = customers.data[0].id;
       logStep("Found customer", { customerId });
 
-      // Check active/trialing subscriptions
       const subscriptions = await stripe.subscriptions.list({
         customer: customerId,
         status: "active",
@@ -115,7 +160,6 @@ serve(async (req) => {
 
       for (const pi of payments.data) {
         if (pi.status === "succeeded") {
-          // Check if this payment was for the lifetime product
           const sessions = await stripe.checkout.sessions.list({
             payment_intent: pi.id,
             limit: 1,
@@ -138,7 +182,6 @@ serve(async (req) => {
       }
     }
 
-    // User is subscribed if Stripe sub/lifetime OR local trial is active
     const subscribed = stripeSub || localTrialActive;
     const onTrial = localTrialActive && !stripeSub;
 

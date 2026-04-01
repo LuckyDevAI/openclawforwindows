@@ -45,7 +45,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const checkSubscription = useCallback(async () => {
     try {
       const { data, error } = await supabase.functions.invoke('check-subscription');
-      if (error) throw error;
+      if (error) {
+        // If 401, session is invalid - sign out
+        if (error.message?.includes('401') || error.message?.includes('Authentication failed')) {
+          await supabase.auth.signOut();
+          return;
+        }
+        throw error;
+      }
+      if (data?.error && (data.error.includes('Authentication') || data.error.includes('unauthorized'))) {
+        await supabase.auth.signOut();
+        return;
+      }
       setSubscription({
         subscribed: data.subscribed ?? false,
         onTrial: data.on_trial ?? false,
