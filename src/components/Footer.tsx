@@ -39,7 +39,7 @@ export default function Footer() {
           </nav>
         </div>
 
-        <p className="mt-2 text-center text-[10px] text-muted-foreground/60 leading-snug max-w-lg mx-auto">
+        <p className="mt-2 text-center text-[10px] text-muted-foreground/60 leading-snug max-w-lg mx-auto whitespace-pre-line">
           {t('footer.disclaimer')}
         </p>
       </div>
