@@ -18,7 +18,7 @@ export default function ProtectedRoute({ children }: { children: React.ReactNode
 
   // Redirect to /install if first-time user hasn't completed installation guide
   const installDone = localStorage.getItem(`openclaw_install_${user.id}`);
-  if (!installDone && location.pathname !== '/install') {
+  if (!installDone && location.pathname !== '/install' && location.pathname !== '/admin') {
     return <Navigate to="/install" replace />;
   }
 
