@@ -38,6 +38,7 @@ const App = () => (
               <Route path="/privacy" element={<PrivacyPolicy />} />
               <Route path="/eula" element={<EULA />} />
               <Route path="/cookies" element={<CookiePolicy />} />
+              <Route path="/age-rating" element={<AgeRating />} />
               <Route path="/support" element={<ProtectedRoute><Support /></ProtectedRoute>} />
               <Route path="/pricing" element={<ProtectedRoute><Pricing /></ProtectedRoute>} />
               <Route path="/install" element={<ProtectedRoute><Install /></ProtectedRoute>} />

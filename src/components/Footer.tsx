@@ -7,6 +7,7 @@ const FOOTER_LINKS = [
   { key: 'footer.privacy' as const, path: '/privacy' },
   { key: 'footer.eula' as const, path: '/eula' },
   { key: 'footer.cookies' as const, path: '/cookies' },
+  { key: 'footer.age_rating' as const, path: '/age-rating' },
   { key: 'footer.support' as const, path: '/support' },
 ];
 
