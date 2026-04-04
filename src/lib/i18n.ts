@@ -202,6 +202,7 @@ const translations: Translations = {
     'footer.privacy': 'Privacy & GDPR',
     'footer.eula': 'EULA',
     'footer.cookies': 'Cookie Policy',
+    'footer.support': 'Supporto',
     'footer.disclaimer': 'OpenClawForWindows non è responsabile per l\'uso improprio delle automazioni create dagli utenti.\nUtilizzando il servizio accetti i nostri Termini di Servizio e la Privacy Policy.',
   },
   en: {
