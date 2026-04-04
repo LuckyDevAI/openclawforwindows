@@ -137,6 +137,33 @@ type TranslationKeys = {
   'cookie.analytics': string;
   'cookie.functional': string;
   'cookie.always_on': string;
+  // IARC / Age Rating
+  'footer.age_rating': string;
+  'iarc.title': string;
+  'iarc.intro': string;
+  'iarc.rating_label': string;
+  'iarc.rating_desc': string;
+  'iarc.content_section': string;
+  'iarc.category': string;
+  'iarc.present': string;
+  'iarc.violence': string;
+  'iarc.fear': string;
+  'iarc.language': string;
+  'iarc.sexual': string;
+  'iarc.drugs': string;
+  'iarc.gambling': string;
+  'iarc.ugc': string;
+  'iarc.iap': string;
+  'iarc.personal_info': string;
+  'iarc.user_interaction': string;
+  'iarc.location': string;
+  'iarc.notes_title': string;
+  'iarc.note_ugc': string;
+  'iarc.note_iap': string;
+  'iarc.note_personal': string;
+  'iarc.about_title': string;
+  'iarc.about_desc': string;
+  'iarc.more_info': string;
 };
 
 type Translations = Record<LangCode, TranslationKeys>;
