@@ -276,6 +276,7 @@ const translations: Translations = {
     'footer.privacy': 'Privacy & GDPR',
     'footer.eula': 'EULA',
     'footer.cookies': 'Cookie Policy',
+    'footer.support': 'Support',
     'footer.disclaimer': 'OpenClawForWindows is not responsible for misuse of automations created by users. By using the Service you agree to our Terms of Service and Privacy Policy.',
   },
   es: {
