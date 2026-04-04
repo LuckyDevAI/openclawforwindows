@@ -73,7 +73,7 @@ export default function CookieConsent() {
             <div className="flex items-center gap-2">
               <Cookie className="h-5 w-5 text-primary shrink-0" />
               <h3 className="text-sm font-bold text-foreground">
-                {t('cookie.title' as any)}
+                {t('cookie.title')}
               </h3>
             </div>
             <button
@@ -87,7 +87,7 @@ export default function CookieConsent() {
 
           {/* Description */}
           <p className="text-xs text-muted-foreground leading-relaxed mb-3">
-            {t('cookie.description' as any)}{' '}
+            {t('cookie.description')}{' '}
             <Link to="/cookies" className="text-primary hover:underline">
               {t('footer.cookies')}
             </Link>
@@ -98,8 +98,8 @@ export default function CookieConsent() {
             <div className="space-y-2 mb-3 rounded-lg bg-muted/40 p-3">
               <label className="flex items-center gap-2 text-xs text-foreground">
                 <input type="checkbox" checked disabled className="accent-primary rounded" />
-                <span className="font-medium">{t('cookie.necessary' as any)}</span>
-                <span className="text-muted-foreground ml-auto">{t('cookie.always_on' as any)}</span>
+                <span className="font-medium">{t('cookie.necessary')}</span>
+                <span className="text-muted-foreground ml-auto">{t('cookie.always_on')}</span>
               </label>
               <label className="flex items-center gap-2 text-xs text-foreground cursor-pointer">
                 <input
@@ -108,7 +108,7 @@ export default function CookieConsent() {
                   onChange={(e) => setPrefs(p => ({ ...p, analytics: e.target.checked }))}
                   className="accent-primary rounded"
                 />
-                <span className="font-medium">{t('cookie.analytics' as any)}</span>
+                <span className="font-medium">{t('cookie.analytics')}</span>
               </label>
               <label className="flex items-center gap-2 text-xs text-foreground cursor-pointer">
                 <input
@@ -117,7 +117,7 @@ export default function CookieConsent() {
                   onChange={(e) => setPrefs(p => ({ ...p, functional: e.target.checked }))}
                   className="accent-primary rounded"
                 />
-                <span className="font-medium">{t('cookie.functional' as any)}</span>
+                <span className="font-medium">{t('cookie.functional')}</span>
               </label>
             </div>
           )}
@@ -125,10 +125,10 @@ export default function CookieConsent() {
           {/* Actions */}
           <div className="flex items-center gap-2">
             <Button size="sm" onClick={() => accept(true)} className="text-xs flex-1">
-              {t('cookie.accept_all' as any)}
+              {t('cookie.accept_all')}
             </Button>
             <Button size="sm" variant="secondary" onClick={reject} className="text-xs flex-1">
-              {t('cookie.reject' as any)}
+              {t('cookie.reject')}
             </Button>
             <Button
               size="sm"
@@ -136,7 +136,7 @@ export default function CookieConsent() {
               onClick={() => showDetails ? accept(false) : setShowDetails(true)}
               className="text-xs"
             >
-              {showDetails ? t('cookie.save' as any) : t('cookie.customize' as any)}
+              {showDetails ? t('cookie.save') : t('cookie.customize' as any)}
             </Button>
           </div>
         </div>
