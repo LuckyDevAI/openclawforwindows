@@ -62,10 +62,21 @@ export default function Home() {
       .select('display_name, avatar_url')
       .eq('id', user.id)
       .single()
-      .then(({ data }) => {
+      .then(async ({ data }) => {
         if (data?.display_name) setDisplayName(data.display_name);
         else setDisplayName(user.email?.split('@')[0] ?? '');
-        if (data?.avatar_url) setAvatarUrl(data.avatar_url);
+        if (data?.avatar_url) {
+          // avatar_url stores the file path; generate a signed URL
+          const path = data.avatar_url.includes('/storage/') 
+            ? data.avatar_url.split('/avatars/')[1]?.split('?')[0] 
+            : data.avatar_url;
+          if (path) {
+            const { data: signedData } = await supabase.storage
+              .from('avatars')
+              .createSignedUrl(path, 3600);
+            if (signedData?.signedUrl) setAvatarUrl(signedData.signedUrl);
+          }
+        }
       });
   }, [user]);
 
@@ -117,20 +128,18 @@ export default function Home() {
         .upload(filePath, file, { upsert: true, contentType: file.type });
       if (uploadError) throw uploadError;
 
-      // Get public URL
-      const { data: urlData } = supabase.storage
+      // Get signed URL for private bucket
+      const { data: signedData } = await supabase.storage
         .from('avatars')
-        .getPublicUrl(filePath);
+        .createSignedUrl(filePath, 3600);
       
-      const publicUrl = `${urlData.publicUrl}?t=${Date.now()}`;
-
-      // Save to profile
+      // Save file path to profile (not the signed URL)
       await supabase
         .from('profiles')
-        .update({ avatar_url: publicUrl } as any)
+        .update({ avatar_url: filePath } as any)
         .eq('id', user.id);
 
-      setAvatarUrl(publicUrl);
+      if (signedData?.signedUrl) setAvatarUrl(signedData.signedUrl);
       toast({ title: '✓', description: 'Avatar aggiornato.' });
     } catch (err: any) {
       console.error('Avatar upload error:', err);
