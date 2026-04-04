@@ -124,6 +124,7 @@ type TranslationKeys = {
   'footer.privacy': string;
   'footer.eula': string;
   'footer.cookies': string;
+  'footer.support': string;
   'footer.disclaimer': string;
 };
 
@@ -201,6 +202,7 @@ const translations: Translations = {
     'footer.privacy': 'Privacy & GDPR',
     'footer.eula': 'EULA',
     'footer.cookies': 'Cookie Policy',
+    'footer.support': 'Supporto',
     'footer.disclaimer': 'OpenClawForWindows non è responsabile per l\'uso improprio delle automazioni create dagli utenti.\nUtilizzando il servizio accetti i nostri Termini di Servizio e la Privacy Policy.',
   },
   en: {
@@ -274,6 +276,7 @@ const translations: Translations = {
     'footer.privacy': 'Privacy & GDPR',
     'footer.eula': 'EULA',
     'footer.cookies': 'Cookie Policy',
+    'footer.support': 'Support',
     'footer.disclaimer': 'OpenClawForWindows is not responsible for misuse of automations created by users. By using the Service you agree to our Terms of Service and Privacy Policy.',
   },
   es: {
@@ -302,7 +305,7 @@ const translations: Translations = {
     'admin.title': 'Panel Admin', 'admin.dashboard': 'Dashboard', 'admin.workflows': 'Workflows',
     'admin.users': 'Usuarios', 'admin.settings': 'Configuración', 'admin.search': 'Buscar...',
     'settings.theme': 'Tema', 'settings.language': 'Idioma', 'settings.light': 'Claro', 'settings.dark': 'Oscuro',
-    'footer.terms': 'Términos de Servicio', 'footer.privacy': 'Privacidad y GDPR', 'footer.eula': 'EULA', 'footer.cookies': 'Política de Cookies',
+    'footer.terms': 'Términos de Servicio', 'footer.privacy': 'Privacidad y GDPR', 'footer.eula': 'EULA', 'footer.cookies': 'Política de Cookies', 'footer.support': 'Soporte',
     'footer.disclaimer': 'OpenClawForWindows no es responsable del uso indebido de las automatizaciones creadas por los usuarios. Al usar el Servicio, aceptas nuestros Términos de Servicio y Política de Privacidad.',
   },
   fr: {
@@ -331,7 +334,7 @@ const translations: Translations = {
     'admin.title': 'Panneau Admin', 'admin.dashboard': 'Tableau de bord', 'admin.workflows': 'Workflows',
     'admin.users': 'Utilisateurs', 'admin.settings': 'Paramètres', 'admin.search': 'Rechercher...',
     'settings.theme': 'Thème', 'settings.language': 'Langue', 'settings.light': 'Clair', 'settings.dark': 'Sombre',
-    'footer.terms': 'Conditions d\'utilisation', 'footer.privacy': 'Confidentialité & RGPD', 'footer.eula': 'CLUF', 'footer.cookies': 'Politique de cookies',
+    'footer.terms': 'Conditions d\'utilisation', 'footer.privacy': 'Confidentialité & RGPD', 'footer.eula': 'CLUF', 'footer.cookies': 'Politique de cookies', 'footer.support': 'Assistance',
     'footer.disclaimer': 'OpenClawForWindows n\'est pas responsable de l\'utilisation abusive des automatisations créées par les utilisateurs. En utilisant le Service, vous acceptez nos Conditions d\'utilisation et notre Politique de confidentialité.',
   },
   de: {
@@ -360,7 +363,7 @@ const translations: Translations = {
     'admin.title': 'Admin-Panel', 'admin.dashboard': 'Dashboard', 'admin.workflows': 'Workflows',
     'admin.users': 'Benutzer', 'admin.settings': 'Einstellungen', 'admin.search': 'Suchen...',
     'settings.theme': 'Design', 'settings.language': 'Sprache', 'settings.light': 'Hell', 'settings.dark': 'Dunkel',
-    'footer.terms': 'Nutzungsbedingungen', 'footer.privacy': 'Datenschutz & DSGVO', 'footer.eula': 'EULA', 'footer.cookies': 'Cookie-Richtlinie',
+    'footer.terms': 'Nutzungsbedingungen', 'footer.privacy': 'Datenschutz & DSGVO', 'footer.eula': 'EULA', 'footer.cookies': 'Cookie-Richtlinie', 'footer.support': 'Support',
     'footer.disclaimer': 'OpenClawForWindows ist nicht verantwortlich für den Missbrauch von Automatisierungen, die von Benutzern erstellt werden. Durch die Nutzung des Dienstes akzeptieren Sie unsere Nutzungsbedingungen und Datenschutzrichtlinie.',
   },
   // Remaining languages use English as base with key translations
