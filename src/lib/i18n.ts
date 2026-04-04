@@ -124,6 +124,7 @@ type TranslationKeys = {
   'footer.privacy': string;
   'footer.eula': string;
   'footer.cookies': string;
+  'footer.support': string;
   'footer.disclaimer': string;
 };
 
