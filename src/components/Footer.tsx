@@ -40,6 +40,15 @@ export default function Footer() {
                 </Link>
               </span>
             ))}
+            <span className="text-muted-foreground/30 mx-2 text-[9px]">·</span>
+            <a
+              href="/sitemap.xml"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[11px] text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Sitemap
+            </a>
           </nav>
         </div>
 
