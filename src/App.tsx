@@ -18,6 +18,7 @@ import TermsOfService from "./pages/legal/TermsOfService.tsx";
 import PrivacyPolicy from "./pages/legal/PrivacyPolicy.tsx";
 import EULA from "./pages/legal/EULA.tsx";
 import CookiePolicy from "./pages/legal/CookiePolicy.tsx";
+import Support from "./pages/Support.tsx";
 
 const queryClient = new QueryClient();
 
