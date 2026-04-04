@@ -161,7 +161,17 @@ export default function Install() {
                         rel="noopener noreferrer"
                       >
                         <Button size="sm" className="h-9 text-sm gap-2">
-                          <Download className="h-4 w-4" /> Scarica .exe
+                          <Download className="h-4 w-4" /> Scarica .exe (Windows)
+                          <ExternalLink className="h-3.5 w-3.5" />
+                        </Button>
+                      </a>
+                      <a
+                        href="https://github.com/openclaw-ai/openclaw/releases/latest"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <Button size="sm" variant="secondary" className="h-9 text-sm gap-2">
+                          <Download className="h-4 w-4" /> Scarica .zip (macOS)
                           <ExternalLink className="h-3.5 w-3.5" />
                         </Button>
                       </a>
