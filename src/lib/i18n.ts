@@ -126,6 +126,17 @@ type TranslationKeys = {
   'footer.cookies': string;
   'footer.support': string;
   'footer.disclaimer': string;
+  // Cookie consent
+  'cookie.title': string;
+  'cookie.description': string;
+  'cookie.accept_all': string;
+  'cookie.reject': string;
+  'cookie.customize': string;
+  'cookie.save': string;
+  'cookie.necessary': string;
+  'cookie.analytics': string;
+  'cookie.functional': string;
+  'cookie.always_on': string;
 };
 
 type Translations = Record<LangCode, TranslationKeys>;
@@ -204,6 +215,16 @@ const translations: Translations = {
     'footer.cookies': 'Cookie Policy',
     'footer.support': 'Supporto',
     'footer.disclaimer': 'OpenClawForWindows non è responsabile per l\'uso improprio delle automazioni create dagli utenti.\nUtilizzando il servizio accetti i nostri Termini di Servizio e la Privacy Policy.',
+    'cookie.title': 'Utilizziamo i cookie',
+    'cookie.description': 'Questo sito utilizza cookie per migliorare la tua esperienza. Puoi scegliere quali cookie accettare.',
+    'cookie.accept_all': 'Accetta tutti',
+    'cookie.reject': 'Rifiuta',
+    'cookie.customize': 'Personalizza',
+    'cookie.save': 'Salva',
+    'cookie.necessary': 'Necessari',
+    'cookie.analytics': 'Analitici',
+    'cookie.functional': 'Funzionali',
+    'cookie.always_on': 'Sempre attivi',
   },
   en: {
     'app.name': 'OpenClawForWindows',
@@ -278,6 +299,16 @@ const translations: Translations = {
     'footer.cookies': 'Cookie Policy',
     'footer.support': 'Support',
     'footer.disclaimer': 'OpenClawForWindows is not responsible for misuse of automations created by users. By using the Service you agree to our Terms of Service and Privacy Policy.',
+    'cookie.title': 'We use cookies',
+    'cookie.description': 'This site uses cookies to improve your experience. You can choose which cookies to accept.',
+    'cookie.accept_all': 'Accept all',
+    'cookie.reject': 'Reject',
+    'cookie.customize': 'Customize',
+    'cookie.save': 'Save',
+    'cookie.necessary': 'Necessary',
+    'cookie.analytics': 'Analytics',
+    'cookie.functional': 'Functional',
+    'cookie.always_on': 'Always on',
   },
   es: {
     'app.name': 'OpenClawForWindows', 'app.subtitle': 'Constructor de Automatización',
@@ -307,6 +338,7 @@ const translations: Translations = {
     'settings.theme': 'Tema', 'settings.language': 'Idioma', 'settings.light': 'Claro', 'settings.dark': 'Oscuro',
     'footer.terms': 'Términos de Servicio', 'footer.privacy': 'Privacidad y GDPR', 'footer.eula': 'EULA', 'footer.cookies': 'Política de Cookies', 'footer.support': 'Soporte',
     'footer.disclaimer': 'OpenClawForWindows no es responsable del uso indebido de las automatizaciones creadas por los usuarios. Al usar el Servicio, aceptas nuestros Términos de Servicio y Política de Privacidad.',
+    'cookie.title': 'Usamos cookies', 'cookie.description': 'Este sitio usa cookies para mejorar tu experiencia. Puedes elegir qué cookies aceptar.', 'cookie.accept_all': 'Aceptar todas', 'cookie.reject': 'Rechazar', 'cookie.customize': 'Personalizar', 'cookie.save': 'Guardar', 'cookie.necessary': 'Necesarias', 'cookie.analytics': 'Analíticas', 'cookie.functional': 'Funcionales', 'cookie.always_on': 'Siempre activas',
   },
   fr: {
     'app.name': 'OpenClawForWindows', 'app.subtitle': "Constructeur d'Automatisation",
@@ -336,6 +368,7 @@ const translations: Translations = {
     'settings.theme': 'Thème', 'settings.language': 'Langue', 'settings.light': 'Clair', 'settings.dark': 'Sombre',
     'footer.terms': 'Conditions d\'utilisation', 'footer.privacy': 'Confidentialité & RGPD', 'footer.eula': 'CLUF', 'footer.cookies': 'Politique de cookies', 'footer.support': 'Assistance',
     'footer.disclaimer': 'OpenClawForWindows n\'est pas responsable de l\'utilisation abusive des automatisations créées par les utilisateurs. En utilisant le Service, vous acceptez nos Conditions d\'utilisation et notre Politique de confidentialité.',
+    'cookie.title': 'Nous utilisons des cookies', 'cookie.description': 'Ce site utilise des cookies pour améliorer votre expérience. Vous pouvez choisir lesquels accepter.', 'cookie.accept_all': 'Tout accepter', 'cookie.reject': 'Refuser', 'cookie.customize': 'Personnaliser', 'cookie.save': 'Enregistrer', 'cookie.necessary': 'Nécessaires', 'cookie.analytics': 'Analytiques', 'cookie.functional': 'Fonctionnels', 'cookie.always_on': 'Toujours actifs',
   },
   de: {
     'app.name': 'OpenClawForWindows', 'app.subtitle': 'Automatisierungs-Builder',
@@ -365,6 +398,7 @@ const translations: Translations = {
     'settings.theme': 'Design', 'settings.language': 'Sprache', 'settings.light': 'Hell', 'settings.dark': 'Dunkel',
     'footer.terms': 'Nutzungsbedingungen', 'footer.privacy': 'Datenschutz & DSGVO', 'footer.eula': 'EULA', 'footer.cookies': 'Cookie-Richtlinie', 'footer.support': 'Support',
     'footer.disclaimer': 'OpenClawForWindows ist nicht verantwortlich für den Missbrauch von Automatisierungen, die von Benutzern erstellt werden. Durch die Nutzung des Dienstes akzeptieren Sie unsere Nutzungsbedingungen und Datenschutzrichtlinie.',
+    'cookie.title': 'Wir verwenden Cookies', 'cookie.description': 'Diese Website verwendet Cookies, um Ihre Erfahrung zu verbessern. Sie können wählen, welche Cookies Sie akzeptieren.', 'cookie.accept_all': 'Alle akzeptieren', 'cookie.reject': 'Ablehnen', 'cookie.customize': 'Anpassen', 'cookie.save': 'Speichern', 'cookie.necessary': 'Notwendig', 'cookie.analytics': 'Analyse', 'cookie.functional': 'Funktional', 'cookie.always_on': 'Immer aktiv',
   },
   // Remaining languages use English as base with key translations
   pt: { ...null as any },
