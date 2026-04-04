@@ -126,6 +126,17 @@ type TranslationKeys = {
   'footer.cookies': string;
   'footer.support': string;
   'footer.disclaimer': string;
+  // Cookie consent
+  'cookie.title': string;
+  'cookie.description': string;
+  'cookie.accept_all': string;
+  'cookie.reject': string;
+  'cookie.customize': string;
+  'cookie.save': string;
+  'cookie.necessary': string;
+  'cookie.analytics': string;
+  'cookie.functional': string;
+  'cookie.always_on': string;
 };
 
 type Translations = Record<LangCode, TranslationKeys>;
