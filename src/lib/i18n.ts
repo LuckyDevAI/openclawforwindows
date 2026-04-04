@@ -338,6 +338,7 @@ const translations: Translations = {
     'settings.theme': 'Tema', 'settings.language': 'Idioma', 'settings.light': 'Claro', 'settings.dark': 'Oscuro',
     'footer.terms': 'Términos de Servicio', 'footer.privacy': 'Privacidad y GDPR', 'footer.eula': 'EULA', 'footer.cookies': 'Política de Cookies', 'footer.support': 'Soporte',
     'footer.disclaimer': 'OpenClawForWindows no es responsable del uso indebido de las automatizaciones creadas por los usuarios. Al usar el Servicio, aceptas nuestros Términos de Servicio y Política de Privacidad.',
+    'cookie.title': 'Usamos cookies', 'cookie.description': 'Este sitio usa cookies para mejorar tu experiencia. Puedes elegir qué cookies aceptar.', 'cookie.accept_all': 'Aceptar todas', 'cookie.reject': 'Rechazar', 'cookie.customize': 'Personalizar', 'cookie.save': 'Guardar', 'cookie.necessary': 'Necesarias', 'cookie.analytics': 'Analíticas', 'cookie.functional': 'Funcionales', 'cookie.always_on': 'Siempre activas',
   },
   fr: {
     'app.name': 'OpenClawForWindows', 'app.subtitle': "Constructeur d'Automatisation",
