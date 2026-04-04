@@ -128,20 +128,18 @@ export default function Home() {
         .upload(filePath, file, { upsert: true, contentType: file.type });
       if (uploadError) throw uploadError;
 
-      // Get public URL
-      const { data: urlData } = supabase.storage
+      // Get signed URL for private bucket
+      const { data: signedData } = await supabase.storage
         .from('avatars')
-        .getPublicUrl(filePath);
+        .createSignedUrl(filePath, 3600);
       
-      const publicUrl = `${urlData.publicUrl}?t=${Date.now()}`;
-
-      // Save to profile
+      // Save file path to profile (not the signed URL)
       await supabase
         .from('profiles')
-        .update({ avatar_url: publicUrl } as any)
+        .update({ avatar_url: filePath } as any)
         .eq('id', user.id);
 
-      setAvatarUrl(publicUrl);
+      if (signedData?.signedUrl) setAvatarUrl(signedData.signedUrl);
       toast({ title: '✓', description: 'Avatar aggiornato.' });
     } catch (err: any) {
       console.error('Avatar upload error:', err);
