@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
-import logo from '@/assets/logo.png';
+import logo from '@/assets/logo.webp';
 import SettingsToolbar from '@/components/SettingsToolbar';
 import { Button } from '@/components/ui/button';
 import { Crown, LogOut } from 'lucide-react';
