@@ -62,10 +62,21 @@ export default function Home() {
       .select('display_name, avatar_url')
       .eq('id', user.id)
       .single()
-      .then(({ data }) => {
+      .then(async ({ data }) => {
         if (data?.display_name) setDisplayName(data.display_name);
         else setDisplayName(user.email?.split('@')[0] ?? '');
-        if (data?.avatar_url) setAvatarUrl(data.avatar_url);
+        if (data?.avatar_url) {
+          // avatar_url stores the file path; generate a signed URL
+          const path = data.avatar_url.includes('/storage/') 
+            ? data.avatar_url.split('/avatars/')[1]?.split('?')[0] 
+            : data.avatar_url;
+          if (path) {
+            const { data: signedData } = await supabase.storage
+              .from('avatars')
+              .createSignedUrl(path, 3600);
+            if (signedData?.signedUrl) setAvatarUrl(signedData.signedUrl);
+          }
+        }
       });
   }, [user]);
 
