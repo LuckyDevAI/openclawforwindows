@@ -398,6 +398,7 @@ const translations: Translations = {
     'settings.theme': 'Design', 'settings.language': 'Sprache', 'settings.light': 'Hell', 'settings.dark': 'Dunkel',
     'footer.terms': 'Nutzungsbedingungen', 'footer.privacy': 'Datenschutz & DSGVO', 'footer.eula': 'EULA', 'footer.cookies': 'Cookie-Richtlinie', 'footer.support': 'Support',
     'footer.disclaimer': 'OpenClawForWindows ist nicht verantwortlich für den Missbrauch von Automatisierungen, die von Benutzern erstellt werden. Durch die Nutzung des Dienstes akzeptieren Sie unsere Nutzungsbedingungen und Datenschutzrichtlinie.',
+    'cookie.title': 'Wir verwenden Cookies', 'cookie.description': 'Diese Website verwendet Cookies, um Ihre Erfahrung zu verbessern. Sie können wählen, welche Cookies Sie akzeptieren.', 'cookie.accept_all': 'Alle akzeptieren', 'cookie.reject': 'Ablehnen', 'cookie.customize': 'Anpassen', 'cookie.save': 'Speichern', 'cookie.necessary': 'Notwendig', 'cookie.analytics': 'Analyse', 'cookie.functional': 'Funktional', 'cookie.always_on': 'Immer aktiv',
   },
   // Remaining languages use English as base with key translations
   pt: { ...null as any },
