@@ -21,6 +21,7 @@ import EULA from "./pages/legal/EULA.tsx";
 import CookiePolicy from "./pages/legal/CookiePolicy.tsx";
 import AgeRating from "./pages/legal/AgeRating.tsx";
 import Support from "./pages/Support.tsx";
+import DownloadPage from "./pages/Download.tsx";
 
 const queryClient = new QueryClient();
 
