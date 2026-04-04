@@ -137,6 +137,33 @@ type TranslationKeys = {
   'cookie.analytics': string;
   'cookie.functional': string;
   'cookie.always_on': string;
+  // IARC / Age Rating
+  'footer.age_rating': string;
+  'iarc.title': string;
+  'iarc.intro': string;
+  'iarc.rating_label': string;
+  'iarc.rating_desc': string;
+  'iarc.content_section': string;
+  'iarc.category': string;
+  'iarc.present': string;
+  'iarc.violence': string;
+  'iarc.fear': string;
+  'iarc.language': string;
+  'iarc.sexual': string;
+  'iarc.drugs': string;
+  'iarc.gambling': string;
+  'iarc.ugc': string;
+  'iarc.iap': string;
+  'iarc.personal_info': string;
+  'iarc.user_interaction': string;
+  'iarc.location': string;
+  'iarc.notes_title': string;
+  'iarc.note_ugc': string;
+  'iarc.note_iap': string;
+  'iarc.note_personal': string;
+  'iarc.about_title': string;
+  'iarc.about_desc': string;
+  'iarc.more_info': string;
 };
 
 type Translations = Record<LangCode, TranslationKeys>;
@@ -225,6 +252,32 @@ const translations: Translations = {
     'cookie.analytics': 'Analitici',
     'cookie.functional': 'Funzionali',
     'cookie.always_on': 'Sempre attivi',
+    'footer.age_rating': 'Classificazione età',
+    'iarc.title': 'Classificazione per età (IARC)',
+    'iarc.intro': 'OpenClawForWindows è classificato secondo gli standard dell\'International Age Rating Coalition (IARC). Questa pagina descrive i contenuti presenti nella nostra applicazione.',
+    'iarc.rating_label': 'PEGI 3 / Everyone',
+    'iarc.rating_desc': 'Adatto a tutte le età. Nessun contenuto inappropriato.',
+    'iarc.content_section': 'Descrittori di contenuto',
+    'iarc.category': 'Categoria',
+    'iarc.present': 'Presente',
+    'iarc.violence': 'Violenza',
+    'iarc.fear': 'Paura / Horror',
+    'iarc.language': 'Linguaggio volgare',
+    'iarc.sexual': 'Contenuti sessuali / Nudità',
+    'iarc.drugs': 'Droghe / Alcol / Tabacco',
+    'iarc.gambling': 'Gioco d\'azzardo',
+    'iarc.ugc': 'Contenuti generati dagli utenti (UGC)',
+    'iarc.iap': 'Acquisti in-app / Abbonamenti',
+    'iarc.personal_info': 'Condivisione informazioni personali',
+    'iarc.user_interaction': 'Interazione tra utenti',
+    'iarc.location': 'Geolocalizzazione',
+    'iarc.notes_title': 'Note aggiuntive',
+    'iarc.note_ugc': 'Gli utenti possono creare workflow e interagire con il chatbot di supporto.',
+    'iarc.note_iap': 'Sono disponibili piani di abbonamento a pagamento tramite Stripe.',
+    'iarc.note_personal': 'Per creare un account sono richiesti email e dati del profilo.',
+    'iarc.about_title': 'Cos\'è l\'IARC?',
+    'iarc.about_desc': 'L\'International Age Rating Coalition (IARC) è un sistema globale di classificazione per età delle applicazioni digitali. Fornisce classificazioni coerenti e affidabili per app e giochi su diverse piattaforme.',
+    'iarc.more_info': 'Per maggiori informazioni visita',
   },
   en: {
     'app.name': 'OpenClawForWindows',
@@ -309,6 +362,32 @@ const translations: Translations = {
     'cookie.analytics': 'Analytics',
     'cookie.functional': 'Functional',
     'cookie.always_on': 'Always on',
+    'footer.age_rating': 'Age Rating',
+    'iarc.title': 'Age Rating (IARC)',
+    'iarc.intro': 'OpenClawForWindows is rated according to the International Age Rating Coalition (IARC) standards. This page describes the content present in our application.',
+    'iarc.rating_label': 'PEGI 3 / Everyone',
+    'iarc.rating_desc': 'Suitable for all ages. No inappropriate content.',
+    'iarc.content_section': 'Content Descriptors',
+    'iarc.category': 'Category',
+    'iarc.present': 'Present',
+    'iarc.violence': 'Violence',
+    'iarc.fear': 'Fear / Horror',
+    'iarc.language': 'Bad Language',
+    'iarc.sexual': 'Sexual Content / Nudity',
+    'iarc.drugs': 'Drugs / Alcohol / Tobacco',
+    'iarc.gambling': 'Gambling',
+    'iarc.ugc': 'User-Generated Content (UGC)',
+    'iarc.iap': 'In-App Purchases / Subscriptions',
+    'iarc.personal_info': 'Personal Information Sharing',
+    'iarc.user_interaction': 'User Interaction',
+    'iarc.location': 'Geolocation',
+    'iarc.notes_title': 'Additional Notes',
+    'iarc.note_ugc': 'Users can create workflows and interact with the support chatbot.',
+    'iarc.note_iap': 'Paid subscription plans are available via Stripe.',
+    'iarc.note_personal': 'Email and profile data are required to create an account.',
+    'iarc.about_title': 'What is IARC?',
+    'iarc.about_desc': 'The International Age Rating Coalition (IARC) is a global age rating system for digital applications. It provides consistent and reliable ratings for apps and games across different platforms.',
+    'iarc.more_info': 'For more information visit',
   },
   es: {
     'app.name': 'OpenClawForWindows', 'app.subtitle': 'Constructor de Automatización',
@@ -339,6 +418,7 @@ const translations: Translations = {
     'footer.terms': 'Términos de Servicio', 'footer.privacy': 'Privacidad y GDPR', 'footer.eula': 'EULA', 'footer.cookies': 'Política de Cookies', 'footer.support': 'Soporte',
     'footer.disclaimer': 'OpenClawForWindows no es responsable del uso indebido de las automatizaciones creadas por los usuarios. Al usar el Servicio, aceptas nuestros Términos de Servicio y Política de Privacidad.',
     'cookie.title': 'Usamos cookies', 'cookie.description': 'Este sitio usa cookies para mejorar tu experiencia. Puedes elegir qué cookies aceptar.', 'cookie.accept_all': 'Aceptar todas', 'cookie.reject': 'Rechazar', 'cookie.customize': 'Personalizar', 'cookie.save': 'Guardar', 'cookie.necessary': 'Necesarias', 'cookie.analytics': 'Analíticas', 'cookie.functional': 'Funcionales', 'cookie.always_on': 'Siempre activas',
+    'footer.age_rating': 'Clasificación por edad', 'iarc.title': 'Clasificación por edad (IARC)', 'iarc.intro': 'OpenClawForWindows está clasificado según los estándares de la IARC.', 'iarc.rating_label': 'PEGI 3 / Everyone', 'iarc.rating_desc': 'Apto para todas las edades.', 'iarc.content_section': 'Descriptores de contenido', 'iarc.category': 'Categoría', 'iarc.present': 'Presente', 'iarc.violence': 'Violencia', 'iarc.fear': 'Miedo / Horror', 'iarc.language': 'Lenguaje soez', 'iarc.sexual': 'Contenido sexual / Desnudez', 'iarc.drugs': 'Drogas / Alcohol / Tabaco', 'iarc.gambling': 'Juegos de azar', 'iarc.ugc': 'Contenido generado por usuarios (UGC)', 'iarc.iap': 'Compras en la app / Suscripciones', 'iarc.personal_info': 'Información personal', 'iarc.user_interaction': 'Interacción entre usuarios', 'iarc.location': 'Geolocalización', 'iarc.notes_title': 'Notas adicionales', 'iarc.note_ugc': 'Los usuarios pueden crear workflows e interactuar con el chatbot.', 'iarc.note_iap': 'Hay planes de suscripción de pago a través de Stripe.', 'iarc.note_personal': 'Se requiere email y datos de perfil para crear una cuenta.', 'iarc.about_title': '¿Qué es la IARC?', 'iarc.about_desc': 'La IARC es un sistema global de clasificación por edad para aplicaciones digitales.', 'iarc.more_info': 'Para más información visita',
   },
   fr: {
     'app.name': 'OpenClawForWindows', 'app.subtitle': "Constructeur d'Automatisation",
@@ -369,6 +449,7 @@ const translations: Translations = {
     'footer.terms': 'Conditions d\'utilisation', 'footer.privacy': 'Confidentialité & RGPD', 'footer.eula': 'CLUF', 'footer.cookies': 'Politique de cookies', 'footer.support': 'Assistance',
     'footer.disclaimer': 'OpenClawForWindows n\'est pas responsable de l\'utilisation abusive des automatisations créées par les utilisateurs. En utilisant le Service, vous acceptez nos Conditions d\'utilisation et notre Politique de confidentialité.',
     'cookie.title': 'Nous utilisons des cookies', 'cookie.description': 'Ce site utilise des cookies pour améliorer votre expérience. Vous pouvez choisir lesquels accepter.', 'cookie.accept_all': 'Tout accepter', 'cookie.reject': 'Refuser', 'cookie.customize': 'Personnaliser', 'cookie.save': 'Enregistrer', 'cookie.necessary': 'Nécessaires', 'cookie.analytics': 'Analytiques', 'cookie.functional': 'Fonctionnels', 'cookie.always_on': 'Toujours actifs',
+    'footer.age_rating': 'Classification par âge', 'iarc.title': 'Classification par âge (IARC)', 'iarc.intro': 'OpenClawForWindows est classé selon les normes de l\'IARC.', 'iarc.rating_label': 'PEGI 3 / Everyone', 'iarc.rating_desc': 'Convient à tous les âges.', 'iarc.content_section': 'Descripteurs de contenu', 'iarc.category': 'Catégorie', 'iarc.present': 'Présent', 'iarc.violence': 'Violence', 'iarc.fear': 'Peur / Horreur', 'iarc.language': 'Langage grossier', 'iarc.sexual': 'Contenu sexuel / Nudité', 'iarc.drugs': 'Drogues / Alcool / Tabac', 'iarc.gambling': 'Jeux de hasard', 'iarc.ugc': 'Contenu généré par les utilisateurs (UGC)', 'iarc.iap': 'Achats intégrés / Abonnements', 'iarc.personal_info': 'Partage d\'informations personnelles', 'iarc.user_interaction': 'Interaction entre utilisateurs', 'iarc.location': 'Géolocalisation', 'iarc.notes_title': 'Notes supplémentaires', 'iarc.note_ugc': 'Les utilisateurs peuvent créer des workflows et interagir avec le chatbot.', 'iarc.note_iap': 'Des abonnements payants sont disponibles via Stripe.', 'iarc.note_personal': 'Un email et des données de profil sont requis pour créer un compte.', 'iarc.about_title': 'Qu\'est-ce que l\'IARC ?', 'iarc.about_desc': 'L\'IARC est un système mondial de classification par âge pour les applications numériques.', 'iarc.more_info': 'Pour plus d\'informations visitez',
   },
   de: {
     'app.name': 'OpenClawForWindows', 'app.subtitle': 'Automatisierungs-Builder',
@@ -399,6 +480,7 @@ const translations: Translations = {
     'footer.terms': 'Nutzungsbedingungen', 'footer.privacy': 'Datenschutz & DSGVO', 'footer.eula': 'EULA', 'footer.cookies': 'Cookie-Richtlinie', 'footer.support': 'Support',
     'footer.disclaimer': 'OpenClawForWindows ist nicht verantwortlich für den Missbrauch von Automatisierungen, die von Benutzern erstellt werden. Durch die Nutzung des Dienstes akzeptieren Sie unsere Nutzungsbedingungen und Datenschutzrichtlinie.',
     'cookie.title': 'Wir verwenden Cookies', 'cookie.description': 'Diese Website verwendet Cookies, um Ihre Erfahrung zu verbessern. Sie können wählen, welche Cookies Sie akzeptieren.', 'cookie.accept_all': 'Alle akzeptieren', 'cookie.reject': 'Ablehnen', 'cookie.customize': 'Anpassen', 'cookie.save': 'Speichern', 'cookie.necessary': 'Notwendig', 'cookie.analytics': 'Analyse', 'cookie.functional': 'Funktional', 'cookie.always_on': 'Immer aktiv',
+    'footer.age_rating': 'Altersfreigabe', 'iarc.title': 'Altersfreigabe (IARC)', 'iarc.intro': 'OpenClawForWindows ist nach den Standards der IARC eingestuft.', 'iarc.rating_label': 'PEGI 3 / Everyone', 'iarc.rating_desc': 'Für alle Altersgruppen geeignet.', 'iarc.content_section': 'Inhaltsbeschreibungen', 'iarc.category': 'Kategorie', 'iarc.present': 'Vorhanden', 'iarc.violence': 'Gewalt', 'iarc.fear': 'Angst / Horror', 'iarc.language': 'Vulgäre Sprache', 'iarc.sexual': 'Sexuelle Inhalte / Nacktheit', 'iarc.drugs': 'Drogen / Alkohol / Tabak', 'iarc.gambling': 'Glücksspiel', 'iarc.ugc': 'Nutzergenerierte Inhalte (UGC)', 'iarc.iap': 'In-App-Käufe / Abonnements', 'iarc.personal_info': 'Persönliche Daten', 'iarc.user_interaction': 'Benutzerinteraktion', 'iarc.location': 'Standortdaten', 'iarc.notes_title': 'Zusätzliche Hinweise', 'iarc.note_ugc': 'Benutzer können Workflows erstellen und mit dem Chatbot interagieren.', 'iarc.note_iap': 'Kostenpflichtige Abonnements sind über Stripe verfügbar.', 'iarc.note_personal': 'E-Mail und Profildaten sind für die Kontoerstellung erforderlich.', 'iarc.about_title': 'Was ist die IARC?', 'iarc.about_desc': 'Die IARC ist ein globales Altersfreigabesystem für digitale Anwendungen.', 'iarc.more_info': 'Weitere Informationen unter',
   },
   // Remaining languages use English as base with key translations
   pt: { ...null as any },

@@ -19,6 +19,7 @@ import TermsOfService from "./pages/legal/TermsOfService.tsx";
 import PrivacyPolicy from "./pages/legal/PrivacyPolicy.tsx";
 import EULA from "./pages/legal/EULA.tsx";
 import CookiePolicy from "./pages/legal/CookiePolicy.tsx";
+import AgeRating from "./pages/legal/AgeRating.tsx";
 import Support from "./pages/Support.tsx";
 
 const queryClient = new QueryClient();
@@ -37,6 +38,7 @@ const App = () => (
               <Route path="/privacy" element={<PrivacyPolicy />} />
               <Route path="/eula" element={<EULA />} />
               <Route path="/cookies" element={<CookiePolicy />} />
+              <Route path="/age-rating" element={<AgeRating />} />
               <Route path="/support" element={<ProtectedRoute><Support /></ProtectedRoute>} />
               <Route path="/pricing" element={<ProtectedRoute><Pricing /></ProtectedRoute>} />
               <Route path="/install" element={<ProtectedRoute><Install /></ProtectedRoute>} />
