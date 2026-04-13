@@ -156,7 +156,7 @@ export default function Install() {
                     </div>
                     <div className="flex flex-wrap gap-2">
                       <a
-                        href="https://github.com/openclaw-ai/openclaw/releases/latest"
+                        href="https://github.com/FastIsEasy/OpenClawForWindows/releases/latest"
                         target="_blank"
                         rel="noopener noreferrer"
                       >
@@ -166,7 +166,7 @@ export default function Install() {
                         </Button>
                       </a>
                       <a
-                        href="https://github.com/openclaw-ai/openclaw/releases/latest"
+                        href="https://github.com/FastIsEasy/OpenClawForWindows/releases/latest"
                         target="_blank"
                         rel="noopener noreferrer"
                       >
@@ -201,14 +201,14 @@ export default function Install() {
                 },
                 {
                   key: 'powershell' as const,
-                  title: 'PowerShell 5.1+',
-                  desc: 'Incluso in Windows 10/11. Usato per lo script di installazione.',
+                  title: 'PowerShell 7+ (consigliato)',
+                  desc: 'PowerShell 7+ consigliato per piena compatibilità. PS 5.1 (incluso in Windows) funziona solo con lo script automatico.',
                   command: '$PSVersionTable.PSVersion',
                 },
                 {
                   key: 'apiKey' as const,
-                  title: 'API Key (Anthropic, OpenAI, Google, Qwen, DeepSeek, Mistral, ecc.)',
-                  desc: "Necessaria per il modello AI. Supporta Anthropic, OpenAI, Google, Qwen, DeepSeek, Mistral e altri.",
+                  title: 'API Key (provider cloud) o Ollama (locale)',
+                  desc: "Necessaria per i provider cloud (OpenAI, Anthropic, Qwen, DeepSeek, Mistral…). Non richiesta se usi Ollama in locale.",
                   link: 'https://docs.openclaw.ai/providers',
                 },
               ].map((item) => (
@@ -336,9 +336,12 @@ export default function Install() {
               <CardContent className="space-y-3">
                 <CopyBlock code={`mkdir "${installPath}"`} label="1. Crea la cartella:" />
                 <CopyBlock
-                  code={`cd "${installPath}" && npm install -g openclaw@latest`}
-                  label="2. Installa OpenClaw:"
+                  code={`cd "${installPath}"; npm install -g openclaw@latest`}
+                  label="2. Installa OpenClaw (globale):"
                 />
+                <p className="text-xs text-muted-foreground">
+                  ⚠️ <code>npm install -g</code> installa il pacchetto globalmente. La cartella serve come directory di lavoro/stato di OpenClaw.
+                </p>
                 <CopyBlock code="openclaw onboard --install-daemon" label="3. Avvia onboarding:" />
               </CardContent>
             </Card>
@@ -448,8 +451,9 @@ export default function Install() {
 
                 <div className="space-y-2">
                   <p className="text-sm font-semibold text-foreground">4. Configura come variabile d'ambiente</p>
-                  <CopyBlock code='$env:DASHSCOPE_API_KEY="LA_TUA_API_KEY"' label="PowerShell:" />
-                  <CopyBlock code='set DASHSCOPE_API_KEY=LA_TUA_API_KEY' label="CMD:" />
+                  <CopyBlock code='$env:DASHSCOPE_API_KEY="LA_TUA_API_KEY"' label="PowerShell (solo sessione corrente):" />
+                  <CopyBlock code='setx DASHSCOPE_API_KEY "LA_TUA_API_KEY"' label="Persistente (riavvia il terminale dopo):" />
+                  <CopyBlock code='set DASHSCOPE_API_KEY=LA_TUA_API_KEY' label="CMD (solo sessione corrente):" />
                 </div>
 
                 <Separator />
@@ -521,8 +525,9 @@ export default function Install() {
 
                 <div className="space-y-2">
                   <p className="text-sm font-semibold text-foreground">3. Configura come variabile d'ambiente</p>
-                  <CopyBlock code='$env:DEEPSEEK_API_KEY="LA_TUA_API_KEY"' label="PowerShell:" />
-                  <CopyBlock code='set DEEPSEEK_API_KEY=LA_TUA_API_KEY' label="CMD:" />
+                  <CopyBlock code='$env:DEEPSEEK_API_KEY="LA_TUA_API_KEY"' label="PowerShell (solo sessione corrente):" />
+                  <CopyBlock code='setx DEEPSEEK_API_KEY "LA_TUA_API_KEY"' label="Persistente (riavvia il terminale dopo):" />
+                  <CopyBlock code='set DEEPSEEK_API_KEY=LA_TUA_API_KEY' label="CMD (solo sessione corrente):" />
                 </div>
 
                 <div className="space-y-2">
@@ -601,8 +606,9 @@ export default function Install() {
 
                 <div className="space-y-2">
                   <p className="text-sm font-semibold text-foreground">4. Configura come variabile d'ambiente</p>
-                  <CopyBlock code='$env:MISTRAL_API_KEY="LA_TUA_API_KEY"' label="PowerShell:" />
-                  <CopyBlock code='set MISTRAL_API_KEY=LA_TUA_API_KEY' label="CMD:" />
+                  <CopyBlock code='$env:MISTRAL_API_KEY="LA_TUA_API_KEY"' label="PowerShell (solo sessione corrente):" />
+                  <CopyBlock code='setx MISTRAL_API_KEY "LA_TUA_API_KEY"' label="Persistente (riavvia il terminale dopo):" />
+                  <CopyBlock code='set MISTRAL_API_KEY=LA_TUA_API_KEY' label="CMD (solo sessione corrente):" />
                 </div>
 
                 <div className="space-y-2">
@@ -683,8 +689,9 @@ export default function Install() {
 
                 <div className="space-y-2">
                   <p className="text-sm font-semibold text-foreground">4. Configura OpenClaw per Ollama</p>
-                  <CopyBlock code='$env:OLLAMA_BASE_URL="http://localhost:11434"' label="PowerShell:" />
-                  <CopyBlock code='set OLLAMA_BASE_URL=http://localhost:11434' label="CMD:" />
+                  <CopyBlock code='$env:OLLAMA_BASE_URL="http://localhost:11434"' label="PowerShell (solo sessione corrente):" />
+                  <CopyBlock code='setx OLLAMA_BASE_URL "http://localhost:11434"' label="Persistente (riavvia il terminale dopo):" />
+                  <CopyBlock code='set OLLAMA_BASE_URL=http://localhost:11434' label="CMD (solo sessione corrente):" />
                 </div>
 
                 <div className="space-y-2">
@@ -756,7 +763,7 @@ export default function Install() {
                           badgeVariant: 'secondary' as const,
                           cost: 'Da ¥0.5/1M token',
                           pros: ['Ottimo per cinese/multilingue', 'Prezzi competitivi', 'Modelli open-weight'],
-                          cons: ['Server in Cina (latenza)', 'Docs principalmente in cinese', 'Meno integrazioni terze parti'],
+                          cons: ['Server in Cina (possibile latenza)', 'Docs principalmente in cinese', 'Meno integrazioni terze parti'],
                         },
                         {
                           name: 'DeepSeek',
@@ -764,7 +771,7 @@ export default function Install() {
                           badgeVariant: 'secondary' as const,
                           cost: 'Da $0.14/1M token',
                           pros: ['Prezzo ultra-competitivo', 'Reasoning avanzato (R1)', 'API compatibile OpenAI'],
-                          cons: ['Meno modelli disponibili', 'Server in Cina', 'Uptime meno garantito'],
+                          cons: ['Meno modelli disponibili', 'Server in Cina (possibile latenza)', 'Servizio relativamente giovane'],
                         },
                         {
                           name: 'Mistral',
@@ -772,7 +779,7 @@ export default function Install() {
                           badgeVariant: 'secondary' as const,
                           cost: 'Da €0.10/1M token',
                           pros: ['Server in Europa (GDPR)', 'Codestral ottimo per codice', 'Modelli open-source'],
-                          cons: ['Meno potente di GPT-4o', 'Ecosistema più giovane', 'Free tier limitato'],
+                          cons: ['Prestazioni inferiori a GPT-4o su alcuni task', 'Ecosistema più giovane', 'Free tier limitato'],
                         },
                         {
                           name: 'Ollama',
@@ -852,9 +859,9 @@ export default function Install() {
               </CardHeader>
               <CardContent className="space-y-3">
                 {[
-                  { var: 'OPENCLAW_HOME', desc: 'Directory home per i percorsi interni' },
-                  { var: 'OPENCLAW_STATE_DIR', desc: 'Override della directory di stato' },
-                  { var: 'OPENCLAW_CONFIG_PATH', desc: 'Override del percorso del file di configurazione' },
+                  { var: 'OPENCLAW_HOME', desc: 'Directory radice di OpenClaw — contiene configurazione, stato e dati. Default: cartella di installazione.' },
+                  { var: 'OPENCLAW_STATE_DIR', desc: 'Override della directory di stato (log, sessioni, cache). Default: $OPENCLAW_HOME/state.' },
+                  { var: 'OPENCLAW_CONFIG_PATH', desc: 'Override del percorso del file di configurazione principale (config.yaml). Default: $OPENCLAW_HOME/config.yaml.' },
                 ].map((env) => (
                   <div key={env.var} className="flex items-start gap-3 text-sm">
                     <code className="text-primary font-mono font-bold bg-muted/60 px-2 py-1 rounded shrink-0">
