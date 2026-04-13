@@ -242,7 +242,7 @@ export default function Install() {
                           </a>
                         )}
                       </div>
-                      <p className="text-sm text-muted-foreground mt-1">{item.desc}</p>
+                      <p className="text-sm text-muted-foreground mt-1">{item.desc.split('\n').map((line, i) => (<span key={i}>{i > 0 && <br />}{line}</span>))}</p>
                       {item.command && (
                         <div className="mt-3" onClick={(e) => e.stopPropagation()}>
                           <CopyBlock code={item.command} label="Verifica:" />
