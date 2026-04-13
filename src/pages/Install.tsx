@@ -207,7 +207,7 @@ export default function Install() {
                 },
                 {
                   key: 'apiKey' as const,
-                  title: 'API Key (provider cloud) o Ollama (locale)',
+                  title: 'Ollama (in local for free) o API Key (provider on cloud)',
                   desc: "Non richiesta se usi Ollama in locale.\nNecessaria per i provider cloud (OpenAI, Anthropic, Qwen, DeepSeek, Mistral…).",
                   link: 'https://docs.openclaw.ai/providers',
                 },
