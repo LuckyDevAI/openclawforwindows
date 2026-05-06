@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
-import { Map } from 'lucide-react';
-import Header from '@/components/Header';
+import { Map, ArrowLeft } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import Footer from '@/components/Footer';
 
 type Entry = { path: string; label: string; description: string };
@@ -38,7 +38,16 @@ const sections: { title: string; items: Entry[] }[] = [
 export default function Sitemap() {
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground">
-      <Header />
+      <header className="border-b border-border bg-card/60 backdrop-blur-sm">
+        <div className="max-w-4xl mx-auto flex items-center h-12 px-4">
+          <Link to="/">
+            <Button variant="ghost" size="sm" className="gap-2">
+              <ArrowLeft className="w-4 h-4" /> Indietro
+            </Button>
+          </Link>
+        </div>
+      </header>
+
       <main className="flex-1 container mx-auto px-4 py-12 max-w-4xl">
         <div className="flex items-center gap-3 mb-2">
           <Map className="w-8 h-8 text-primary" />
