@@ -1,34 +1,14 @@
-const CACHE_NAME = 'openclaw-v1';
-const ASSETS_TO_CACHE = [
-  '/',
-  '/index.html',
-  '/manifest.json',
-  '/icon-192.png',
-  '/icon-512.png',
-];
-
-self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS_TO_CACHE))
-  );
-});
-
-self.addEventListener('fetch', (event) => {
-  event.respondWith(
-    caches.match(event.request).then((response) => {
-      return response || fetch(event.request).then((networkResponse) => {
-        if (networkResponse && networkResponse.status === 200) {
-          const responseClone = networkResponse.clone();
-          caches.open(CACHE_NAME).then((cache) => {
-            cache.put(event.request, responseClone);
-          });
-        }
-        return networkResponse;
-      });
-    }).catch(() => {
-      return new Response('<h1>Sei offline</h1><p>Riprova quando sei connesso.</p>', {
-        headers: { 'Content-Type': 'text/html' }
-      });
-    })
-  );
-});
+// Kill-switch service worker: clears caches, unregisters, reloads clients.
+self.addEventListener('install', (e) => e.waitUntil(self.skipWaiting()));
+self.addEventListener('activate', (e) => e.waitUntil((async () => {
+  await self.clients.claim();
+  const names = await caches.keys();
+  await Promise.all(names.map((n) => caches.delete(n)));
+  const clients = await self.clients.matchAll({ type: 'window', includeUncontrolled: true });
+  await Promise.all(clients.map((c) => {
+    const url = new URL(c.url);
+    url.searchParams.set('sw-cleanup', Date.now().toString());
+    return c.navigate(url.toString());
+  }));
+  await self.registration.unregister();
+})()));
