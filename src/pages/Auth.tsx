@@ -15,7 +15,7 @@ import { useToast } from '@/hooks/use-toast';
 import { useEffect } from 'react';
 
 export default function Auth() {
-  const [mode, setMode] = useState<'login' | 'signup'>('login');
+  const [mode, setMode] = useState<'login' | 'signup' | 'forgot'>('login');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -32,7 +32,17 @@ export default function Auth() {
     e.preventDefault();
     setLoading(true);
     try {
-      if (mode === 'signup') {
+      if (mode === 'forgot') {
+        const { error } = await supabase.auth.resetPasswordForEmail(email, {
+          redirectTo: `${window.location.origin}/reset-password`,
+        });
+        if (error) throw error;
+        toast({
+          title: 'Email inviata',
+          description: 'Controlla la tua casella per il link di reset password.',
+        });
+        setMode('login');
+      } else if (mode === 'signup') {
         const { error } = await supabase.auth.signUp({
           email,
           password,
@@ -76,11 +86,15 @@ export default function Auth() {
             </div>
             <CardTitle className="text-lg font-bold tracking-tight">OpenClawForWindows</CardTitle>
             <CardDescription className="text-xs">
-              {mode === 'login' ? 'Accedi al tuo account' : 'Crea un nuovo account'}
+              {mode === 'login' && 'Accedi al tuo account'}
+              {mode === 'signup' && 'Crea un nuovo account'}
+              {mode === 'forgot' && 'Reimposta la tua password'}
             </CardDescription>
           </CardHeader>
 
           <CardContent className="space-y-4">
+            {mode !== 'forgot' && (
+              <>
             {/* Google */}
             <Button
               variant="outline"
@@ -102,6 +116,8 @@ export default function Auth() {
               <span className="text-[10px] uppercase tracking-wider text-muted-foreground">oppure</span>
               <Separator className="flex-1" />
             </div>
+              </>
+            )}
 
             {/* Email form */}
             <form onSubmit={handleEmail} className="space-y-3">
@@ -120,6 +136,7 @@ export default function Auth() {
                   />
                 </div>
               </div>
+              {mode !== 'forgot' && (
               <div className="space-y-1.5">
                 <Label htmlFor="password" className="text-xs">Password</Label>
                 <div className="relative">
@@ -141,13 +158,35 @@ export default function Auth() {
                     {showPassword ? <EyeOff className="h-3.5 w-3.5" /> : <Eye className="h-3.5 w-3.5" />}
                   </button>
                 </div>
+                {mode === 'login' && (
+                  <button
+                    type="button"
+                    onClick={() => setMode('forgot')}
+                    className="text-[11px] text-primary hover:underline font-medium"
+                  >
+                    Password dimenticata?
+                  </button>
+                )}
               </div>
+              )}
               <Button type="submit" className="w-full h-9 text-xs font-semibold" disabled={loading}>
                 {loading && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
-                {mode === 'login' ? 'Accedi' : 'Registrati'}
+                {mode === 'login' && 'Accedi'}
+                {mode === 'signup' && 'Registrati'}
+                {mode === 'forgot' && 'Invia link di reset'}
               </Button>
             </form>
 
+            {mode === 'forgot' ? (
+              <p className="text-center text-[11px] text-muted-foreground">
+                <button
+                  onClick={() => setMode('login')}
+                  className="text-primary hover:underline font-medium"
+                >
+                  Torna al login
+                </button>
+              </p>
+            ) : (
             <p className="text-center text-[11px] text-muted-foreground">
               {mode === 'login' ? 'Non hai un account?' : 'Hai già un account?'}{' '}
               <button
@@ -157,6 +196,7 @@ export default function Auth() {
                 {mode === 'login' ? 'Registrati' : 'Accedi'}
               </button>
             </p>
+            )}
           </CardContent>
         </Card>
       </div>

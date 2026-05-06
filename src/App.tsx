@@ -23,6 +23,7 @@ import AgeRating from "./pages/legal/AgeRating.tsx";
 import Support from "./pages/Support.tsx";
 import DownloadPage from "./pages/Download.tsx";
 import Sitemap from "./pages/Sitemap.tsx";
+import ResetPassword from "./pages/ResetPassword.tsx";
 
 const queryClient = new QueryClient();
 
@@ -36,6 +37,7 @@ const App = () => (
           <AuthProvider>
             <Routes>
               <Route path="/auth" element={<Auth />} />
+              <Route path="/reset-password" element={<ResetPassword />} />
               <Route path="/terms" element={<TermsOfService />} />
               <Route path="/privacy" element={<PrivacyPolicy />} />
               <Route path="/eula" element={<EULA />} />
