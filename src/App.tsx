@@ -22,6 +22,7 @@ import CookiePolicy from "./pages/legal/CookiePolicy.tsx";
 import AgeRating from "./pages/legal/AgeRating.tsx";
 import Support from "./pages/Support.tsx";
 import DownloadPage from "./pages/Download.tsx";
+import Sitemap from "./pages/Sitemap.tsx";
 
 const queryClient = new QueryClient();
 
@@ -40,6 +41,7 @@ const App = () => (
               <Route path="/eula" element={<EULA />} />
               <Route path="/cookies" element={<CookiePolicy />} />
               <Route path="/age-rating" element={<AgeRating />} />
+              <Route path="/sitemap" element={<Sitemap />} />
               <Route path="/download" element={<ProtectedRoute><DownloadPage /></ProtectedRoute>} />
               <Route path="/support" element={<ProtectedRoute><Support /></ProtectedRoute>} />
               <Route path="/pricing" element={<ProtectedRoute><Pricing /></ProtectedRoute>} />
