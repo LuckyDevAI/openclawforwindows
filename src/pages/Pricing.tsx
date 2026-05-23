@@ -20,6 +20,7 @@ const annualFeatureKeys = [
   'feat.notifications',
   'feat.backup',
   'feat.backup_local',
+  'feat.future_updates',
 ] as const;
 
 const lifetimeFeatureKeys = [
@@ -29,6 +30,7 @@ const lifetimeFeatureKeys = [
   'feat.webhooks',
   'feat.notifications',
   'feat.backup_local',
+  'feat.future_updates',
 ] as const;
 
 export default function Pricing() {
