@@ -254,6 +254,11 @@ export default function Admin() {
           <span className="text-sm font-bold text-foreground tracking-tight">Pannello Admin</span>
         </div>
         <div className="flex-1" />
+        <Link to="/admin/security">
+          <Button variant="ghost" size="sm" className="h-8 gap-1.5 text-xs">
+            <Shield className="h-3.5 w-3.5" /> Sicurezza
+          </Button>
+        </Link>
         <Button variant="ghost" size="icon" className="h-8 w-8" onClick={loadUsers} disabled={loadingUsers}>
           <RefreshCw className={`h-3.5 w-3.5 ${loadingUsers ? 'animate-spin' : ''}`} />
         </Button>
