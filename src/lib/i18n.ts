@@ -470,7 +470,7 @@ const translations: Translations = {
     'auth.login': 'Connexion', 'auth.signup': "S'inscrire", 'auth.email': 'E-mail', 'auth.password': 'Mot de passe',
     'auth.google': 'Continuer avec Google', 'auth.passkey': 'Connexion Passkey', 'auth.or': 'ou',
     'auth.no_account': 'Pas de compte ?', 'auth.has_account': 'Déjà un compte ?',
-    'auth.login_title': 'Connectez-vous', 'auth.signup_title': 'Créer un compte',
+    'auth.login_title': 'Connectez-vous', 'auth.signup_title': 'Créer un compte', 'auth.forgot_title': 'Réinitialiser votre mot de passe', 'auth.forgot_password_link': 'Mot de passe oublié ?', 'auth.reset_link': 'Envoyer le lien de réinitialisation', 'auth.back_to_login': 'Retour à la connexion', 'auth.check_email': 'Vérifiez votre email', 'auth.confirmation_sent': 'Nous vous avons envoyé un lien de confirmation.', 'auth.reset_email_sent': 'Email envoyé', 'auth.reset_email_desc': 'Vérifiez votre boîte de réception pour le lien de réinitialisation.', 'auth.passkey_coming_soon': 'Le support Passkey/WebAuthn sera bientôt disponible.', 'auth.email_placeholder': 'nom@exemple.com', 'auth.password_placeholder': '••••••••', 'auth.error': 'Erreur',
     'editor.untitled': 'Projet sans titre', 'editor.open': 'Ouvrir', 'editor.save': 'Enregistrer',
     'editor.run': 'Exécuter', 'editor.stop': 'Arrêter', 'editor.drag_hint': 'Glissez des nœuds depuis la barre latérale',
     'editor.no_nodes': 'Ajoutez au moins un nœud.', 'editor.saved': 'Enregistré', 'editor.opened': 'Ouvert',
