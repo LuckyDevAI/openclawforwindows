@@ -90,15 +90,15 @@ export default function Auth() {
             </div>
             <CardTitle className="text-lg font-bold tracking-tight">OpenClawForWindows</CardTitle>
             {/* Language selector */}
-            <div className="flex items-center justify-center gap-2 pt-3">
-              <span className="text-xs text-muted-foreground">{t('settings.language')}:</span>
+            <div className="flex items-center justify-center gap-2 pt-3 pb-5 border-b border-border/60 mb-5">
+              <span className="text-sm font-medium text-foreground">{t('settings.language')}:</span>
               <Select value={lang} onValueChange={(v) => setLang(v as LangCode)}>
-                <SelectTrigger className="h-8 w-[180px] text-xs">
+                <SelectTrigger className="h-9 w-[190px] text-sm">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
                   {TOP_10_LANGUAGES.map(l => (
-                    <SelectItem key={l.code} value={l.code} className="text-xs">
+                    <SelectItem key={l.code} value={l.code} className="text-sm">
                       <span className="mr-2">{l.flag}</span>
                       {l.name}
                     </SelectItem>
@@ -106,7 +106,7 @@ export default function Auth() {
                 </SelectContent>
               </Select>
             </div>
-            <CardDescription className="text-xs">
+            <CardDescription className="text-sm text-foreground/80">
               {mode === 'login' && t('auth.login_title')}
               {mode === 'signup' && t('auth.signup_title')}
               {mode === 'forgot' && t('auth.forgot_title')}
