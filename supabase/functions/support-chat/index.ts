@@ -6,22 +6,66 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
-const SYSTEM_PROMPT = `You are the official support assistant for OpenClawForWindows, a workflow automation platform.
+const LANG_NAMES: Record<string, string> = {
+  it: "Italian", en: "English", zh: "Chinese (Simplified)", hi: "Hindi",
+  es: "Spanish", fr: "French", ar: "Arabic", bn: "Bengali", pt: "Portuguese", ru: "Russian",
+};
 
-Your role:
-- Answer questions about OpenClawForWindows features, pricing, account management, and troubleshooting.
-- Be helpful, concise, and friendly.
-- If you don't know something specific, suggest contacting support@openclaw.app.
-- You can help with: creating workflows, understanding nodes (triggers, actions, conditions, outputs), subscription/billing questions, account issues, and general usage.
-- Always respond in the same language the user writes in.
+const KNOWLEDGE_BASE = `
+## Product
+OpenClawForWindows is a visual no-code/low-code workflow automation builder for Windows desktop (also macOS & Linux desktop via Electron). Node-RED inspired, drag-and-drop canvas powered by XYFlow.
 
-Key facts:
-- OpenClawForWindows is a visual workflow automation builder for Windows.
-- It has a Pro subscription plan with a 10-day free trial.
-- Workflows are built by dragging nodes onto a canvas and connecting them.
-- Node types: Triggers, Actions, Conditions, Outputs.
-- Support email: support@openclaw.app
-- Legal email: legal@openclaw.app`;
+## Pricing (EUR, via Stripe)
+- **Free Trial**: 10 days local trial, no credit card.
+- **Annual Plan**: 10,90 € / year.
+- **Lifetime Plan**: 55,90 € one-time payment.
+- Manage billing from /pricing (Stripe customer portal).
+
+## Installation
+- Download from /download. Available builds: Windows (.exe / MSIX), macOS (.dmg), ZIP portable.
+- Requirements: Windows 10/11 64-bit, PowerShell 7+ recommended.
+- For AI nodes locally we recommend **Ollama** (free, runs on device). Cloud providers (OpenAI, Anthropic, Gemini) are also supported by adding the API key in /home → Agents.
+- Full guide at /install.
+
+## Workflow Editor
+- Canvas at "/" (Index). Drag nodes from the palette, connect outputs to inputs.
+- Node categories: **Triggers** (Manual, Scheduled with cron, Webhook), **Actions** (HTTP, AI Agent, File, Shell), **Conditions** (If/Else, Switch), **Outputs** (Log, Notification, File write).
+- Simulation: click "Run" to execute workflow in topological order with real-time visual feedback.
+- Projects are auto-synced to the cloud for logged-in users.
+
+## Account
+- Sign in at /auth (email+password or Google).
+- Reset password at /reset-password.
+- Profile & avatar editable at /home.
+- Delete account: contact support@openclaw.app.
+
+## Common issues
+- "Workflow won't run": check that there is at least one Trigger node connected.
+- "AI Agent fails": verify API key in /home → Agents; for Ollama ensure the local server is running on port 11434.
+- "Login loop": clear cookies for openclawforwindows.com and try again.
+- "Trial expired": upgrade at /pricing.
+
+## Contacts
+- Support: support@openclaw.app
+- Legal: legal@openclaw.app
+- Website: https://openclawforwindows.com
+`;
+
+function buildSystemPrompt(lang: string) {
+  const langName = LANG_NAMES[lang] || "the same language as the user";
+  return `You are the official support assistant for **OpenClawForWindows**.
+
+## Rules
+- ALWAYS reply in ${langName}. Even if the user writes in another language, your reply MUST be in ${langName}.
+- Be helpful, concise, friendly. Use markdown (lists, **bold**, \`code\`, links).
+- Keep answers short (max ~150 words) unless the user asks for detail.
+- If the question is outside OpenClawForWindows scope, politely redirect.
+- If you don't know, say so and suggest emailing **support@openclaw.app**.
+- Never invent prices, features or URLs that are not in the knowledge base below.
+
+## Knowledge Base
+${KNOWLEDGE_BASE}`;
+}
 
 serve(async (req) => {
   if (req.method === "OPTIONS") {
@@ -29,7 +73,8 @@ serve(async (req) => {
   }
 
   try {
-    const { messages } = await req.json();
+    const { messages, lang } = await req.json();
+    const userLang = typeof lang === "string" ? lang : "en";
 
     if (!messages || !Array.isArray(messages)) {
       return new Response(
@@ -52,7 +97,7 @@ serve(async (req) => {
       body: JSON.stringify({
         model: "google/gemini-3-flash-preview",
         messages: [
-          { role: "system", content: SYSTEM_PROMPT },
+          { role: "system", content: buildSystemPrompt(userLang) },
           ...messages,
         ],
         stream: true,

@@ -24,6 +24,7 @@ import Support from "./pages/Support.tsx";
 import DownloadPage from "./pages/Download.tsx";
 import Sitemap from "./pages/Sitemap.tsx";
 import ResetPassword from "./pages/ResetPassword.tsx";
+import SupportWidget from "./components/SupportWidget";
 
 const queryClient = new QueryClient();
 
@@ -53,6 +54,7 @@ const App = () => (
               <Route path="/admin" element={<ProtectedRoute><Admin /></ProtectedRoute>} />
               <Route path="*" element={<NotFound />} />
             </Routes>
+            <SupportWidget />
           </AuthProvider>
           <CookieConsent />
         </BrowserRouter>
