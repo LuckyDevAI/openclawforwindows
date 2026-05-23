@@ -19,7 +19,7 @@ type W = {
   quick: string[];
 };
 
-const WIDGET_I18N: Record<LangCode, W> = {
+const WIDGET_I18N: Partial<Record<LangCode, W>> = {
   it: { title: 'Supporto', welcome: 'Ciao! 👋 Come posso aiutarti con OpenClawForWindows?', placeholder: 'Scrivi un messaggio...', reset: 'Nuova chat', open: 'Apri supporto', quick: ['Come installo?', 'Quanto costa?', 'Reset password', 'Crea un workflow'] },
   en: { title: 'Support', welcome: 'Hi! 👋 How can I help you with OpenClawForWindows?', placeholder: 'Type a message...', reset: 'New chat', open: 'Open support', quick: ['How do I install?', 'How much does it cost?', 'Reset password', 'Create a workflow'] },
   zh: { title: '支持', welcome: '你好! 👋 我能为你的 OpenClawForWindows 做什么?', placeholder: '输入消息...', reset: '新聊天', open: '打开支持', quick: ['如何安装?', '价格是多少?', '重置密码', '创建工作流'] },
