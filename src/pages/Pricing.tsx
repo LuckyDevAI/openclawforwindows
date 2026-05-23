@@ -12,13 +12,23 @@ import { Badge } from '@/components/ui/badge';
 import { Check, Loader2, Crown, ArrowLeft, Infinity } from 'lucide-react';
 import { toast } from 'sonner';
 
-const featureKeys = [
+const annualFeatureKeys = [
   'feat.unlimited',
   'feat.all_nodes',
   'feat.auto_exec',
   'feat.webhooks',
   'feat.notifications',
   'feat.backup',
+  'feat.backup_local',
+] as const;
+
+const lifetimeFeatureKeys = [
+  'feat.unlimited',
+  'feat.all_nodes',
+  'feat.auto_exec',
+  'feat.webhooks',
+  'feat.notifications',
+  'feat.backup_local',
 ] as const;
 
 export default function Pricing() {
@@ -124,7 +134,7 @@ export default function Pricing() {
               </CardHeader>
               <CardContent className="space-y-5 pt-2">
                 <ul className="space-y-3">
-                  {featureKeys.map(k => (
+                  {annualFeatureKeys.map(k => (
                     <li key={k} className="flex items-center gap-3 text-sm text-foreground">
                       <Check className="h-4 w-4 text-accent shrink-0" />
                       <span className="font-medium">{t(k)}</span>
@@ -191,7 +201,7 @@ export default function Pricing() {
               </CardHeader>
               <CardContent className="space-y-5 pt-2">
                 <ul className="space-y-3">
-                  {featureKeys.map(k => (
+                  {lifetimeFeatureKeys.map(k => (
                     <li key={k} className="flex items-center gap-3 text-sm text-foreground">
                       <Check className="h-4 w-4 text-accent shrink-0" />
                       <span className="font-medium">{t(k)}</span>
