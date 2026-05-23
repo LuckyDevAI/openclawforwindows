@@ -4,15 +4,18 @@ import { useNavigate } from 'react-router-dom';
 import { lovable } from '@/integrations/lovable';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
+import { useSettings } from '@/contexts/SettingsContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Mail, KeyRound, Eye, EyeOff, Loader2 } from 'lucide-react';
 import Footer from '@/components/Footer';
 import { useToast } from '@/hooks/use-toast';
 import { useEffect } from 'react';
+import { TOP_10_LANGUAGES, type LangCode } from '@/lib/i18n';
 
 export default function Auth() {
   const [mode, setMode] = useState<'login' | 'signup' | 'forgot'>('login');
@@ -23,6 +26,7 @@ export default function Auth() {
   const { toast } = useToast();
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { t, lang, setLang } = useSettings();
 
   useEffect(() => {
     if (user) navigate('/home', { replace: true });
@@ -38,8 +42,8 @@ export default function Auth() {
         });
         if (error) throw error;
         toast({
-          title: 'Email inviata',
-          description: 'Controlla la tua casella per il link di reset password.',
+          title: t('auth.reset_email_sent'),
+          description: t('auth.reset_email_desc'),
         });
         setMode('login');
       } else if (mode === 'signup') {
@@ -49,14 +53,14 @@ export default function Auth() {
           options: { emailRedirectTo: window.location.origin },
         });
         if (error) throw error;
-        toast({ title: 'Controlla la tua email', description: 'Ti abbiamo inviato un link di conferma.' });
+        toast({ title: t('auth.check_email'), description: t('auth.confirmation_sent') });
       } else {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
         navigate('/home');
       }
     } catch (err: any) {
-      toast({ title: 'Errore', description: err.message, variant: 'destructive' });
+      toast({ title: t('auth.error'), description: err.message, variant: 'destructive' });
     } finally {
       setLoading(false);
     }
@@ -66,13 +70,13 @@ export default function Auth() {
     const { error } = await lovable.auth.signInWithOAuth('google', {
       redirect_uri: window.location.origin,
     });
-    if (error) toast({ title: 'Errore', description: error.message, variant: 'destructive' });
+    if (error) toast({ title: t('auth.error'), description: error.message, variant: 'destructive' });
   };
 
   const handlePasskey = async () => {
     toast({
       title: 'Passkey',
-      description: 'Il supporto Passkey/WebAuthn sarà disponibile prossimamente.',
+      description: t('auth.passkey_coming_soon'),
     });
   };
 
@@ -80,15 +84,33 @@ export default function Auth() {
     <div className="flex min-h-screen flex-col bg-background">
       <div className="flex flex-1 items-center justify-center p-4">
         <Card className="w-full max-w-sm border-border bg-card">
+          {/* Language selector */}
+          <div className="flex items-center justify-end gap-2 px-6 pt-6 pb-0">
+            <span className="text-xs text-muted-foreground">{t('settings.language')}:</span>
+            <Select value={lang} onValueChange={(v) => setLang(v as LangCode)}>
+              <SelectTrigger className="h-8 w-[180px] text-xs">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {TOP_10_LANGUAGES.map(l => (
+                  <SelectItem key={l.code} value={l.code} className="text-xs">
+                    <span className="mr-2">{l.flag}</span>
+                    {l.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
           <CardHeader className="text-center pb-4">
             <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-primary/15 overflow-hidden">
               <img src={logo} alt="OpenClawForWindows" className="h-10 w-10 object-contain" />
             </div>
             <CardTitle className="text-lg font-bold tracking-tight">OpenClawForWindows</CardTitle>
             <CardDescription className="text-xs">
-              {mode === 'login' && 'Accedi al tuo account'}
-              {mode === 'signup' && 'Crea un nuovo account'}
-              {mode === 'forgot' && 'Reimposta la tua password'}
+              {mode === 'login' && t('auth.login_title')}
+              {mode === 'signup' && t('auth.signup_title')}
+              {mode === 'forgot' && t('auth.forgot_title')}
             </CardDescription>
           </CardHeader>
 
@@ -107,13 +129,13 @@ export default function Auth() {
                 <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
                 <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
               </svg>
-              Continua con Google
+              {t('auth.google')}
             </Button>
 
 
             <div className="flex items-center gap-3">
               <Separator className="flex-1" />
-              <span className="text-[10px] uppercase tracking-wider text-muted-foreground">oppure</span>
+              <span className="text-[10px] uppercase tracking-wider text-muted-foreground">{t('auth.or')}</span>
               <Separator className="flex-1" />
             </div>
               </>
@@ -122,7 +144,7 @@ export default function Auth() {
             {/* Email form */}
             <form onSubmit={handleEmail} className="space-y-3">
               <div className="space-y-1.5">
-                <Label htmlFor="email" className="text-xs">Email</Label>
+                <Label htmlFor="email" className="text-xs">{t('auth.email')}</Label>
                 <div className="relative">
                   <Mail className="absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground" />
                   <Input
@@ -130,7 +152,7 @@ export default function Auth() {
                     type="email"
                     value={email}
                     onChange={e => setEmail(e.target.value)}
-                    placeholder="nome@esempio.com"
+                    placeholder={t('auth.email_placeholder')}
                     className="h-9 pl-8 text-xs"
                     required
                   />
@@ -138,14 +160,14 @@ export default function Auth() {
               </div>
               {mode !== 'forgot' && (
               <div className="space-y-1.5">
-                <Label htmlFor="password" className="text-xs">Password</Label>
+                <Label htmlFor="password" className="text-xs">{t('auth.password')}</Label>
                 <div className="relative">
                   <Input
                     id="password"
                     type={showPassword ? 'text' : 'password'}
                     value={password}
                     onChange={e => setPassword(e.target.value)}
-                    placeholder="••••••••"
+                    placeholder={t('auth.password_placeholder')}
                     className="h-9 pr-9 text-xs"
                     required
                     minLength={6}
@@ -164,16 +186,16 @@ export default function Auth() {
                     onClick={() => setMode('forgot')}
                     className="text-[11px] text-primary hover:underline font-medium"
                   >
-                    Password dimenticata?
+                    {t('auth.forgot_password_link')}
                   </button>
                 )}
               </div>
               )}
               <Button type="submit" className="w-full h-9 text-xs font-semibold" disabled={loading}>
                 {loading && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
-                {mode === 'login' && 'Accedi'}
-                {mode === 'signup' && 'Registrati'}
-                {mode === 'forgot' && 'Invia link di reset'}
+                {mode === 'login' && t('auth.login')}
+                {mode === 'signup' && t('auth.signup')}
+                {mode === 'forgot' && t('auth.reset_link')}
               </Button>
             </form>
 
@@ -183,17 +205,17 @@ export default function Auth() {
                   onClick={() => setMode('login')}
                   className="text-primary hover:underline font-medium"
                 >
-                  Torna al login
+                  {t('auth.back_to_login')}
                 </button>
               </p>
             ) : (
             <p className="text-center text-[11px] text-muted-foreground">
-              {mode === 'login' ? 'Non hai un account?' : 'Hai già un account?'}{' '}
+              {mode === 'login' ? t('auth.no_account') : t('auth.has_account')}{' '}
               <button
                 onClick={() => setMode(m => m === 'login' ? 'signup' : 'login')}
                 className="text-primary hover:underline font-medium"
               >
-                {mode === 'login' ? 'Registrati' : 'Accedi'}
+                {mode === 'login' ? t('auth.signup') : t('auth.login')}
               </button>
             </p>
             )}

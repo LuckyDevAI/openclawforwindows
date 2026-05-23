@@ -68,6 +68,18 @@ type TranslationKeys = {
   'auth.has_account': string;
   'auth.login_title': string;
   'auth.signup_title': string;
+  'auth.forgot_title': string;
+  'auth.forgot_password_link': string;
+  'auth.reset_link': string;
+  'auth.back_to_login': string;
+  'auth.check_email': string;
+  'auth.confirmation_sent': string;
+  'auth.reset_email_sent': string;
+  'auth.reset_email_desc': string;
+  'auth.passkey_coming_soon': string;
+  'auth.email_placeholder': string;
+  'auth.password_placeholder': string;
+  'auth.error': string;
   // Editor
   'editor.untitled': string;
   'editor.open': string;
@@ -192,6 +204,18 @@ const translations: Translations = {
     'auth.has_account': 'Hai già un account?',
     'auth.login_title': 'Accedi al tuo account',
     'auth.signup_title': 'Crea un nuovo account',
+    'auth.forgot_title': 'Reimposta la tua password',
+    'auth.forgot_password_link': 'Password dimenticata?',
+    'auth.reset_link': 'Invia link di reset',
+    'auth.back_to_login': 'Torna al login',
+    'auth.check_email': 'Controlla la tua email',
+    'auth.confirmation_sent': 'Ti abbiamo inviato un link di conferma.',
+    'auth.reset_email_sent': 'Email inviata',
+    'auth.reset_email_desc': 'Controlla la tua casella per il link di reset password.',
+    'auth.passkey_coming_soon': 'Il supporto Passkey/WebAuthn sarà disponibile prossimamente.',
+    'auth.email_placeholder': 'nome@esempio.com',
+    'auth.password_placeholder': '••••••••',
+    'auth.error': 'Errore',
     'editor.untitled': 'Progetto senza titolo',
     'editor.open': 'Apri',
     'editor.save': 'Salva',
@@ -302,6 +326,18 @@ const translations: Translations = {
     'auth.has_account': 'Already have an account?',
     'auth.login_title': 'Log in to your account',
     'auth.signup_title': 'Create a new account',
+    'auth.forgot_title': 'Reset your password',
+    'auth.forgot_password_link': 'Forgot password?',
+    'auth.reset_link': 'Send reset link',
+    'auth.back_to_login': 'Back to login',
+    'auth.check_email': 'Check your email',
+    'auth.confirmation_sent': 'We sent you a confirmation link.',
+    'auth.reset_email_sent': 'Email sent',
+    'auth.reset_email_desc': 'Check your inbox for the password reset link.',
+    'auth.passkey_coming_soon': 'Passkey/WebAuthn support will be available soon.',
+    'auth.email_placeholder': 'name@example.com',
+    'auth.password_placeholder': '••••••••',
+    'auth.error': 'Error',
     'editor.untitled': 'Untitled project',
     'editor.open': 'Open',
     'editor.save': 'Save',
@@ -403,7 +439,7 @@ const translations: Translations = {
     'auth.login': 'Iniciar sesión', 'auth.signup': 'Registrarse', 'auth.email': 'Correo', 'auth.password': 'Contraseña',
     'auth.google': 'Continuar con Google', 'auth.passkey': 'Iniciar con Passkey', 'auth.or': 'o',
     'auth.no_account': '¿No tienes cuenta?', 'auth.has_account': '¿Ya tienes cuenta?',
-    'auth.login_title': 'Inicia sesión', 'auth.signup_title': 'Crea una cuenta',
+    'auth.login_title': 'Inicia sesión', 'auth.signup_title': 'Crea una cuenta', 'auth.forgot_title': 'Restablecer tu contraseña', 'auth.forgot_password_link': '¿Olvidaste tu contraseña?', 'auth.reset_link': 'Enviar enlace de restablecimiento', 'auth.back_to_login': 'Volver al inicio de sesión', 'auth.check_email': 'Revisa tu correo', 'auth.confirmation_sent': 'Te hemos enviado un enlace de confirmación.', 'auth.reset_email_sent': 'Correo enviado', 'auth.reset_email_desc': 'Revisa tu bandeja de entrada para el enlace de restablecimiento.', 'auth.passkey_coming_soon': 'El soporte Passkey/WebAuthn estará disponible próximamente.', 'auth.email_placeholder': 'nombre@ejemplo.com', 'auth.password_placeholder': '••••••••', 'auth.error': 'Error',
     'editor.untitled': 'Proyecto sin título', 'editor.open': 'Abrir', 'editor.save': 'Guardar',
     'editor.run': 'Ejecutar', 'editor.stop': 'Detener', 'editor.drag_hint': 'Arrastra nodos desde la barra lateral',
     'editor.no_nodes': 'Añade al menos un nodo.', 'editor.saved': 'Guardado', 'editor.opened': 'Abierto',
@@ -434,7 +470,7 @@ const translations: Translations = {
     'auth.login': 'Connexion', 'auth.signup': "S'inscrire", 'auth.email': 'E-mail', 'auth.password': 'Mot de passe',
     'auth.google': 'Continuer avec Google', 'auth.passkey': 'Connexion Passkey', 'auth.or': 'ou',
     'auth.no_account': 'Pas de compte ?', 'auth.has_account': 'Déjà un compte ?',
-    'auth.login_title': 'Connectez-vous', 'auth.signup_title': 'Créer un compte',
+    'auth.login_title': 'Connectez-vous', 'auth.signup_title': 'Créer un compte', 'auth.forgot_title': 'Réinitialiser votre mot de passe', 'auth.forgot_password_link': 'Mot de passe oublié ?', 'auth.reset_link': 'Envoyer le lien de réinitialisation', 'auth.back_to_login': 'Retour à la connexion', 'auth.check_email': 'Vérifiez votre email', 'auth.confirmation_sent': 'Nous vous avons envoyé un lien de confirmation.', 'auth.reset_email_sent': 'Email envoyé', 'auth.reset_email_desc': 'Vérifiez votre boîte de réception pour le lien de réinitialisation.', 'auth.passkey_coming_soon': 'Le support Passkey/WebAuthn sera bientôt disponible.', 'auth.email_placeholder': 'nom@exemple.com', 'auth.password_placeholder': '••••••••', 'auth.error': 'Erreur',
     'editor.untitled': 'Projet sans titre', 'editor.open': 'Ouvrir', 'editor.save': 'Enregistrer',
     'editor.run': 'Exécuter', 'editor.stop': 'Arrêter', 'editor.drag_hint': 'Glissez des nœuds depuis la barre latérale',
     'editor.no_nodes': 'Ajoutez au moins un nœud.', 'editor.saved': 'Enregistré', 'editor.opened': 'Ouvert',
@@ -465,7 +501,7 @@ const translations: Translations = {
     'auth.login': 'Anmelden', 'auth.signup': 'Registrieren', 'auth.email': 'E-Mail', 'auth.password': 'Passwort',
     'auth.google': 'Weiter mit Google', 'auth.passkey': 'Mit Passkey anmelden', 'auth.or': 'oder',
     'auth.no_account': 'Kein Konto?', 'auth.has_account': 'Bereits ein Konto?',
-    'auth.login_title': 'Anmelden', 'auth.signup_title': 'Konto erstellen',
+    'auth.login_title': 'Anmelden', 'auth.signup_title': 'Konto erstellen', 'auth.forgot_title': 'Passwort zurücksetzen', 'auth.forgot_password_link': 'Passwort vergessen?', 'auth.reset_link': 'Reset-Link senden', 'auth.back_to_login': 'Zurück zum Login', 'auth.check_email': 'Überprüfe deine E-Mail', 'auth.confirmation_sent': 'Wir haben dir einen Bestätigungslink gesendet.', 'auth.reset_email_sent': 'E-Mail gesendet', 'auth.reset_email_desc': 'Überprüfe deinen Posteingang für den Passwort-Reset-Link.', 'auth.passkey_coming_soon': 'Passkey/WebAuthn-Unterstützung wird bald verfügbar sein.', 'auth.email_placeholder': 'name@beispiel.de', 'auth.password_placeholder': '••••••••', 'auth.error': 'Fehler',
     'editor.untitled': 'Unbenanntes Projekt', 'editor.open': 'Öffnen', 'editor.save': 'Speichern',
     'editor.run': 'Ausführen', 'editor.stop': 'Stoppen', 'editor.drag_hint': 'Ziehen Sie Knoten aus der Seitenleiste',
     'editor.no_nodes': 'Fügen Sie mindestens einen Knoten hinzu.', 'editor.saved': 'Gespeichert', 'editor.opened': 'Geöffnet',
@@ -531,13 +567,24 @@ const translations: Translations = {
 
 // Fill remaining languages with translated auth/UI strings
 const langData: Record<string, Partial<TranslationKeys>> = {
-  pt: { 'auth.login': 'Entrar', 'auth.signup': 'Cadastrar', 'auth.google': 'Continuar com Google', 'auth.or': 'ou', 'auth.no_account': 'Não tem conta?', 'auth.has_account': 'Já tem conta?', 'auth.login_title': 'Entre na sua conta', 'auth.signup_title': 'Crie uma conta', 'editor.open': 'Abrir', 'editor.save': 'Salvar', 'editor.run': 'Executar', 'editor.stop': 'Parar', 'editor.drag_hint': 'Arraste nós da barra lateral', 'cat.triggers': 'Gatilhos', 'cat.actions': 'Ações', 'cat.conditions': 'Condições', 'cat.outputs': 'Saídas', 'settings.light': 'Claro', 'settings.dark': 'Escuro', 'settings.theme': 'Tema', 'settings.language': 'Idioma',
+  pt: { 'auth.login': 'Entrar', 'auth.signup': 'Cadastrar', 'auth.google': 'Continuar com Google', 'auth.or': 'ou', 'auth.no_account': 'Não tem conta?', 'auth.has_account': 'Já tem conta?', 'auth.login_title': 'Entre na sua conta', 'auth.signup_title': 'Crie uma conta',
+    'auth.forgot_title': 'Redefinir sua senha', 'auth.forgot_password_link': 'Esqueceu a senha?', 'auth.reset_link': 'Enviar link de redefinição', 'auth.back_to_login': 'Voltar ao login',
+    'auth.check_email': 'Verifique seu email', 'auth.confirmation_sent': 'Enviamos um link de confirmação.', 'auth.reset_email_sent': 'Email enviado', 'auth.reset_email_desc': 'Verifique sua caixa de entrada para o link de redefinição.',
+    'auth.passkey_coming_soon': 'O suporte Passkey/WebAuthn estará disponível em breve.', 'auth.email_placeholder': 'nome@exemplo.com', 'auth.password_placeholder': '••••••••', 'auth.error': 'Erro', 'editor.open': 'Abrir', 'editor.save': 'Salvar', 'editor.run': 'Executar', 'editor.stop': 'Parar', 'editor.drag_hint': 'Arraste nós da barra lateral', 'cat.triggers': 'Gatilhos', 'cat.actions': 'Ações', 'cat.conditions': 'Condições', 'cat.outputs': 'Saídas', 'settings.light': 'Claro', 'settings.dark': 'Escuro', 'settings.theme': 'Tema', 'settings.language': 'Idioma',
     'pricing.title': 'OpenClawForWindows Pro', 'pricing.subtitle': 'Automações sem limites', 'pricing.year': '/ano', 'pricing.trial': '10 dias grátis · Cancele quando quiser', 'pricing.start_trial': 'Iniciar teste grátis', 'pricing.no_charge': 'Sem cobrança por 10 dias', 'pricing.manage': 'Gerenciar assinatura', 'pricing.refresh': 'Atualizar', 'pricing.back': 'Voltar', 'pricing.active': 'Assinatura ativa', 'pricing.trial_active': 'Teste ativo', 'pricing.trial_until': 'Teste até', 'pricing.renews': 'Renova em',
     'feat.unlimited': 'Workflows ilimitados', 'feat.all_nodes': 'Todos os tipos de nó', 'feat.auto_exec': 'Execução automática', 'feat.webhooks': 'Webhooks & APIs', 'feat.notifications': 'Notificações desktop', 'feat.support': 'Suporte prioritário' },
-  ru: { 'auth.login': 'Войти', 'auth.signup': 'Регистрация', 'auth.google': 'Войти через Google', 'auth.or': 'или', 'editor.open': 'Открыть', 'editor.save': 'Сохранить', 'editor.run': 'Запуск', 'editor.stop': 'Стоп', 'cat.triggers': 'Триггеры', 'cat.actions': 'Действия', 'cat.conditions': 'Условия', 'cat.outputs': 'Выходы', 'settings.light': 'Светлая', 'settings.dark': 'Тёмная', 'settings.theme': 'Тема', 'settings.language': 'Язык',
+  ru: { 'auth.login': 'Войти', 'auth.signup': 'Регистрация', 'auth.google': 'Войти через Google', 'auth.or': 'или',
+    'auth.no_account': 'Нет аккаунта?', 'auth.has_account': 'Уже есть аккаунт?', 'auth.login_title': 'Вход', 'auth.signup_title': 'Создать аккаунт',
+    'auth.forgot_title': 'Сбросить пароль', 'auth.forgot_password_link': 'Забыли пароль?', 'auth.reset_link': 'Отправить ссылку для сброса', 'auth.back_to_login': 'Назад ко входу',
+    'auth.check_email': 'Проверьте свою почту', 'auth.confirmation_sent': 'Мы отправили вам ссылку для подтверждения.', 'auth.reset_email_sent': 'Письмо отправлено', 'auth.reset_email_desc': 'Проверьте входящие для ссылки сброса пароля.',
+    'auth.passkey_coming_soon': 'Поддержка Passkey/WebAuthn скоро будет доступна.', 'auth.email_placeholder': 'имя@пример.ru', 'auth.password_placeholder': '••••••••', 'auth.error': 'Ошибка', 'editor.open': 'Открыть', 'editor.save': 'Сохранить', 'editor.run': 'Запуск', 'editor.stop': 'Стоп', 'cat.triggers': 'Триггеры', 'cat.actions': 'Действия', 'cat.conditions': 'Условия', 'cat.outputs': 'Выходы', 'settings.light': 'Светлая', 'settings.dark': 'Тёмная', 'settings.theme': 'Тема', 'settings.language': 'Язык',
     'pricing.title': 'OpenClawForWindows Pro', 'pricing.subtitle': 'Безлимитная автоматизация', 'pricing.year': '/год', 'pricing.trial': '10 дней бесплатно · Отмена в любое время', 'pricing.start_trial': 'Начать пробный период', 'pricing.no_charge': 'Бесплатно в течение 10 дней', 'pricing.manage': 'Управление подпиской', 'pricing.refresh': 'Обновить', 'pricing.back': 'Назад', 'pricing.active': 'Подписка активна', 'pricing.trial_active': 'Пробный период', 'pricing.trial_until': 'Пробный до', 'pricing.renews': 'Продление',
     'feat.unlimited': 'Безлимитные воркфлоу', 'feat.all_nodes': 'Все типы узлов', 'feat.auto_exec': 'Авто-выполнение', 'feat.webhooks': 'Webhooks & APIs', 'feat.notifications': 'Уведомления', 'feat.support': 'Приоритетная поддержка' },
-  zh: { 'auth.login': '登录', 'auth.signup': '注册', 'auth.google': '使用Google继续', 'auth.or': '或', 'editor.open': '打开', 'editor.save': '保存', 'editor.run': '运行', 'editor.stop': '停止', 'cat.triggers': '触发器', 'cat.actions': '操作', 'cat.conditions': '条件', 'cat.outputs': '输出', 'settings.light': '浅色', 'settings.dark': '深色', 'settings.theme': '主题', 'settings.language': '语言',
+  zh: { 'auth.login': '登录', 'auth.signup': '注册', 'auth.google': '使用Google继续', 'auth.or': '或',
+    'auth.no_account': '没有账户？', 'auth.has_account': '已有账户？', 'auth.login_title': '登录您的账户', 'auth.signup_title': '创建新账户',
+    'auth.forgot_title': '重置密码', 'auth.forgot_password_link': '忘记密码？', 'auth.reset_link': '发送重置链接', 'auth.back_to_login': '返回登录',
+    'auth.check_email': '查看您的邮箱', 'auth.confirmation_sent': '我们已发送确认链接。', 'auth.reset_email_sent': '邮件已发送', 'auth.reset_email_desc': '请查看收件箱中的密码重置链接。',
+    'auth.passkey_coming_soon': 'Passkey/WebAuthn 支持即将推出。', 'auth.email_placeholder': '姓名@示例.com', 'auth.password_placeholder': '••••••••', 'auth.error': '错误', 'editor.open': '打开', 'editor.save': '保存', 'editor.run': '运行', 'editor.stop': '停止', 'cat.triggers': '触发器', 'cat.actions': '操作', 'cat.conditions': '条件', 'cat.outputs': '输出', 'settings.light': '浅色', 'settings.dark': '深色', 'settings.theme': '主题', 'settings.language': '语言',
     'pricing.title': 'OpenClawForWindows Pro', 'pricing.subtitle': '无限自动化', 'pricing.year': '/年', 'pricing.trial': '10天免费试用 · 随时取消', 'pricing.start_trial': '开始免费试用', 'pricing.no_charge': '10天内不收费', 'pricing.manage': '管理订阅', 'pricing.refresh': '刷新', 'pricing.back': '返回', 'pricing.active': '订阅已激活', 'pricing.trial_active': '试用中', 'pricing.trial_until': '试用至', 'pricing.renews': '续费日期',
     'feat.unlimited': '无限工作流', 'feat.all_nodes': '所有节点类型', 'feat.auto_exec': '自动执行', 'feat.webhooks': 'Webhooks & APIs', 'feat.notifications': '桌面通知', 'feat.support': '优先支持' },
   ja: { 'auth.login': 'ログイン', 'auth.signup': '登録', 'auth.google': 'Googleで続行', 'auth.or': 'または', 'editor.open': '開く', 'editor.save': '保存', 'editor.run': '実行', 'editor.stop': '停止', 'cat.triggers': 'トリガー', 'cat.actions': 'アクション', 'cat.conditions': '条件', 'cat.outputs': '出力', 'settings.light': 'ライト', 'settings.dark': 'ダーク', 'settings.theme': 'テーマ', 'settings.language': '言語',
@@ -546,10 +593,18 @@ const langData: Record<string, Partial<TranslationKeys>> = {
   ko: { 'auth.login': '로그인', 'auth.signup': '가입', 'auth.google': 'Google로 계속', 'auth.or': '또는', 'editor.open': '열기', 'editor.save': '저장', 'editor.run': '실행', 'editor.stop': '중지', 'cat.triggers': '트리거', 'cat.actions': '액션', 'cat.conditions': '조건', 'cat.outputs': '출력', 'settings.light': '라이트', 'settings.dark': '다크', 'settings.theme': '테마', 'settings.language': '언어',
     'pricing.title': 'OpenClawForWindows Pro', 'pricing.subtitle': '무제한 자동화', 'pricing.year': '/년', 'pricing.trial': '10일 무료 · 언제든 취소', 'pricing.start_trial': '무료 체험 시작', 'pricing.no_charge': '10일간 무료', 'pricing.manage': '구독 관리', 'pricing.refresh': '새로고침', 'pricing.back': '뒤로', 'pricing.active': '구독 활성', 'pricing.trial_active': '체험 중', 'pricing.trial_until': '체험 종료일', 'pricing.renews': '갱신일',
     'feat.unlimited': '무제한 워크플로우', 'feat.all_nodes': '모든 노드 유형', 'feat.auto_exec': '자동 실행', 'feat.webhooks': 'Webhooks & APIs', 'feat.notifications': '데스크톱 알림', 'feat.support': '우선 지원' },
-  ar: { 'auth.login': 'تسجيل الدخول', 'auth.signup': 'التسجيل', 'auth.google': 'المتابعة مع Google', 'auth.or': 'أو', 'editor.open': 'فتح', 'editor.save': 'حفظ', 'editor.run': 'تشغيل', 'editor.stop': 'إيقاف', 'settings.light': 'فاتح', 'settings.dark': 'داكن', 'settings.theme': 'المظهر', 'settings.language': 'اللغة',
+  ar: { 'auth.login': 'تسجيل الدخول', 'auth.signup': 'التسجيل', 'auth.google': 'المتابعة مع Google', 'auth.or': 'أو',
+    'auth.no_account': 'ليس لديك حساب؟', 'auth.has_account': 'لديك حساب بالفعل؟', 'auth.login_title': 'تسجيل الدخول إلى حسابك', 'auth.signup_title': 'إنشاء حساب جديد',
+    'auth.forgot_title': 'إعادة تعيين كلمة المرور', 'auth.forgot_password_link': 'نسيت كلمة المرور؟', 'auth.reset_link': 'إرسال رابط إعادة التعيين', 'auth.back_to_login': 'العودة إلى تسجيل الدخول',
+    'auth.check_email': 'تحقق من بريدك الإلكتروني', 'auth.confirmation_sent': 'لقد أرسلنا لك رابط تأكيد.', 'auth.reset_email_sent': 'تم إرسال البريد الإلكتروني', 'auth.reset_email_desc': 'تحقق من صندوق الوارد للحصول على رابط إعادة التعيين.',
+    'auth.passkey_coming_soon': 'سيتوفر دعم Passkey/WebAuthn قريباً.', 'auth.email_placeholder': 'اسم@مثال.com', 'auth.password_placeholder': '••••••••', 'auth.error': 'خطأ', 'editor.open': 'فتح', 'editor.save': 'حفظ', 'editor.run': 'تشغيل', 'editor.stop': 'إيقاف', 'settings.light': 'فاتح', 'settings.dark': 'داكن', 'settings.theme': 'المظهر', 'settings.language': 'اللغة',
     'pricing.title': 'OpenClawForWindows Pro', 'pricing.subtitle': 'أتمتة بلا حدود', 'pricing.year': '/سنة', 'pricing.trial': '10 أيام مجاناً · إلغاء في أي وقت', 'pricing.start_trial': 'ابدأ التجربة المجانية', 'pricing.no_charge': 'بدون رسوم لمدة 10 أيام', 'pricing.manage': 'إدارة الاشتراك', 'pricing.refresh': 'تحديث', 'pricing.back': 'رجوع', 'pricing.active': 'اشتراك نشط', 'pricing.trial_active': 'تجربة نشطة', 'pricing.trial_until': 'التجربة حتى', 'pricing.renews': 'التجديد في',
     'feat.unlimited': 'سير عمل غير محدود', 'feat.all_nodes': 'جميع أنواع العقد', 'feat.auto_exec': 'تنفيذ تلقائي', 'feat.webhooks': 'Webhooks & APIs', 'feat.notifications': 'إشعارات سطح المكتب', 'feat.support': 'دعم ذو أولوية' },
-  hi: { 'auth.login': 'लॉगिन', 'auth.signup': 'साइन अप', 'auth.google': 'Google से जारी रखें', 'auth.or': 'या', 'editor.open': 'खोलें', 'editor.save': 'सहेजें', 'editor.run': 'चलाएं', 'editor.stop': 'रोकें', 'settings.light': 'लाइट', 'settings.dark': 'डार्क', 'settings.theme': 'थीम', 'settings.language': 'भाषा',
+  hi: { 'auth.login': 'लॉगिन', 'auth.signup': 'साइन अप', 'auth.google': 'Google से जारी रखें', 'auth.or': 'या',
+    'auth.no_account': 'खाता नहीं है?', 'auth.has_account': 'पहले से खाता है?', 'auth.login_title': 'अपने खाते में लॉग इन करें', 'auth.signup_title': 'नया खाता बनाएं',
+    'auth.forgot_title': 'पासवर्ड रीसेट करें', 'auth.forgot_password_link': 'पासवर्ड भूल गए?', 'auth.reset_link': 'रीसेट लिंक भेजें', 'auth.back_to_login': 'लॉगिन पर वापस जाएं',
+    'auth.check_email': 'अपना ईमेल जांचें', 'auth.confirmation_sent': 'हमने आपको एक पुष्टिकरण लिंक भेजा है।', 'auth.reset_email_sent': 'ईमेल भेजा गया', 'auth.reset_email_desc': 'पासवर्ड रीसेट लिंक के लिए अपना इनबॉक्स जांचें।',
+    'auth.passkey_coming_soon': 'Passkey/WebAuthn समर्थन जल्द ही उपलब्ध होगा।', 'auth.email_placeholder': 'नाम@उदाहरण.com', 'auth.password_placeholder': '••••••••', 'auth.error': 'त्रुटि', 'editor.open': 'खोलें', 'editor.save': 'सहेजें', 'editor.run': 'चलाएं', 'editor.stop': 'रोकें', 'settings.light': 'लाइट', 'settings.dark': 'डार्क', 'settings.theme': 'थीम', 'settings.language': 'भाषा',
     'pricing.title': 'OpenClawForWindows Pro', 'pricing.subtitle': 'असीमित ऑटोमेशन', 'pricing.year': '/वर्ष', 'pricing.trial': '10 दिन मुफ़्त · कभी भी रद्द करें', 'pricing.start_trial': 'मुफ़्त परीक्षण शुरू करें', 'pricing.no_charge': '10 दिन तक कोई शुल्क नहीं', 'pricing.manage': 'सदस्यता प्रबंधित करें', 'pricing.refresh': 'ताज़ा करें', 'pricing.back': 'वापस', 'pricing.active': 'सदस्यता सक्रिय', 'pricing.trial_active': 'परीक्षण सक्रिय', 'pricing.trial_until': 'परीक्षण तक', 'pricing.renews': 'नवीनीकरण',
     'feat.unlimited': 'असीमित वर्कफ़्लो', 'feat.all_nodes': 'सभी नोड प्रकार', 'feat.auto_exec': 'स्वचालित निष्पादन', 'feat.webhooks': 'Webhooks & APIs', 'feat.notifications': 'डेस्कटॉप सूचनाएं', 'feat.support': 'प्राथमिकता सहायता' },
   tr: { 'auth.login': 'Giriş', 'auth.signup': 'Kayıt', 'auth.google': 'Google ile devam et', 'auth.or': 'veya', 'editor.open': 'Aç', 'editor.save': 'Kaydet', 'editor.run': 'Çalıştır', 'editor.stop': 'Durdur', 'settings.light': 'Açık', 'settings.dark': 'Koyu', 'settings.theme': 'Tema', 'settings.language': 'Dil',
@@ -618,7 +673,11 @@ const langData: Record<string, Partial<TranslationKeys>> = {
   fa: { 'auth.login': 'ورود', 'auth.signup': 'ثبت‌نام', 'auth.or': 'یا', 'editor.open': 'باز کردن', 'editor.save': 'ذخیره', 'editor.run': 'اجرا', 'editor.stop': 'توقف', 'settings.light': 'روشن', 'settings.dark': 'تاریک', 'settings.theme': 'پوسته', 'settings.language': 'زبان',
     'pricing.title': 'OpenClawForWindows Pro', 'pricing.subtitle': 'اتوماسیون نامحدود', 'pricing.year': '/سال', 'pricing.trial': '10 روز رایگان · هر زمان لغو کنید', 'pricing.start_trial': 'شروع دوره آزمایشی', 'pricing.no_charge': 'بدون هزینه برای 10 روز', 'pricing.manage': 'مدیریت اشتراک', 'pricing.refresh': 'بازخوانی', 'pricing.back': 'بازگشت', 'pricing.active': 'اشتراک فعال', 'pricing.trial_active': 'دوره آزمایشی', 'pricing.trial_until': 'آزمایش تا', 'pricing.renews': 'تمدید',
     'feat.unlimited': 'گردش کار نامحدود', 'feat.all_nodes': 'همه انواع گره', 'feat.auto_exec': 'اجرای خودکار', 'feat.webhooks': 'Webhooks & APIs', 'feat.notifications': 'اعلان‌های دسکتاپ', 'feat.support': 'پشتیبانی اولویت‌دار' },
-  bn: { 'auth.login': 'লগইন', 'auth.signup': 'সাইন আপ', 'auth.or': 'অথবা', 'editor.open': 'খুলুন', 'editor.save': 'সংরক্ষণ', 'editor.run': 'চালান', 'editor.stop': 'থামান', 'settings.light': 'হালকা', 'settings.dark': 'গাঢ়', 'settings.theme': 'থিম', 'settings.language': 'ভাষা',
+  bn: { 'auth.login': 'লগইন', 'auth.signup': 'সাইন আপ', 'auth.or': 'অথবা',
+    'auth.no_account': 'অ্যাকাউন্ট নেই?', 'auth.has_account': 'অলরেডি অ্যাকাউন্ট আছে?', 'auth.login_title': 'আপনার অ্যাকাউন্টে লগইন করুন', 'auth.signup_title': 'নতুন অ্যাকাউন্ট তৈরি করুন',
+    'auth.forgot_title': 'পাসওয়ার্ড রিসেট করুন', 'auth.forgot_password_link': 'পাসওয়ার্ড ভুলে গেছেন?', 'auth.reset_link': 'রিসেট লিংক পাঠান', 'auth.back_to_login': 'লগইনে ফিরে যান',
+    'auth.check_email': 'আপনার ইমেইল চেক করুন', 'auth.confirmation_sent': 'আমরা আপনাকে একটি নিশ্চিতকরণ লিংক পাঠিয়েছি।', 'auth.reset_email_sent': 'ইমেইল পাঠানো হয়েছে', 'auth.reset_email_desc': 'পাসওয়ার্ড রিসেট লিংকের জন্য আপনার ইনবক্স চেক করুন।',
+    'auth.passkey_coming_soon': 'Passkey/WebAuthn সমর্থন শীঘ্রই উপলব্ধ হবে।', 'auth.email_placeholder': 'নাম@উদাহরণ.com', 'auth.password_placeholder': '••••••••', 'auth.error': 'ত্রুটি', 'editor.open': 'খুলুন', 'editor.save': 'সংরক্ষণ', 'editor.run': 'চালান', 'editor.stop': 'থামান', 'settings.light': 'হালকা', 'settings.dark': 'গাঢ়', 'settings.theme': 'থিম', 'settings.language': 'ভাষা',
     'pricing.title': 'OpenClawForWindows Pro', 'pricing.subtitle': 'সীমাহীন অটোমেশন', 'pricing.year': '/বছর', 'pricing.trial': '10 দিন বিনামূল্যে · যেকোনো সময় বাতিল করুন', 'pricing.start_trial': 'বিনামূল্যে ট্রায়াল শুরু', 'pricing.no_charge': '10 দিন বিনামূল্যে', 'pricing.manage': 'সাবস্ক্রিপশন পরিচালনা', 'pricing.refresh': 'রিফ্রেশ', 'pricing.back': 'ফিরে যান', 'pricing.active': 'সাবস্ক্রিপশন সক্রিয়', 'pricing.trial_active': 'ট্রায়াল চলছে', 'pricing.trial_until': 'ট্রায়াল পর্যন্ত', 'pricing.renews': 'পুনর্নবীকরণ',
     'feat.unlimited': 'সীমাহীন ওয়ার্কফ্লো', 'feat.all_nodes': 'সব ধরনের নোড', 'feat.auto_exec': 'স্বয়ংক্রিয় সম্পাদন', 'feat.webhooks': 'Webhooks & APIs', 'feat.notifications': 'ডেস্কটপ বিজ্ঞপ্তি', 'feat.support': 'অগ্রাধিকার সহায়তা' },
   ta: { 'auth.login': 'உள்நுழை', 'auth.signup': 'பதிவு', 'auth.or': 'அல்லது', 'editor.open': 'திற', 'editor.save': 'சேமி', 'editor.run': 'இயக்கு', 'editor.stop': 'நிறுத்து', 'settings.light': 'ஒளி', 'settings.dark': 'இருள்', 'settings.theme': 'தீம்', 'settings.language': 'மொழி',
