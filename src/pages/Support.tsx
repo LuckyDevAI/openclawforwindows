@@ -56,7 +56,7 @@ export default function Support() {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
         },
-        body: JSON.stringify({ messages: allMessages }),
+        body: JSON.stringify({ messages: allMessages, lang: (typeof window !== 'undefined' && localStorage.getItem('openclaw_lang')) || 'it' }),
       });
 
       if (!resp.ok || !resp.body) {
