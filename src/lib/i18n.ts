@@ -245,7 +245,7 @@ const translations: Translations = {
     'pricing.year': '/anno',
     'pricing.trial': '10 giorni di prova gratuita · Annulla quando vuoi',
     'pricing.start_trial': 'Inizia la prova gratuita',
-    'pricing.no_charge': 'Non ti verrà addebitato nulla per 10 giorni',
+    'pricing.no_charge': 'Non ti verrà addebitato nulla per la decade\nPuoi disdire entro 10 giorni',
     'pricing.manage': 'Gestisci abbonamento',
     'pricing.refresh': 'Aggiorna stato',
     'pricing.back': 'Torna indietro',
