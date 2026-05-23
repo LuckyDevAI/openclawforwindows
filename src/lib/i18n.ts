@@ -41,6 +41,15 @@ export const LANGUAGES = [
   { code: 'lv', name: 'Latviešu', flag: '🇱🇻' },
 ] as const;
 
+// Top 10 most spoken languages worldwide (including Italian per project requirement)
+export const TOP_10_LANGUAGE_CODES = [
+  'en', 'zh', 'hi', 'es', 'fr', 'ar', 'bn', 'pt', 'ru', 'it',
+] as const;
+
+export const TOP_10_LANGUAGES = TOP_10_LANGUAGE_CODES
+  .map(code => LANGUAGES.find(l => l.code === code)!)
+  .filter(Boolean);
+
 export type LangCode = (typeof LANGUAGES)[number]['code'];
 
 type TranslationKeys = {

@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { useToast } from '@/hooks/use-toast';
@@ -19,10 +20,11 @@ import {
 import OnboardingWizard from '@/components/OnboardingWizard';
 import AgentInstallWizard from '@/components/AgentInstallWizard';
 import AgentList, { type Agent } from '@/components/AgentList';
+import { TOP_10_LANGUAGES, type LangCode } from '@/lib/i18n';
 
 export default function Home() {
   const { user, subscription } = useAuth();
-  const { t } = useSettings();
+  const { t, lang, setLang } = useSettings();
   const navigate = useNavigate();
   const { toast } = useToast();
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -169,6 +171,24 @@ export default function Home() {
       <Header />
 
       <main className="flex-1 max-w-4xl mx-auto px-4 py-8 space-y-8">
+        {/* Language Selector — Top 10 most spoken languages */}
+        <section className="flex items-center justify-end gap-2">
+          <span className="text-xs text-muted-foreground">{t('settings.language')}:</span>
+          <Select value={lang} onValueChange={(v) => setLang(v as LangCode)}>
+            <SelectTrigger className="h-8 w-[200px] text-xs">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {TOP_10_LANGUAGES.map(l => (
+                <SelectItem key={l.code} value={l.code} className="text-xs">
+                  <span className="mr-2">{l.flag}</span>
+                  {l.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </section>
+
         {/* Profile Section */}
         <section className="flex items-center gap-4">
           {/* Avatar with upload overlay */}
