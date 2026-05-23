@@ -501,7 +501,7 @@ const translations: Translations = {
     'auth.login': 'Anmelden', 'auth.signup': 'Registrieren', 'auth.email': 'E-Mail', 'auth.password': 'Passwort',
     'auth.google': 'Weiter mit Google', 'auth.passkey': 'Mit Passkey anmelden', 'auth.or': 'oder',
     'auth.no_account': 'Kein Konto?', 'auth.has_account': 'Bereits ein Konto?',
-    'auth.login_title': 'Anmelden', 'auth.signup_title': 'Konto erstellen',
+    'auth.login_title': 'Anmelden', 'auth.signup_title': 'Konto erstellen', 'auth.forgot_title': 'Passwort zurücksetzen', 'auth.forgot_password_link': 'Passwort vergessen?', 'auth.reset_link': 'Reset-Link senden', 'auth.back_to_login': 'Zurück zum Login', 'auth.check_email': 'Überprüfe deine E-Mail', 'auth.confirmation_sent': 'Wir haben dir einen Bestätigungslink gesendet.', 'auth.reset_email_sent': 'E-Mail gesendet', 'auth.reset_email_desc': 'Überprüfe deinen Posteingang für den Passwort-Reset-Link.', 'auth.passkey_coming_soon': 'Passkey/WebAuthn-Unterstützung wird bald verfügbar sein.', 'auth.email_placeholder': 'name@beispiel.de', 'auth.password_placeholder': '••••••••', 'auth.error': 'Fehler',
     'editor.untitled': 'Unbenanntes Projekt', 'editor.open': 'Öffnen', 'editor.save': 'Speichern',
     'editor.run': 'Ausführen', 'editor.stop': 'Stoppen', 'editor.drag_hint': 'Ziehen Sie Knoten aus der Seitenleiste',
     'editor.no_nodes': 'Fügen Sie mindestens einen Knoten hinzu.', 'editor.saved': 'Gespeichert', 'editor.opened': 'Geöffnet',
