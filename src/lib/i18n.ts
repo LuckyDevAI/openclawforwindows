@@ -128,6 +128,7 @@ type TranslationKeys = {
   'feat.webhooks': string;
   'feat.notifications': string;
   'feat.support': string;
+ 'feat.backup': string;
   // Admin
   'admin.title': string;
   'admin.dashboard': string;
@@ -382,6 +383,7 @@ const translations: Translations = {
     'feat.webhooks': 'Webhooks & APIs',
     'feat.notifications': 'Desktop notifications',
     'feat.support': 'Priority support',
+    'feat.backup': 'Online backup of automations',
     'admin.title': 'Admin Panel',
     'admin.dashboard': 'Dashboard',
     'admin.workflows': 'Workflows',
