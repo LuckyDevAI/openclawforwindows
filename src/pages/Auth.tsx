@@ -84,29 +84,28 @@ export default function Auth() {
     <div className="flex min-h-screen flex-col bg-background">
       <div className="flex flex-1 items-center justify-center p-4">
         <Card className="w-full max-w-sm border-border bg-card">
-          {/* Language selector */}
-          <div className="flex items-center justify-end gap-2 px-6 pt-6 pb-0">
-            <span className="text-xs text-muted-foreground">{t('settings.language')}:</span>
-            <Select value={lang} onValueChange={(v) => setLang(v as LangCode)}>
-              <SelectTrigger className="h-8 w-[180px] text-xs">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {TOP_10_LANGUAGES.map(l => (
-                  <SelectItem key={l.code} value={l.code} className="text-xs">
-                    <span className="mr-2">{l.flag}</span>
-                    {l.name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-
           <CardHeader className="text-center pb-4">
             <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-primary/15 overflow-hidden">
               <img src={logo} alt="OpenClawForWindows" className="h-10 w-10 object-contain" />
             </div>
             <CardTitle className="text-lg font-bold tracking-tight">OpenClawForWindows</CardTitle>
+            {/* Language selector */}
+            <div className="flex items-center justify-center gap-2 pt-3">
+              <span className="text-xs text-muted-foreground">{t('settings.language')}:</span>
+              <Select value={lang} onValueChange={(v) => setLang(v as LangCode)}>
+                <SelectTrigger className="h-8 w-[180px] text-xs">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {TOP_10_LANGUAGES.map(l => (
+                    <SelectItem key={l.code} value={l.code} className="text-xs">
+                      <span className="mr-2">{l.flag}</span>
+                      {l.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
             <CardDescription className="text-xs">
               {mode === 'login' && t('auth.login_title')}
               {mode === 'signup' && t('auth.signup_title')}
