@@ -118,7 +118,7 @@ export default function Pricing() {
                   <span className="text-base font-normal text-muted-foreground ml-1">{t('pricing.year')}</span>
                 </CardTitle>
                 <CardDescription className="text-sm mt-1">
-                  10 giorni di prova gratuita · Annulla quando vuoi
+                  10 giorni di prova gratuita<br />Annulla quando vuoi
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-5 pt-2">
