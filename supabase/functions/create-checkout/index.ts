@@ -13,7 +13,7 @@ const PLANS = {
     mode: "subscription" as const,
   },
   lifetime: {
-    price_id: "price_1TFMROCRiYFDB9U6RHZfzNlz",
+    price_id: "price_1TaDfxCRiYFDB9U6QWYsiyLd",
     mode: "payment" as const,
   },
 };
