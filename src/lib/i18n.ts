@@ -261,7 +261,6 @@ const translations: Translations = {
     'feat.webhooks': 'Webhook & API',
     'feat.notifications': 'Notifiche desktop',
     'feat.support': 'Supporto prioritario', 'feat.backup': 'Backup online delle automazioni', 'feat.backup_local': 'Backup locale delle automazioni',
-    'feat.backup_local': 'Backup locale delle automazioni',
     'admin.title': 'Pannello Admin',
     'admin.dashboard': 'Dashboard',
     'admin.workflows': 'Workflow',
