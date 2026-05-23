@@ -439,7 +439,7 @@ const translations: Translations = {
     'auth.login': 'Iniciar sesión', 'auth.signup': 'Registrarse', 'auth.email': 'Correo', 'auth.password': 'Contraseña',
     'auth.google': 'Continuar con Google', 'auth.passkey': 'Iniciar con Passkey', 'auth.or': 'o',
     'auth.no_account': '¿No tienes cuenta?', 'auth.has_account': '¿Ya tienes cuenta?',
-    'auth.login_title': 'Inicia sesión', 'auth.signup_title': 'Crea una cuenta',
+    'auth.login_title': 'Inicia sesión', 'auth.signup_title': 'Crea una cuenta', 'auth.forgot_title': 'Restablecer tu contraseña', 'auth.forgot_password_link': '¿Olvidaste tu contraseña?', 'auth.reset_link': 'Enviar enlace de restablecimiento', 'auth.back_to_login': 'Volver al inicio de sesión', 'auth.check_email': 'Revisa tu correo', 'auth.confirmation_sent': 'Te hemos enviado un enlace de confirmación.', 'auth.reset_email_sent': 'Correo enviado', 'auth.reset_email_desc': 'Revisa tu bandeja de entrada para el enlace de restablecimiento.', 'auth.passkey_coming_soon': 'El soporte Passkey/WebAuthn estará disponible próximamente.', 'auth.email_placeholder': 'nombre@ejemplo.com', 'auth.password_placeholder': '••••••••', 'auth.error': 'Error',
     'editor.untitled': 'Proyecto sin título', 'editor.open': 'Abrir', 'editor.save': 'Guardar',
     'editor.run': 'Ejecutar', 'editor.stop': 'Detener', 'editor.drag_hint': 'Arrastra nodos desde la barra lateral',
     'editor.no_nodes': 'Añade al menos un nodo.', 'editor.saved': 'Guardado', 'editor.opened': 'Abierto',
