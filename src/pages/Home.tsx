@@ -5,6 +5,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useSettings } from '@/contexts/SettingsContext';
 import { supabase } from '@/integrations/supabase/client';
 import { listProjects, deleteProject, type WorkflowProject } from '@/lib/projectStorage';
+import { saveProject } from '@/lib/projectStorage';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -15,7 +16,7 @@ import Footer from '@/components/Footer';
 import { useToast } from '@/hooks/use-toast';
 import {
   Workflow, Plus, Trash2, Crown, Clock,
-  FolderOpen, Pencil, Check, X, Camera, Loader2, Bot,
+  FolderOpen, Pencil, Check, X, Camera, Loader2, Bot, Download, Upload,
 } from 'lucide-react';
 import OnboardingWizard from '@/components/OnboardingWizard';
 import AgentInstallWizard from '@/components/AgentInstallWizard';
@@ -28,6 +29,7 @@ export default function Home() {
   const navigate = useNavigate();
   const { toast } = useToast();
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const backupInputRef = useRef<HTMLInputElement>(null);
 
   const [projects, setProjects] = useState<WorkflowProject[]>([]);
   const [displayName, setDisplayName] = useState('');
@@ -164,6 +166,56 @@ export default function Home() {
     navigate('/');
   };
 
+  const handleExportBackup = () => {
+    const payload = {
+      app: 'OpenClawForWindows',
+      version: 1,
+      exportedAt: new Date().toISOString(),
+      projects,
+    };
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `openclaw-backup-${new Date().toISOString().slice(0, 10)}.json`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+    toast({ title: '✓', description: `${projects.length} automazioni esportate.` });
+  };
+
+  const handleImportBackup = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    try {
+      const text = await file.text();
+      const data = JSON.parse(text);
+      const list: WorkflowProject[] = Array.isArray(data) ? data : data.projects;
+      if (!Array.isArray(list)) throw new Error('Formato non valido');
+      let count = 0;
+      for (const p of list) {
+        if (!p?.id || !p?.name) continue;
+        await saveProject({
+          id: p.id,
+          name: p.name,
+          nodes: p.nodes ?? [],
+          edges: p.edges ?? [],
+          createdAt: p.createdAt ?? new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        });
+        count++;
+      }
+      const updated = await listProjects();
+      setProjects(updated);
+      toast({ title: '✓', description: `${count} automazioni ripristinate.` });
+    } catch (err: any) {
+      toast({ title: 'Errore', description: err.message ?? 'File non valido', variant: 'destructive' });
+    } finally {
+      if (backupInputRef.current) backupInputRef.current.value = '';
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <OnboardingWizard open={showOnboarding} onComplete={() => setShowOnboarding(false)} />
@@ -284,14 +336,44 @@ export default function Home() {
         <section className="space-y-4">
           <div className="flex items-center justify-between">
             <h2 className="text-sm font-semibold text-foreground">{t('admin.workflows')}</h2>
-            <Button
-              size="sm"
-              className="h-8 text-xs gap-1.5"
-              onClick={() => navigate('/')}
-            >
-              <Plus className="h-3.5 w-3.5" />
-              {t('editor.new_project')}
-            </Button>
+            <div className="flex items-center gap-2">
+              <input
+                ref={backupInputRef}
+                type="file"
+                accept="application/json,.json"
+                className="hidden"
+                onChange={handleImportBackup}
+              />
+              <Button
+                size="sm"
+                variant="outline"
+                className="h-8 text-xs gap-1.5"
+                onClick={() => backupInputRef.current?.click()}
+                title="Ripristina backup"
+              >
+                <Upload className="h-3.5 w-3.5" />
+                Ripristina
+              </Button>
+              <Button
+                size="sm"
+                variant="outline"
+                className="h-8 text-xs gap-1.5"
+                onClick={handleExportBackup}
+                disabled={projects.length === 0}
+                title="Scarica backup delle automazioni"
+              >
+                <Download className="h-3.5 w-3.5" />
+                Backup
+              </Button>
+              <Button
+                size="sm"
+                className="h-8 text-xs gap-1.5"
+                onClick={() => navigate('/')}
+              >
+                <Plus className="h-3.5 w-3.5" />
+                {t('editor.new_project')}
+              </Button>
+            </div>
           </div>
 
           {projects.length === 0 ? (

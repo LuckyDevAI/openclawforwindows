@@ -18,6 +18,7 @@ const featureKeys = [
   'feat.auto_exec',
   'feat.webhooks',
   'feat.notifications',
+  'feat.backup',
 ] as const;
 
 export default function Pricing() {
