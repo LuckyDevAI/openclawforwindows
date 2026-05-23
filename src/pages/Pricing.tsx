@@ -184,7 +184,7 @@ export default function Pricing() {
               </div>
               <CardHeader className="text-center pb-3 pt-8">
                 <CardTitle className="text-4xl font-bold tabular-nums text-foreground">
-                  €55,90
+                  €29,90
                   <span className="text-base font-normal text-muted-foreground ml-1"> una tantum</span>
                 </CardTitle>
                 <CardDescription className="text-sm mt-1">Piano Lifetime · Pagamento unico</CardDescription>
