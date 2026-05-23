@@ -1,62 +1,80 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://openclawforwindows.lovable.app/</loc>
+    <loc>https://openclawforwindows.com/</loc>
+    <lastmod>2026-05-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://openclawforwindows.lovable.app/auth</loc>
+    <loc>https://openclawforwindows.com/auth</loc>
+    <lastmod>2026-05-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://openclawforwindows.lovable.app/home</loc>
+    <loc>https://openclawforwindows.com/home</loc>
+    <lastmod>2026-05-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://openclawforwindows.lovable.app/pricing</loc>
+    <loc>https://openclawforwindows.com/pricing</loc>
+    <lastmod>2026-05-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://openclawforwindows.com/install</loc>
+    <lastmod>2026-05-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://openclawforwindows.lovable.app/install</loc>
+    <loc>https://openclawforwindows.com/download</loc>
+    <lastmod>2026-05-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://openclawforwindows.lovable.app/download</loc>
+    <loc>https://openclawforwindows.com/support</loc>
+    <lastmod>2026-05-23</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://openclawforwindows.lovable.app/support</loc>
+    <loc>https://openclawforwindows.com/sitemap</loc>
+    <lastmod>2026-05-23</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
+    <priority>0.4</priority>
   </url>
   <url>
-    <loc>https://openclawforwindows.lovable.app/terms</loc>
+    <loc>https://openclawforwindows.com/terms</loc>
+    <lastmod>2026-05-23</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://openclawforwindows.lovable.app/privacy</loc>
+    <loc>https://openclawforwindows.com/privacy</loc>
+    <lastmod>2026-05-23</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://openclawforwindows.lovable.app/eula</loc>
+    <loc>https://openclawforwindows.com/eula</loc>
+    <lastmod>2026-05-23</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://openclawforwindows.lovable.app/cookies</loc>
+    <loc>https://openclawforwindows.com/cookies</loc>
+    <lastmod>2026-05-23</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://openclawforwindows.lovable.app/age-rating</loc>
+    <loc>https://openclawforwindows.com/age-rating</loc>
+    <lastmod>2026-05-23</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
