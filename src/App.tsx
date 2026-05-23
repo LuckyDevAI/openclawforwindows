@@ -11,6 +11,7 @@ import SubscriptionGate from "@/components/SubscriptionGate";
 import Index from "./pages/Index.tsx";
 import Home from "./pages/Home.tsx";
 import Admin from "./pages/Admin.tsx";
+import AdminSecurity from "./pages/AdminSecurity.tsx";
 import Auth from "./pages/Auth.tsx";
 import Pricing from "./pages/Pricing.tsx";
 import Install from "./pages/Install.tsx";
@@ -52,6 +53,7 @@ const App = () => (
               <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
               <Route path="/" element={<ProtectedRoute><SubscriptionGate><Index /></SubscriptionGate></ProtectedRoute>} />
               <Route path="/admin" element={<ProtectedRoute><Admin /></ProtectedRoute>} />
+              <Route path="/admin/security" element={<ProtectedRoute><AdminSecurity /></ProtectedRoute>} />
               <Route path="*" element={<NotFound />} />
             </Routes>
             <SupportWidget />
