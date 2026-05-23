@@ -18,7 +18,7 @@ OpenClawForWindows is a visual no-code/low-code workflow automation builder for 
 ## Pricing (EUR, via Stripe)
 - **Free Trial**: 10 days local trial, no credit card.
 - **Annual Plan**: 10,90 € / year.
-- **Lifetime Plan**: 55,90 € one-time payment.
+- **Lifetime Plan**: 29,90 € one-time payment.
 - Manage billing from /pricing (Stripe customer portal).
 
 ## Installation
