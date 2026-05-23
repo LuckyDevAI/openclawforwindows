@@ -186,7 +186,7 @@ export default function Pricing() {
                   €29,90
                   <span className="text-base font-normal text-muted-foreground ml-1"> una tantum</span>
                 </CardTitle>
-                <CardDescription className="text-sm mt-1">Piano Lifetime · Pagamento unico</CardDescription>
+                <CardDescription className="text-sm mt-1">10 giorni di prova gratuita · Pagamento unico</CardDescription>
               </CardHeader>
               <CardContent className="space-y-5 pt-2">
                 <ul className="space-y-3">
