@@ -151,7 +151,7 @@ export default function Pricing() {
                           {loading === 'trial' && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
                           {t('pricing.start_trial')}
                         </Button>
-                        <p className="text-xs text-center text-muted-foreground">{t('pricing.no_charge')}</p>
+                        <p className="text-xs text-center text-muted-foreground whitespace-pre-line">{t('pricing.no_charge')}</p>
                         <div className="relative flex items-center py-1">
                           <div className="flex-grow border-t border-border" />
                           <span className="mx-4 text-xs text-muted-foreground">pagamento</span>
@@ -212,7 +212,7 @@ export default function Pricing() {
                       {loading === 'trial' && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
                       {t('pricing.start_trial')}
                     </Button>
-                    <p className="text-xs text-center text-muted-foreground">{t('pricing.no_charge')}</p>
+                    <p className="text-xs text-center text-muted-foreground whitespace-pre-line">{t('pricing.no_charge')}</p>
                     <div className="relative flex items-center py-1">
                       <div className="flex-grow border-t border-border" />
                       <span className="mx-4 text-xs text-muted-foreground">pagamento</span>
