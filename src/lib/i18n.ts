@@ -130,6 +130,7 @@ type TranslationKeys = {
   'feat.support': string;
  'feat.backup': string;
  'feat.backup_local': string;
+ 'feat.future_updates': string;
   // Admin
   'admin.title': string;
   'admin.dashboard': string;
