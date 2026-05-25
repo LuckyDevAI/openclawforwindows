@@ -136,6 +136,7 @@ export default function Support() {
       </header>
 
       <main className="flex-1 flex flex-col max-w-3xl mx-auto w-full px-4">
+        <h1 className="sr-only">Centro Assistenza OpenClawForWindows</h1>
         <ScrollArea className="flex-1 py-4" ref={scrollRef as any}>
           <div className="space-y-4 pb-4">
             {messages.map((msg, i) => (
