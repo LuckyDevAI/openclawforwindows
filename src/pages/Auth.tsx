@@ -82,7 +82,8 @@ export default function Auth() {
 
   return (
     <div className="flex min-h-screen flex-col bg-background">
-      <div className="flex flex-1 items-center justify-center p-4">
+      <main className="flex flex-1 items-center justify-center p-4">
+        <h1 className="sr-only">Accedi a OpenClawForWindows</h1>
         <Card className="w-full max-w-sm border-border bg-card">
           <CardHeader className="text-center pb-4">
             <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-primary/15 overflow-hidden">
@@ -220,7 +221,7 @@ export default function Auth() {
             )}
           </CardContent>
         </Card>
-      </div>
+      </main>
       <Footer />
     </div>
   );

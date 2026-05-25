@@ -3,9 +3,10 @@ import Footer from '@/components/Footer';
 
 const Index = () => (
   <div className="flex flex-col h-screen">
-    <div className="flex-1 min-h-0">
+    <main className="flex-1 min-h-0">
+      <h1 className="sr-only">OpenClaw — Visual Automation Builder</h1>
       <WorkflowEditor />
-    </div>
+    </main>
     <Footer />
   </div>
 );

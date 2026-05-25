@@ -1,0 +1,22 @@
+# OpenClawForWindows
+
+> Visual, Node-RED inspired automation builder for Windows and macOS. Design workflows on a drag-and-drop canvas, connect AI agents (Ollama, OpenAI, Gemini, Anthropic), and run them locally.
+
+OpenClawForWindows is a desktop PWA + Electron app that lets users build automation workflows visually. It supports scheduled triggers, AI agent nodes, and local execution. Distributed via direct download (Windows installer, macOS app, ZIP) and offered with a 10-day free trial plus Annual (€10.90) and Lifetime (€29.90) plans.
+
+## Pages
+
+- [Home](/): Visual workflow editor (drag-and-drop canvas).
+- [Pricing](/pricing): Annual and Lifetime plans, free trial details.
+- [Install](/install): Setup guide — Ollama, PowerShell 7+, dependencies.
+- [Download](/download): Windows, macOS, and ZIP builds.
+- [Support](/support): AI assistant chatbot for help and troubleshooting.
+- [Sitemap](/sitemap): Full list of public pages.
+
+## Legal
+
+- [Terms of Service](/terms): Usage conditions.
+- [Privacy Policy](/privacy): How personal data is handled.
+- [EULA](/eula): End-user license agreement.
+- [Cookie Policy](/cookies): Cookie usage and GDPR consent.
+- [Age Rating](/age-rating): IARC PEGI 3 classification.

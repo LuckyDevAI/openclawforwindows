@@ -21,10 +21,10 @@ export default function Header() {
         </div>
         <div className="flex items-center gap-1">
           <SettingsToolbar />
-          <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => navigate('/pricing')}>
+          <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => navigate('/pricing')} aria-label="Vai ai piani e prezzi">
             <Crown className="h-3.5 w-3.5" />
           </Button>
-          <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground" onClick={signOut}>
+          <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground" onClick={signOut} aria-label="Esci dall'account">
             <LogOut className="h-3.5 w-3.5" />
           </Button>
         </div>
