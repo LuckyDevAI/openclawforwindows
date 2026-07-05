@@ -156,16 +156,24 @@ export default function Install() {
                       </p>
                     </div>
                     <div className="flex flex-wrap gap-2">
-                      <Link to="/download">
+                      <a
+                        href="https://github.com/FastIsEasy/OpenClawForWindows/releases/latest"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
                         <Button size="sm" className="h-9 text-sm gap-2">
                           <Download className="h-4 w-4" /> Scarica .exe (Windows)
                         </Button>
-                      </Link>
-                      <Link to="/download">
+                      </a>
+                      <a
+                        href="https://github.com/FastIsEasy/OpenClawForWindows/releases/latest"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
                         <Button size="sm" variant="secondary" className="h-9 text-sm gap-2">
                           <Download className="h-4 w-4" /> Scarica .zip (macOS)
                         </Button>
-                      </Link>
+                      </a>
                       <a
                         href="https://www.npmjs.com/package/openclaw"
                         target="_blank"
