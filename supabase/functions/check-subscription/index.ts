@@ -119,15 +119,20 @@ serve(async (req) => {
 
       const allSubs = [...subscriptions.data, ...trialingSubs.data];
       if (allSubs.length > 0) {
-        const sub = allSubs[0];
+        const sub = allSubs[0] as any;
         stripeSub = true;
         plan = "annual";
-        subscriptionEnd = new Date(sub.current_period_end * 1000).toISOString();
+        // In Stripe API 2025-08-27, current_period_end moved onto subscription items
+        const periodEnd: number | undefined =
+          sub.current_period_end ?? sub.items?.data?.[0]?.current_period_end;
+        if (typeof periodEnd === "number" && !Number.isNaN(periodEnd)) {
+          subscriptionEnd = new Date(periodEnd * 1000).toISOString();
+        }
         stripeOnTrial = sub.status === "trialing";
-        if (sub.trial_end) {
+        if (typeof sub.trial_end === "number" && !Number.isNaN(sub.trial_end)) {
           stripeTrialEnd = new Date(sub.trial_end * 1000).toISOString();
         }
-        logStep("Stripe subscription found", { status: sub.status });
+        logStep("Stripe subscription found", { status: sub.status, periodEnd });
       }
 
       // Check for lifetime one-time purchase
