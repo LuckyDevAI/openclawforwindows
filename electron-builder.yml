@@ -1,7 +1,7 @@
 appId: com.openclaw.forwindows
 productName: OpenClawForWindows
 directories:
-  output: electron-installer
+  output: /tmp/electron-installer
   buildResources: public
 files:
   - dist/**/*
