@@ -106,16 +106,19 @@ serve(async (req) => {
       const customerId = customers.data[0].id;
       logStep("Found customer", { customerId });
 
+      logStep("Listing active subs");
       const subscriptions = await stripe.subscriptions.list({
         customer: customerId,
         status: "active",
         limit: 1,
       });
+      logStep("Listing trialing subs");
       const trialingSubs = await stripe.subscriptions.list({
         customer: customerId,
         status: "trialing",
         limit: 1,
       });
+      logStep("Subs listed", { active: subscriptions.data.length, trialing: trialingSubs.data.length });
 
       const allSubs = [...subscriptions.data, ...trialingSubs.data];
       if (allSubs.length > 0) {
@@ -136,19 +139,33 @@ serve(async (req) => {
       }
 
       // Check for lifetime one-time purchase
+      logStep("Listing payment intents");
       const payments = await stripe.paymentIntents.list({
         customer: customerId,
         limit: 50,
       });
+      logStep("Payment intents listed", { count: payments.data.length });
 
       for (const pi of payments.data) {
         if (pi.status === "succeeded") {
-          const sessions = await stripe.checkout.sessions.list({
+          let sessions;
+          try {
+            sessions = await stripe.checkout.sessions.list({
             payment_intent: pi.id,
             limit: 1,
           });
+          } catch (e) {
+            logStep("sessions.list failed", { pi: pi.id, err: String(e) });
+            continue;
+          }
           for (const session of sessions.data) {
-            const lineItems = await stripe.checkout.sessions.listLineItems(session.id);
+            let lineItems;
+            try {
+              lineItems = await stripe.checkout.sessions.listLineItems(session.id);
+            } catch (e) {
+              logStep("listLineItems failed", { session: session.id, err: String(e) });
+              continue;
+            }
             for (const item of lineItems.data) {
               if (item.price?.product === LIFETIME_PRODUCT_ID) {
                 isLifetime = true;
