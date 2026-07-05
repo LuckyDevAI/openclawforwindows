@@ -31,6 +31,7 @@ import {
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import openclawWinAsset from '@/assets/openclaw-win.zip.asset.json';
+import openclawWinInstallerAsset from '@/assets/openclaw-win-installer.zip.asset.json';
 
 const STEPS = [
   { label: 'Prerequisiti', icon: Cpu },
