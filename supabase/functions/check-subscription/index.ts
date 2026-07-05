@@ -106,44 +106,66 @@ serve(async (req) => {
       const customerId = customers.data[0].id;
       logStep("Found customer", { customerId });
 
+      logStep("Listing active subs");
       const subscriptions = await stripe.subscriptions.list({
         customer: customerId,
         status: "active",
         limit: 1,
       });
+      logStep("Listing trialing subs");
       const trialingSubs = await stripe.subscriptions.list({
         customer: customerId,
         status: "trialing",
         limit: 1,
       });
+      logStep("Subs listed", { active: subscriptions.data.length, trialing: trialingSubs.data.length });
 
       const allSubs = [...subscriptions.data, ...trialingSubs.data];
       if (allSubs.length > 0) {
-        const sub = allSubs[0];
+        const sub = allSubs[0] as any;
         stripeSub = true;
         plan = "annual";
-        subscriptionEnd = new Date(sub.current_period_end * 1000).toISOString();
+        // In Stripe API 2025-08-27, current_period_end moved onto subscription items
+        const periodEnd: number | undefined =
+          sub.current_period_end ?? sub.items?.data?.[0]?.current_period_end;
+        if (typeof periodEnd === "number" && !Number.isNaN(periodEnd)) {
+          subscriptionEnd = new Date(periodEnd * 1000).toISOString();
+        }
         stripeOnTrial = sub.status === "trialing";
-        if (sub.trial_end) {
+        if (typeof sub.trial_end === "number" && !Number.isNaN(sub.trial_end)) {
           stripeTrialEnd = new Date(sub.trial_end * 1000).toISOString();
         }
-        logStep("Stripe subscription found", { status: sub.status });
+        logStep("Stripe subscription found", { status: sub.status, periodEnd });
       }
 
       // Check for lifetime one-time purchase
+      logStep("Listing payment intents");
       const payments = await stripe.paymentIntents.list({
         customer: customerId,
         limit: 50,
       });
+      logStep("Payment intents listed", { count: payments.data.length });
 
       for (const pi of payments.data) {
         if (pi.status === "succeeded") {
-          const sessions = await stripe.checkout.sessions.list({
+          let sessions;
+          try {
+            sessions = await stripe.checkout.sessions.list({
             payment_intent: pi.id,
             limit: 1,
           });
+          } catch (e) {
+            logStep("sessions.list failed", { pi: pi.id, err: String(e) });
+            continue;
+          }
           for (const session of sessions.data) {
-            const lineItems = await stripe.checkout.sessions.listLineItems(session.id);
+            let lineItems;
+            try {
+              lineItems = await stripe.checkout.sessions.listLineItems(session.id);
+            } catch (e) {
+              logStep("listLineItems failed", { session: session.id, err: String(e) });
+              continue;
+            }
             for (const item of lineItems.data) {
               if (item.price?.product === LIFETIME_PRODUCT_ID) {
                 isLifetime = true;
