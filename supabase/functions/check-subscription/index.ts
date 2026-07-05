@@ -15,18 +15,6 @@ const logStep = (step: string, details?: any) => {
 const TRIAL_DAYS = 10;
 const LIFETIME_PRODUCT_ID = "prod_UDo3mzdfWpDlzz";
 
-// Decode JWT payload without verification (session validation happens via getUser)
-function decodeJwtPayload(token: string): any {
-  try {
-    const parts = token.split('.');
-    if (parts.length !== 3) return null;
-    const payload = JSON.parse(atob(parts[1].replace(/-/g, '+').replace(/_/g, '/')));
-    return payload;
-  } catch {
-    return null;
-  }
-}
-
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -46,9 +34,7 @@ serve(async (req) => {
       });
     }
 
-    const token = authHeader.replace("Bearer ", "");
-
-    // Try user-context client first
+    // User-context client — signature is verified by Supabase via getUser()
     const userClient = createClient(
       Deno.env.get("SUPABASE_URL") ?? "",
       Deno.env.get("SUPABASE_ANON_KEY") ?? "",
@@ -59,25 +45,17 @@ serve(async (req) => {
     let userEmail: string | undefined;
 
     const { data: userData, error: userError } = await userClient.auth.getUser();
-    
-    if (userError) {
-      // Fallback: decode JWT to get user info (token may be valid but session expired)
-      logStep("getUser failed, trying JWT decode", { error: userError.message });
-      const payload = decodeJwtPayload(token);
-      if (payload?.sub && payload?.email && payload?.exp && payload.exp > Date.now() / 1000) {
-        userId = payload.sub;
-        userEmail = payload.email;
-        logStep("JWT decode fallback succeeded", { email: userEmail });
-      } else {
-        return new Response(JSON.stringify({ error: "Authentication failed", details: userError.message }), {
-          headers: { ...corsHeaders, "Content-Type": "application/json" },
-          status: 401,
-        });
-      }
-    } else {
-      userId = userData.user?.id;
-      userEmail = userData.user?.email;
+
+    if (userError || !userData?.user) {
+      logStep("Authentication failed", { error: userError?.message });
+      return new Response(JSON.stringify({ error: "Unauthorized" }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 401,
+      });
     }
+
+    userId = userData.user.id;
+    userEmail = userData.user.email;
 
     if (!userId || !userEmail) {
       return new Response(JSON.stringify({ error: "User not authenticated" }), {
