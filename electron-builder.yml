@@ -24,3 +24,5 @@ nsis:
   createStartMenuShortcut: true
   shortcutName: OpenClawForWindows
   runAfterFinish: true
+  differentialPackage: false
+  unicode: true
