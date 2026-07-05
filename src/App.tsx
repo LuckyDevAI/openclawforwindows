@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, HashRouter, Route, Routes } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -29,13 +29,17 @@ import SupportWidget from "./components/SupportWidget";
 
 const queryClient = new QueryClient();
 
+// In Electron the app is loaded via file://, where BrowserRouter breaks (shows 404).
+const isFileProtocol = window.location.protocol === "file:";
+const Router = isFileProtocol ? HashRouter : BrowserRouter;
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <SettingsProvider>
         <Toaster />
         <Sonner />
-        <BrowserRouter>
+        <Router>
           <AuthProvider>
             <Routes>
               <Route path="/auth" element={<Auth />} />
@@ -59,7 +63,7 @@ const App = () => (
             <SupportWidget />
           </AuthProvider>
           <CookieConsent />
-        </BrowserRouter>
+        </Router>
       </SettingsProvider>
     </TooltipProvider>
   </QueryClientProvider>
