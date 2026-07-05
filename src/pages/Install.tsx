@@ -30,6 +30,7 @@ import {
   Settings2,
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import openclawWinAsset from '@/assets/openclaw-win.zip.asset.json';
 
 const STEPS = [
   { label: 'Prerequisiti', icon: Cpu },
@@ -157,21 +158,11 @@ export default function Install() {
                     </div>
                     <div className="flex flex-wrap gap-2">
                       <a
-                        href="https://github.com/FastIsEasy/OpenClawForWindows/releases/latest"
-                        target="_blank"
-                        rel="noopener noreferrer"
+                        href={openclawWinAsset.url}
+                        download="OpenClawForWindows-win-x64.zip"
                       >
                         <Button size="sm" className="h-9 text-sm gap-2">
-                          <Download className="h-4 w-4" /> Scarica .exe (Windows)
-                        </Button>
-                      </a>
-                      <a
-                        href="https://github.com/FastIsEasy/OpenClawForWindows/releases/latest"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <Button size="sm" variant="secondary" className="h-9 text-sm gap-2">
-                          <Download className="h-4 w-4" /> Scarica .zip (macOS)
+                          <Download className="h-4 w-4" /> Scarica per Windows (.zip · 145 MB)
                         </Button>
                       </a>
                       <a
@@ -185,7 +176,10 @@ export default function Install() {
                         </Button>
                       </a>
                     </div>
-                    <CopyBlock code="npm install -g openclaw@latest" label="Oppure installa via terminale:" />
+                    <CopyBlock
+                      code="Estrai lo zip e apri OpenClawForWindows.exe"
+                      label="Dopo il download:"
+                    />
                   </div>
                 </CardContent>
               </Card>
