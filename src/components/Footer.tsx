@@ -49,6 +49,15 @@ export default function Footer() {
             >
               Sitemap
             </a>
+            <span className="text-muted-foreground/30 mx-2 text-[9px]">·</span>
+            <a
+              href="https://github.com/LuckyDevAI/OpenClawForWindows"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[11px] text-muted-foreground hover:text-foreground transition-colors"
+            >
+              GitHub
+            </a>
           </nav>
         </div>
 
