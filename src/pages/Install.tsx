@@ -31,7 +31,7 @@ import {
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import openclawWinAsset from '@/assets/openclaw-win.zip.asset.json';
-import openclawWinInstallerAsset from '@/assets/openclaw-win-installer.zip.asset.json';
+import openclawWinInstallerAsset from '@/assets/openclaw-win-setup.exe.asset.json';
 
 const STEPS = [
   { label: 'Prerequisiti', icon: Cpu },
@@ -160,10 +160,10 @@ export default function Install() {
                     <div className="flex flex-wrap gap-2">
                       <a
                         href={openclawWinInstallerAsset.url}
-                        download="OpenClawForWindows-Installer.zip"
+                        download="OpenClawForWindows-Setup.exe"
                       >
                         <Button size="sm" className="h-9 text-sm gap-2">
-                          <Download className="h-4 w-4" /> Installer Windows (Setup wizard · 100 MB)
+                          <Download className="h-4 w-4" /> Installer Windows (Setup.exe · 105 MB)
                         </Button>
                       </a>
                       <a
@@ -186,7 +186,7 @@ export default function Install() {
                       </a>
                     </div>
                     <CopyBlock
-                      code="Estrai lo zip e apri OpenClawForWindows-Setup-0.0.0.exe (installer) oppure OpenClawForWindows.exe (portable)"
+                      code="Apri OpenClawForWindows-Setup.exe e segui il setup guidato (oppure estrai lo zip portable e apri OpenClawForWindows.exe)"
                       label="Dopo il download:"
                     />
                   </div>
