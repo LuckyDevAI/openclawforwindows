@@ -1,6 +1,7 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import Stripe from "https://esm.sh/stripe@18.5.0";
 import { createClient } from "npm:@supabase/supabase-js@2.57.2";
+import { findCustomerForUser } from "../_shared/billing.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -62,11 +63,11 @@ serve(async (req) => {
           .eq("user_id", u.id);
 
         let subscription = null;
-        if (u.email) {
+        {
           try {
-            const customers = await stripe.customers.list({ email: u.email, limit: 1 });
-            if (customers.data.length > 0) {
-              const subs = await stripe.subscriptions.list({ customer: customers.data[0].id, limit: 1 });
+            const customerId = await findCustomerForUser(stripe, u);
+            if (customerId) {
+              const subs = await stripe.subscriptions.list({ customer: customerId, limit: 1 });
               if (subs.data.length > 0) {
                 const sub = subs.data[0];
                 subscription = {
@@ -99,14 +100,17 @@ serve(async (req) => {
     }
 
     if (action === "update-subscription") {
-      const { email: targetEmail, newEndDate } = body;
-      if (!targetEmail || !newEndDate) throw new Error("email and newEndDate required");
+      const { userId: targetUserId, newEndDate } = body;
+      if (!targetUserId || !newEndDate) throw new Error("userId and newEndDate required");
+
+      const { data: target, error: tErr } = await supabaseAdmin.auth.admin.getUserById(targetUserId);
+      if (tErr || !target.user) throw new Error("User not found");
 
       const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY") || "", { apiVersion: "2025-08-27.basil" });
-      const customers = await stripe.customers.list({ email: targetEmail, limit: 1 });
-      if (customers.data.length === 0) throw new Error("No Stripe customer found");
+      const customerId = await findCustomerForUser(stripe, target.user);
+      if (!customerId) throw new Error("No Stripe customer found");
 
-      const subs = await stripe.subscriptions.list({ customer: customers.data[0].id, limit: 1 });
+      const subs = await stripe.subscriptions.list({ customer: customerId, limit: 1 });
       if (subs.data.length === 0) throw new Error("No subscription found");
 
       const newEnd = Math.floor(new Date(newEndDate).getTime() / 1000);

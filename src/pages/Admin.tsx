@@ -116,7 +116,7 @@ export default function Admin() {
     setSaving(true);
     try {
       const { data, error } = await supabase.functions.invoke('admin-users', {
-        body: { action: 'update-subscription', email: editingUser.email, newEndDate },
+        body: { action: 'update-subscription', userId: editingUser.id, newEndDate },
       });
       if (error) throw error;
       if (data?.error) throw new Error(data.error);
