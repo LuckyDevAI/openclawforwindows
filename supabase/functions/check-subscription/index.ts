@@ -1,6 +1,7 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import Stripe from "https://esm.sh/stripe@18.5.0";
 import { createClient } from "npm:@supabase/supabase-js@2.57.2";
+import { findCustomerForUser } from "../_shared/billing.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -87,13 +88,14 @@ serve(async (req) => {
     if (trialStart) {
       const trialEndDate = new Date(trialStart.getTime() + TRIAL_DAYS * 24 * 60 * 60 * 1000);
       localTrialEnd = trialEndDate.toISOString();
-      localTrialActive = new Date() < trialEndDate;
+      const now = new Date();
+      localTrialActive = trialStart <= now && now < trialEndDate;
       logStep("Local trial check", { trialStart: trialStart.toISOString(), trialEnd: localTrialEnd, active: localTrialActive });
     }
 
     // 2) Check Stripe
     const stripe = new Stripe(stripeKey, { apiVersion: "2025-08-27.basil" });
-    const customers = await stripe.customers.list({ email: userEmail, limit: 1 });
+    const boundCustomerId = await findCustomerForUser(stripe, userData.user);
 
     let stripeSub = false;
     let stripeOnTrial = false;
@@ -102,8 +104,8 @@ serve(async (req) => {
     let isLifetime = false;
     let plan: string | null = null;
 
-    if (customers.data.length > 0) {
-      const customerId = customers.data[0].id;
+    if (boundCustomerId) {
+      const customerId = boundCustomerId;
       logStep("Found customer", { customerId });
 
       logStep("Listing active subs");

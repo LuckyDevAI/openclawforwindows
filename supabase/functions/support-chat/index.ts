@@ -95,9 +95,20 @@ serve(async (req) => {
     }
 
     const { messages, lang } = await req.json();
-    const userLang = typeof lang === "string" ? lang : "en";
+    const userLang = typeof lang === "string" && LANG_NAMES[lang] ? lang : "en";
 
     if (!messages || !Array.isArray(messages)) {
+      return new Response(
+        JSON.stringify({ error: "messages array is required" }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    const safeMessages = messages
+      .slice(-30)
+      .filter((m: any) => m && (m.role === "user" || m.role === "assistant") && typeof m.content === "string")
+      .map((m: any) => ({ role: m.role, content: m.content.slice(0, 4000) }));
+    if (safeMessages.length === 0) {
       return new Response(
         JSON.stringify({ error: "messages array is required" }),
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
@@ -119,7 +130,7 @@ serve(async (req) => {
         model: "google/gemini-3-flash-preview",
         messages: [
           { role: "system", content: buildSystemPrompt(userLang) },
-          ...messages,
+          ...safeMessages,
         ],
         stream: true,
       }),
